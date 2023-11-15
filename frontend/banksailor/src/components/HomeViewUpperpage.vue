@@ -20,8 +20,9 @@
 }
 
 .title {
-  font-size: 5rem;
+  font-size: 6rem;
   color: #1c5f82;
+  /* font-size: 10rem; */
   -webkit-text-stroke-width: 2px;
   -webkit-text-stroke-color: white;
   font-weight: 900;
