@@ -19,6 +19,18 @@ const router = createRouter({
       path: "/products",
       name: "products",
       component: ProductsView,
+      children: [
+        {
+          path: "/deposit",
+          name: "deposit",
+          component: ProductsDepositView,
+        },
+        {
+          path: "/saving",
+          name: "saving",
+          component: ProductsSavingView,
+        },
+      ]
     },
     {
       path: "/map",
@@ -34,16 +46,6 @@ const router = createRouter({
       path: "/article",
       name: "article",
       component: ArticleView,
-    },
-    {
-      path: "/products/deposit/",
-      name: "deposit",
-      component: ProductsDepositView,
-    },
-    {
-      path: "/products/saving/",
-      name: "saving",
-      component: ProductsSavingView,
     },
   ],
 });
