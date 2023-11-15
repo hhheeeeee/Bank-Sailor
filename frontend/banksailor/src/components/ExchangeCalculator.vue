@@ -8,23 +8,43 @@
       </div>
       <div class="exchangeicon">⇄</div>
       <div class="inputbox">
-        <div class="exchangeresult">환전 결과</div>
+        <div class="exchangeresult">{{ exchangeresult.value }}</div>
         <img :src="toContryflagimgurl" alt="" class="flagimg" />
         <div class="selectcountry">⌵</div>
       </div>
     </div>
     <p>* 엔화/인도네시아 루피아는 100단위, 나머지는 모두 1단위</p>
-    <button>환율 추적</button>
+    <button @click="getExchangeResult">환율 추적</button>
   </div>
 </template>
 
 <script setup>
+import axios from "axios";
 import { ref } from "vue";
+import { useCounterStore } from "@/stores/counter";
+const store = useCounterStore();
+
 const fromCountry = "USD";
 const toCountry = "KRW";
+const price = 1;
+const exchangeresult = ref("null");
 
 const fromContryflagimgurl = `/src/assets/flags/${fromCountry}.png`;
 const toContryflagimgurl = `/src/assets/flags/${toCountry}.png`;
+
+const getExchangeResult = function () {
+  axios({
+    method: "get",
+    url: `${store.API_URL}/exchange/${fromCountry}/${toCountry}/${price}`,
+  })
+    .then((res) => {
+      console.log(res.data);
+      // exchangeresult.value = res.exchangeresult;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 </script>
 
 <style lang="scss" scoped>
