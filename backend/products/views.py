@@ -1,9 +1,14 @@
-from django.shortcuts import render
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from rest_framework import status
 
-# Create your views here.
+from django.shortcuts import get_list_or_404, get_object_or_404
+
+
+@api_view(['GET'])
 def deposit_list(request):
-    pass
-
+    if request.method == 'POST':
+        pass
 
 def saving_list(request):
     pass
