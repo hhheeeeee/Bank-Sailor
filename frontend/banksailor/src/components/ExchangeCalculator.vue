@@ -8,7 +8,7 @@
       </div>
       <div class="exchangeicon">⇄</div>
       <div class="inputbox">
-        <div class="exchangeresult">{{ exchangeresult.value }}</div>
+        <div class="exchangeresult">{{ exchangeresult }}</div>
         <img :src="toContryflagimgurl" alt="" class="flagimg" />
         <div class="selectcountry">⌵</div>
       </div>
@@ -27,7 +27,7 @@ const store = useCounterStore();
 const fromCountry = "USD";
 const toCountry = "KRW";
 const price = 1;
-const exchangeresult = ref("null");
+const exchangeresult = ref("");
 
 const fromContryflagimgurl = `/src/assets/flags/${fromCountry}.png`;
 const toContryflagimgurl = `/src/assets/flags/${toCountry}.png`;
@@ -35,11 +35,12 @@ const toContryflagimgurl = `/src/assets/flags/${toCountry}.png`;
 const getExchangeResult = function () {
   axios({
     method: "get",
-    url: `${store.API_URL}/exchange/${fromCountry}/${toCountry}/${price}`,
+    url: `${store.API_URL}/exchange/${fromCountry}/${toCountry}/${price}/`,
   })
     .then((res) => {
       console.log(res.data);
-      // exchangeresult.value = res.exchangeresult;
+      exchangeresult.value = res.data.exchangeresult;
+      // console.log(exchangeresult.value);
     })
     .catch((err) => {
       console.log(err);
