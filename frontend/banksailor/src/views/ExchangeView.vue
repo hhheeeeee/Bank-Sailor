@@ -1,7 +1,9 @@
 <template>
-  <div></div>
+  <div>
+    <h1>환율계산기+</h1>
+  </div>
 </template>
 
 <script setup></script>
 
-<style lang="scss" scoped></style>
+<style scoped></style>
