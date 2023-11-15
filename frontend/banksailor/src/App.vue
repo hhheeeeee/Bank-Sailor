@@ -1,85 +1,62 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import { RouterLink, RouterView } from "vue-router";
 </script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
+    <nav class="navbar bg-body-tertiary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          <img
+            src="@/assets/banksailor_logo.png"
+            alt="Logo"
+            width="30"
+            height="30"
+            class="d-inline-block align-text-top"
+          />
+        </a>
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
+        <RouterLink :to="{ name: 'products' }">예금 비교</RouterLink>
+        <RouterLink :to="{ name: 'exchange' }">환율 계산기</RouterLink>
+        <RouterLink :to="{ name: 'map' }">은행 지도</RouterLink>
+        <RouterLink :to="{ name: 'products' }">게시판</RouterLink>
 
+        <!-- 만약 로그인 안된 상태라면 -->
+        <button class="login">LOGIN</button>
+        <button class="signin">SIGN IN</button>
+        <!-- 로그인 상태라면 -->
+        <!-- <button class="logout">logout</button> -->
+      </div>
+    </nav>
+  </header>
   <RouterView />
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
+a {
+  text-decoration: none;
+  color: #1c5f82;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+button {
+  border: 1px solid #1c5f82;
+  border-radius: 30px;
+  padding-bottom: 4px;
+  width: 80px;
+  height: 35px;
 }
 
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
+.login {
+  color: #1c5f82;
 }
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
+.signin {
+  color: white;
+  background-color: #1c5f82;
 }
 
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
+.logout {
+  color: white;
+  background-color: #1c5f82;
 }
 </style>
