@@ -1,7 +1,17 @@
 <template>
-  <div></div>
+  <div class="containerbody">
+    <HomeViewUpperpage />
+    <HomeViewlowerpage />
+  </div>
 </template>
 
-<script setup></script>
+<script setup>
+import HomeViewUpperpage from "@/components/HomeViewUpperpage.vue";
+import HomeViewlowerpage from "@/components/HomeViewlowerpage.vue";
+</script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.containerbody {
+  width: 100%;
+}
+</style>
