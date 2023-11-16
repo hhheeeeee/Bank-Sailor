@@ -6,8 +6,8 @@
 </template>
 
 <script setup>
-import HomeViewUpperpage from "@/components/HomeViewUpperpage.vue";
-import HomeViewlowerpage from "@/components/HomeViewlowerpage.vue";
+import HomeViewUpperpage from "@/components/HomeViewComponents/HomeViewUpperpage.vue";
+import HomeViewlowerpage from "@/components/HomeViewComponents/HomeViewlowerpage.vue";
 </script>
 
 <style lang="scss" scoped>

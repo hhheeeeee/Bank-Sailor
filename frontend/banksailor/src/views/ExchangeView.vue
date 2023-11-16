@@ -6,7 +6,7 @@
 </template>
 
 <script setup>
-import ExchangeCalculator from "@/components/ExchangeCalculator.vue";
+import ExchangeCalculator from "@/components/ExchangeViewComponents/ExchangeCalculator.vue";
 </script>
 
 <style scoped>
