@@ -14,7 +14,7 @@
 <script setup>
 import { onMounted } from 'vue'
 import { useCounterStore } from '@/stores/counter'
-import ProductsSavingItem from '@/components/ProductsSavingItem.vue'
+import ProductsSavingItem from '@/components/ProductViewComponents/ProductsSavingItem.vue'
 
 const store = useCounterStore()
 
