@@ -3,14 +3,12 @@
     <h1 class="maptitle">내 근처 은행 찾기</h1>
     <div class="mapcontents">
       <Mapinput />
-      <MapKakao :latitude="37.39843974939604" :longitude="127.10972941510465" />
     </div>
   </div>
 </template>
 
 <script setup>
 import Mapinput from "@/components/MapViewComponents/Mapinput.vue";
-import MapKakao from "@/components/MapViewComponents/MapKakao.vue";
 </script>
 
 <style scoped>
