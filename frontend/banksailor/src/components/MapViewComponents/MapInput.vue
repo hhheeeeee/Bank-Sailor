@@ -1,41 +1,21 @@
 <template>
   <div class="inputarea">
-    <form @submit.prevent="sendMapKeyword">
-      <p class="label">광역시 / 도</p>
-      <input type="text" name="province" v-model="province" />
-      <p class="label">시 / 군 / 구</p>
-      <input type="text" name="city" v-model="city" />
-      <p class="label">은행명</p>
-      <input type="text" name="bankName" v-model="bankName" />
-      <input type="submit" value="검색" />
-    </form>
+    <MapInputDropdown @sendMapKeyword="getKeyword" />
     <div id="map"></div>
   </div>
 </template>
 
 <script setup>
+import MapInputDropdown from "@/components/MapViewComponents/MapInputDropdown.vue";
 import { ref, onMounted } from "vue";
 
-const isclicked = ref(false);
-const province = ref(null);
-const city = ref(null);
-const bankName = ref(null);
 const keyword = ref("강남 은행");
 
 onMounted(() => createmap());
 
-const sendMapKeyword = function (event) {
-  event.preventDefault();
-  console.log("검색");
-  if (province.value == null || city.value == null || bankName.value == null) {
-    window.alert("검색어를 모두 임력해주세요");
-    return;
-  } else {
-    keyword.value = province.value + city.value + bankName.value;
-    console.log(keyword.value);
-    isclicked.value = true;
-    createmap();
-  }
+const getKeyword = function (arg) {
+  keyword.value = arg;
+  createmap();
 };
 
 let map;
