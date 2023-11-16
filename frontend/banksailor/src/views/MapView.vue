@@ -2,16 +2,13 @@
   <div class="containerbody1">
     <h1 class="maptitle">내 근처 은행 찾기</h1>
     <div class="mapcontents">
-      <div class="inputarea">
-        <p>selfs</p>
-      </div>
-      <MapKakao :latitude="37.39843974939604" :longitude="127.10972941510465" />
+      <Mapinput />
     </div>
   </div>
 </template>
 
 <script setup>
-import MapKakao from "@/components/MapViewComponents/MapKakao.vue";
+import Mapinput from "@/components/MapViewComponents/Mapinput.vue";
 </script>
 
 <style scoped>
@@ -43,16 +40,12 @@ import MapKakao from "@/components/MapViewComponents/MapKakao.vue";
 .mapcontents {
   display: flex;
   width: 80%;
+  height: 60vh;
   border: 3px solid #1c5f82;
   background-color: #f6ddb4;
   justify-content: space-evenly;
   align-items: center;
   padding: 20px 20px;
   border-radius: 30px;
-}
-
-.inputarea {
-  width: 35%;
-  background-color: pink;
 }
 </style>
