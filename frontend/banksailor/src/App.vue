@@ -19,7 +19,7 @@ import { RouterLink, RouterView } from "vue-router";
         <RouterLink :to="{ name: 'products' }">예금 비교</RouterLink>
         <RouterLink :to="{ name: 'exchange' }">환율 계산기</RouterLink>
         <RouterLink :to="{ name: 'map' }">은행 지도</RouterLink>
-        <RouterLink :to="{ name: 'products' }">게시판</RouterLink>
+        <RouterLink :to="{ name: 'article' }">게시판</RouterLink>
 
         <!-- 만약 로그인 안된 상태라면 -->
         <button class="login">LOGIN</button>

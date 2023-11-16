@@ -3,10 +3,20 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 
 export const useCounterStore = defineStore('counter', () => {
-  const count = ref(0)
-  const doubleCount = computed(() => count.value * 2)
-  function increment() {
-    count.value++
+  const articles = ref([])  
+  const comments = ref([])
+
+  const getArticles = function () {
+    axios({
+      method: 'get',
+      url: `${API_URL}/articles/articles/`
+    })
+      .then((res) => {
+        articles.value = res.data
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
   // 
   const deposits = ref([])
@@ -26,6 +36,43 @@ export const useCounterStore = defineStore('counter', () => {
         console.log(error)
       })
   }
+  
+  const createArticle = function () {
+    axios({
+      method: 'post',
+      url: `${API_URL}/articles/articles/`
+    })
+      .then((res) => {
+        console.log(res.data)
+      }).catch((error) => {
+        console.log(error)
+      })
+  }
+  
+  const getComments = function () {
+    axios({
+      method: 'get',
+      url: `${API_URL}/articles/comments/`,
+    })
+      .then((res) => {
+        comments.value = res.data
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+  const createComments = function () {
+    axios({
+      method: 'post',
+      url: `${API_URL}/articles/articles/<int:article_pk>/comments/`
+    })
+      .then((res) => {
+        console.log(res.data)
+      }).catch((error) => {
+        console.log(error)
+      })
+  }
 
 
   const getSavings = () => {
@@ -41,5 +88,5 @@ export const useCounterStore = defineStore('counter', () => {
       })
   }
 
-  return { count, doubleCount, increment, deposits, getDeposits, savings, getSavings }
-})
+  return { articles, API_URL, getArticles, createArticle, getComments, deposits, getDeposits, savings, getSavings }
+}, {persist:true})

@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'articles',
+    'exchange',
     'products',
     'rest_framework',
     'corsheaders',

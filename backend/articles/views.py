@@ -2,6 +2,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
 from django.shortcuts import get_object_or_404, get_list_or_404
+from django.http import JsonResponse
 from .models import Article, Comment
 from .serializers import ArticleListSerializer, ArticleSerializer, CommentSerializer
 
@@ -78,3 +79,19 @@ def comment_create(request, article_pk):
     if serializer.is_valid(raise_exception=True):
         serializer.save(article=article)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+# @api_view(['GET'])
+# def search_article(request):
+#     key_for_search = request.GET.get()
+#     value_for_search = request.GET.get()
+
+#     if key_for_search == 'all':
+#         articles = Article.objects.filter()
+#     elif key_for_search == 'category':
+#         articles = Article.objects.filter(category)
+#     elif key_for_search == 'title':
+#         articles = Article.objects.filter(title)
+#     elif key_for_search == 'contents':
+#         articles = Article.objects.filter(contents)
+#     elif key_for_search == 'user':
+#         articles = Article.objects.filter(user)
