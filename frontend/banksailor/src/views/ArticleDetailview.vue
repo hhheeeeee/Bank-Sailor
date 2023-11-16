@@ -8,18 +8,29 @@
 
     <div>
       <div v-if="article" >
-        <div class="header">
+        <div class="header" v-if="currentState">
           <p>{{ article.category }}</p> / <p>{{ article.title }}</p>
           <p>작성일 : {{ article.created_at }}</p>
+          <div class="main">
+            <p>{{ article.content }}</p>
+          </div>
         </div>
-        <div class="main">
-          <p>{{ article.content }}</p>
+        
+        <div class="header" v-else>
+          <input type="text" v-bind:value="article.title">
+          <br>
+          <input type="text">
+          <p>작성일 : {{ article.created_at }}</p>
+          <div class="main">
+            <p>{{ article.content }}</p>
+          </div>
         </div>
       </div>
     </div>
     
     <div>
-      <button @click="editArticle()">수정</button>
+      <button v-show="currentState" @click="onClickEvent()">수정</button>
+      <button v-show="!currentState" @click="editArticle()">완료</button>
       <button @click="deleteArticle()">삭제</button>
       <button @click="moveToList()">목록</button>
     </div>
@@ -27,9 +38,9 @@
   
   <div class="comment-box">
     <!-- <p>총 {{ article.comment_count }}건의 댓글이 있습니다</p> -->
-    <form>
+    <form @submit.prevent="createComment">
       <textarea name="" id="" cols="30" rows="5"></textarea>
-      <input type="submit">
+      <button @click="createComment">댓글쓰기</button>
     </form>
 
     <CommentList :article="article"/>
@@ -44,12 +55,13 @@ import { onMounted, ref } from 'vue'
 import { useCounterStore } from '@/stores/counter'
 import { useRouter, useRoute } from 'vue-router'
 import CommentList from '@/components/ArticleViewComponents/CommentList.vue'
-import CommentCreate from '@/components/ArticleViewComponents/CommentCreate.vue'
+// import CommentCreate from '@/components/ArticleViewComponents/CommentCreate.vue'
 
 const store = useCounterStore()
 const route = useRoute()
 const router = useRouter()
 const article = ref(null)
+const currentState = ref(true)
 
 onMounted(() => {
   axios({
@@ -69,16 +81,21 @@ const moveToList = () => {
   router.push({name: 'article'})
 }
 
+const onClickEvent = () => {
+  currentState.value = !currentState.value
+}
+
 const editArticle = function (request, article_pk) {
-    axios({
-      method: 'put',
-      url: `${store.API_URL}/articles/articles/${route.params.id}/`
-    })
-      .then((res) => {
-        console.log(res.data)
-      }).catch((error) => {
-        console.log(error)
-      })
+  currentState.value = !currentState.value
+    // axios({
+    //   method: 'put',
+    //   url: `${store.API_URL}/articles/articles/${route.params.id}/`
+    // })
+    //   .then((res) => {
+    //     console.log(res.data)
+    //   }).catch((error) => {
+    //     console.log(error)
+    //   })
   }
 
   const deleteArticle = function (request, article_pk) {
@@ -95,6 +112,25 @@ const editArticle = function (request, article_pk) {
         console.log(err)
       })
   }
+
+  const createComment = function () {
+    const content = ref('')
+    axios({
+      method: 'post',
+      url: `${store.API_URL}/articles/articles/${route.params.id}/comments/`,
+      data: {
+          content: content.value,
+        },
+      })  
+      .then((res) => {
+        console.log(res)
+        console.log('된다고해!!!!!!!!!')
+        // router.go(0)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    }
 
 </script>
 

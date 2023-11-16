@@ -1,11 +1,8 @@
 <template>
   <div>
     <h1 class="title">게시판</h1>
-    
-    <p>검색창 자리 게시판이랑 가로길이 똑같이</p>
-    <input type="text" v-model="searchQuery" placeholder="검색어를 입력하세요" />
-    
-    <div>
+
+    <div class="search-bar">
       <select v-model="search_key">
         <option value="all">전체</option>
         <option value="category">분류</option>
@@ -16,6 +13,10 @@
       &nbsp;
       <input type="text" v-model="search_value" @keyup.enter="fnPage()">
       &nbsp;
+      <!-- <form id="searchForm" method="get" action="{% url 'index' %}">
+        <input type="hidden" id="kw" name="kw" value="{{ kw|default_if_none:'' }}">
+        <input type="hidden" id="page" name="page" value="{{ page }}">
+      </form> -->
       <button @click="fnPage()">검색</button>
     </div>
 
@@ -64,4 +65,33 @@ button {
   color: white;
   background-color: #1c5f82;
 }
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.search-bar select,
+.search-bar input[type="text"],
+.search-bar button {
+  padding: 8px;
+  margin: 0 5px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.search-bar button {
+  background-color: #1c5f82;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.search-bar button:hover {
+  background-color: #144362;
+}
+
 </style>
