@@ -1,24 +1,13 @@
 <template>
   <div class="calculatorbody">
-    <div class="exchangearea">
-      <div class="inputbox">
-        <input type="number" />
-        <img :src="fromContryflagimgurl" alt="" class="flagimg" />
-        <div class="selectcountry">⌵</div>
-      </div>
-      <div class="exchangeicon">⇄</div>
-      <div class="inputbox">
-        <div class="exchangeresult">{{ exchangeresult }}</div>
-        <img :src="toContryflagimgurl" alt="" class="flagimg" />
-        <div class="selectcountry">⌵</div>
-      </div>
-    </div>
+    <CurrencyInput />
     <p>* 엔화/인도네시아 루피아는 100단위, 나머지는 모두 1단위</p>
     <button @click="getExchangeResult">환율 추적</button>
   </div>
 </template>
 
 <script setup>
+import CurrencyInput from "@/components/ExchangeViewComponents/CurrencyInput.vue";
 import axios from "axios";
 import { ref } from "vue";
 import { useCounterStore } from "@/stores/counter";
