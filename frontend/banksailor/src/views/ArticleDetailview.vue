@@ -7,7 +7,7 @@
     <hr>
 
     <div>
-      <div v-if="article">
+      <div v-if="article" >
         <div class="header">
           <p>{{ article.category }}</p> / <p>{{ article.title }}</p>
           <p>작성일 : {{ article.created_at }}</p>
@@ -16,23 +16,24 @@
           <p>{{ article.content }}</p>
         </div>
       </div>
-      <div class="comment-box">
-        <!-- <p>총 {{ article.comment_count }}건의 댓글이 있습니다</p> -->
-        <form>
-          <textarea name="" id="" cols="30" rows="5"></textarea>
-          <input type="submit">
-        </form>
-      </div>
     </div>
-
+    
     <div>
       <button @click="editArticle()">수정</button>
       <button @click="deleteArticle()">삭제</button>
       <button @click="moveToList()">목록</button>
     </div>
   </div>
+  
+  <div class="comment-box">
+    <!-- <p>총 {{ article.comment_count }}건의 댓글이 있습니다</p> -->
+    <form>
+      <textarea name="" id="" cols="30" rows="5"></textarea>
+      <input type="submit">
+    </form>
 
-  <CommentList />
+    <CommentList :article="article"/>
+  </div>
 
 </template>
 
@@ -43,6 +44,7 @@ import { onMounted, ref } from 'vue'
 import { useCounterStore } from '@/stores/counter'
 import { useRouter, useRoute } from 'vue-router'
 import CommentList from '@/components/ArticleViewComponents/CommentList.vue'
+import CommentCreate from '@/components/ArticleViewComponents/CommentCreate.vue'
 
 const store = useCounterStore()
 const route = useRoute()
