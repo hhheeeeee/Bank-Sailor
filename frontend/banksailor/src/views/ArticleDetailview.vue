@@ -2,12 +2,11 @@
   <div>
     <h1 class="title">게시판</h1>
     
-    <p>검색창 자리 게시판이랑 가로길이 똑같이</p>
-    <input type="text" v-model="searchQuery" placeholder="검색어를 입력하세요" />
     <hr>
 
     <div>
       <div v-if="article" >
+        
         <div class="header" v-if="currentState">
           <p>{{ article.category }}</p> / <p>{{ article.title }}</p>
           <p>작성일 : {{ article.created_at }}</p>
@@ -17,32 +16,45 @@
         </div>
         
         <div class="header" v-else>
-          <input type="text" v-bind:value="article.title">
-          <br>
-          <input type="text">
-          <p>작성일 : {{ article.created_at }}</p>
-          <div class="main">
-            <p>{{ article.content }}</p>
-          </div>
+          <form @submit.prevent="editArticle">
+            <div>
+              카테고리: <select v-model="article.category">
+                <option v-for="category in categoryList" :key="category.id" :value="article.category">
+                  {{ category.value }}
+                </option>
+              </select>
+            </div>
+
+            <div>
+              <label for="title">제목:</label>
+              <input type="text" v-model="article.title">
+            </div>
+
+            <div>
+              <label for="content">내용:</label>
+              <textarea type="text" v-model="article.content"></textarea>
+            </div>
+            <button v-show="!currentState">완료</button>
+            <button @click="$router.go(0)">취소</button>
+          </form>
+        </div>
         </div>
       </div>
-    </div>
+
     
     <div>
       <button v-show="currentState" @click="onClickEvent()">수정</button>
-      <button v-show="!currentState" @click="editArticle()">완료</button>
       <button @click="deleteArticle()">삭제</button>
       <button @click="moveToList()">목록</button>
     </div>
   </div>
   
   <div class="comment-box">
-    <!-- <p>총 {{ article.comment_count }}건의 댓글이 있습니다</p> -->
+    <!-- <p>총 {{ article.value.comment_count }}건의 댓글이 있습니다</p> -->
     <form @submit.prevent="createComment">
       <label for="comments_content">댓글 달기 : </label>
       <textarea type="text" id="comments_content" v-model.trim="comments_content"></textarea>
       <input type="submit" label="댓글쓰기">
-      <!-- <button @click="createComment">댓글쓰기</button> -->
     </form>
 
     <CommentList :article="article"/>
@@ -57,14 +69,26 @@ import { onMounted, ref } from 'vue'
 import { useCounterStore } from '@/stores/counter'
 import { useRouter, useRoute } from 'vue-router'
 import CommentList from '@/components/ArticleViewComponents/CommentList.vue'
-// import CommentCreate from '@/components/ArticleViewComponents/CommentCreate.vue'
 
 const store = useCounterStore()
 const route = useRoute()
 const router = useRouter()
 const article = ref(null)
+const title = ref(null)
+const content = ref(null)
+const category = ref(null)
 const currentState = ref(true)
 const comments_content = ref(null)
+const categoryList = [
+  {
+    id: 1,
+    value: '잡담',
+  },
+  {
+    id: 2,
+    value: '리뷰',
+  }
+]
 
 onMounted(() => {
   axios({
@@ -88,17 +112,23 @@ const onClickEvent = () => {
   currentState.value = !currentState.value
 }
 
-const editArticle = function (request, article_pk) {
+const editArticle = function () {
   currentState.value = !currentState.value
-    // axios({
-    //   method: 'put',
-    //   url: `${store.API_URL}/articles/articles/${route.params.id}/`
-    // })
-    //   .then((res) => {
-    //     console.log(res.data)
-    //   }).catch((error) => {
-    //     console.log(error)
-    //   })
+    axios({
+      method: 'put',
+      url: `${store.API_URL}/articles/articles/${route.params.id}/`,
+      data: {
+        title: article.value.title,
+        content: article.value.content,
+        category: article.value.category,
+      },
+    })
+      .then((res) => {
+        console.log(res.data)
+        currentState.value = true
+      }).catch((error) => {
+        console.log(error)
+      })
   }
 
   const deleteArticle = function (request, article_pk) {

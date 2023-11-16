@@ -10,13 +10,9 @@
         <option value="contents">내용</option>
         <option value="user">작성자</option>
       </select>
-      &nbsp;
+      &nbsp;   <!-- 줄바꿈없이 간격띄우는 인자 -->
       <input type="text" v-model="search_value" @keyup.enter="fnPage()">
       &nbsp;
-      <!-- <form id="searchForm" method="get" action="{% url 'index' %}">
-        <input type="hidden" id="kw" name="kw" value="{{ kw|default_if_none:'' }}">
-        <input type="hidden" id="page" name="page" value="{{ page }}">
-      </form> -->
       <button @click="fnPage()">검색</button>
     </div>
 
