@@ -96,7 +96,7 @@ onMounted(() => {
     url: `${store.API_URL}/articles/articles/${route.params.id}/`
   })
     .then((res) => {
-      console.log(res.data)
+      // console.log(res.data)
       article.value = res.data
     })
     .catch((err) => {
