@@ -1,12 +1,12 @@
 <template>
   <div class="containerbody">
     <h1 class="calculatortitle">환율 계산기</h1>
-    <ExchangeCalculator />
+    <Currency />
   </div>
 </template>
 
 <script setup>
-import ExchangeCalculator from "@/components/ExchangeViewComponents/ExchangeCalculator.vue";
+import Currency from "@/components/ExchangeViewComponents/Currency.vue";
 </script>
 
 <style scoped>
