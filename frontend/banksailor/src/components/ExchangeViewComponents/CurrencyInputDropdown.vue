@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="btn-group">
+    <div class="btn-group" @click="ToKorea">
       <button
         class="btn dropdown-toggle"
         type="button"
@@ -9,7 +9,8 @@
       >
         {{ selected || "" }}
       </button>
-      <ul class="dropdown-menu">
+      <!-- 만약에 처음에 원화를 선택했으면 다른거 다 선택 가능해야됨 -->
+      <ul class="dropdown-menu" v-show="isshow">
         <li><a class="dropdown-item" @click="selectItem('AED')">AED</a></li>
         <li><a class="dropdown-item" @click="selectItem('ATS')">ATS</a></li>
         <li><a class="dropdown-item" @click="selectItem('AUD')">AUD</a></li>
@@ -26,10 +27,18 @@
         <li><a class="dropdown-item" @click="selectItem('FRF')">FRF</a></li>
         <li><a class="dropdown-item" @click="selectItem('GBP')">GBP</a></li>
         <li><a class="dropdown-item" @click="selectItem('HKD')">HKD</a></li>
-        <li><a class="dropdown-item" @click="selectItem('IDR')">IDR</a></li>
-        <li><a class="dropdown-item" @click="selectItem('ITL')">ITL</a></li>
-        <li><a class="dropdown-item" @click="selectItem('JPY')">JPY</a></li>
-        <li><a class="dropdown-item" @click="selectItem('KRW')">KRW</a></li>
+        <li>
+          <a class="dropdown-item" @click="selectItem('IDR(100)')">IDR</a>
+        </li>
+        <li>
+          <a class="dropdown-item" @click="selectItem('ITL(100)')">ITL</a>
+        </li>
+        <li>
+          <a class="dropdown-item" @click="selectItem('JPY(100)')">JPY</a>
+        </li>
+        <li v-show="korea">
+          <a class="dropdown-item" @click="selectItem('KRW')">KRW</a>
+        </li>
         <li><a class="dropdown-item" @click="selectItem('KWD')">KWD</a></li>
         <li><a class="dropdown-item" @click="selectItem('MYR')">MYR</a></li>
         <li><a class="dropdown-item" @click="selectItem('NLG')">NLG</a></li>
@@ -46,11 +55,36 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { processSlotOutlet } from "@vue/compiler-core";
+import { ref, computed } from "vue";
+const isshow = ref("true");
+const korea = ref("true");
+const props = defineProps({ firstinput: String, order: String });
+
+const emit = defineEmits(["selectCountry"]);
+
 const selected = ref("");
+
+const allowAll = computed(() => {
+  return props.firstinput === "KRW" || props.firstinput.length === 0;
+});
 
 const selectItem = (item) => {
   selected.value = item;
+  emit("selectCountry", selected.value);
+};
+
+const ToKorea = () => {
+  console.log(props.order);
+  if (props.order == "second") {
+    if (props.firstinput === "KRW") {
+      korea.value = false;
+    } else if (props.firstinput.length > 0) {
+      selected.value = "KRW";
+      emit("selectCountry", selected.value);
+      isshow.value = false;
+    }
+  }
 };
 </script>
 
