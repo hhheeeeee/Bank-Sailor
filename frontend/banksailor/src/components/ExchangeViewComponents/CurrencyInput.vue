@@ -3,19 +3,39 @@
     <div class="inputbox">
       <input type="number" />
       <!-- <img :src="fromContryflagimgurl" alt="" class="flagimg" /> -->
-      <currencyInputDropdown />
+      <currencyInputDropdown
+        @selectCountry="getFromCountry"
+        :firstinput="fromCountry"
+        order="first"
+      />
     </div>
     <div class="exchangeicon">⇄</div>
     <div class="inputbox">
       <!-- <div class="exchangeresult">{{ exchangeresult }}</div> -->
       <!-- <img :src="toContryflagimgurl" alt="" class="flagimg" /> -->
-      <currencyInputDropdown />
+      <currencyInputDropdown
+        @selectCountry="getToCountry"
+        :firstinput="fromCountry"
+        order="second"
+      />
     </div>
   </div>
 </template>
 
 <script setup>
+import { ref } from "vue";
 import currencyInputDropdown from "@/components/ExchangeViewComponents/currencyInputDropdown.vue";
+const fromCountry = ref("");
+const toCountry = ref("");
+
+const getFromCountry = function (arg) {
+  fromCountry.value = arg;
+};
+
+const getToCountry = function (arg) {
+  console.log(`fromcountry: ${fromCountry.value}`);
+  toCountry.value = arg;
+};
 </script>
 
 <style scoped>
