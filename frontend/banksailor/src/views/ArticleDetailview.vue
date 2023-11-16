@@ -39,8 +39,10 @@
   <div class="comment-box">
     <!-- <p>총 {{ article.comment_count }}건의 댓글이 있습니다</p> -->
     <form @submit.prevent="createComment">
-      <textarea name="" id="" cols="30" rows="5"></textarea>
-      <button @click="createComment">댓글쓰기</button>
+      <label for="comments_content">댓글 달기 : </label>
+      <textarea type="text" id="comments_content" v-model.trim="comments_content"></textarea>
+      <input type="submit" label="댓글쓰기">
+      <!-- <button @click="createComment">댓글쓰기</button> -->
     </form>
 
     <CommentList :article="article"/>
@@ -62,6 +64,7 @@ const route = useRoute()
 const router = useRouter()
 const article = ref(null)
 const currentState = ref(true)
+const comments_content = ref(null)
 
 onMounted(() => {
   axios({
@@ -119,13 +122,13 @@ const editArticle = function (request, article_pk) {
       method: 'post',
       url: `${store.API_URL}/articles/articles/${route.params.id}/comments/`,
       data: {
-          content: content.value,
+          content: comments_content.value,
         },
       })  
       .then((res) => {
         console.log(res)
         console.log('된다고해!!!!!!!!!')
-        // router.go(0)
+        router.go(0)
       })
       .catch((err) => {
         console.log(err)
