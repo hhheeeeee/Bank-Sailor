@@ -8,6 +8,8 @@ import ArticleCreateView from "@/views/ArticleCreateView.vue";
 import ArticleDetailView from "@/views/ArticleDetailView.vue";
 import ProductsDepositView from "@/views/ProductsDepositView.vue";
 import ProductsSavingView from "@/views/ProductsSavingView.vue";
+import ProductsDepositDetailView from "@/views/ProductsDepositDetailView.vue";
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -58,6 +60,11 @@ const router = createRouter({
       path: "/article/:id",
       name: "ArticleDetailView",
       component: ArticleDetailView,
+    },
+    {
+      path: "/deposit/:id",
+      name: "depositdetail",
+      component: ProductsDepositDetailView,
     },
   ],
 });
