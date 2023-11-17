@@ -1,13 +1,17 @@
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes # permission Decorators
 from rest_framework import status
+from rest_framework import generics, filters
 from django.shortcuts import get_object_or_404, get_list_or_404
 from django.http import JsonResponse
 from .models import Article, Comment
 from .serializers import ArticleListSerializer, ArticleSerializer, CommentSerializer
 
+# permission Decorators
+from rest_framework.permissions import IsAuthenticated
 
 @api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
 def article_list(request):
     if request.method == 'GET':
         # articles = Article.objects.all()
@@ -18,7 +22,7 @@ def article_list(request):
     elif request.method == 'POST':
         serializer = ArticleSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            serializer.save()
+            serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -79,19 +83,3 @@ def comment_create(request, article_pk):
     if serializer.is_valid(raise_exception=True):
         serializer.save(article=article)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-# @api_view(['GET'])
-# def search_article(request):
-#     key_for_search = request.GET.get()
-#     value_for_search = request.GET.get()
-
-#     if key_for_search == 'all':
-#         articles = Article.objects.filter()
-#     elif key_for_search == 'category':
-#         articles = Article.objects.filter(category)
-#     elif key_for_search == 'title':
-#         articles = Article.objects.filter(title)
-#     elif key_for_search == 'contents':
-#         articles = Article.objects.filter(contents)
-#     elif key_for_search == 'user':
-#         articles = Article.objects.filter(user)

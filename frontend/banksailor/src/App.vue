@@ -1,5 +1,12 @@
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
+import { useCounterStore } from "@/stores/counter";
+const store = useCounterStore();
+
+const customlogout = function () {
+  window.alert("정말 떠나실건가요..?");
+  store.logOut();
+};
 </script>
 
 <template>
@@ -21,11 +28,20 @@ import { RouterLink, RouterView } from "vue-router";
         <RouterLink :to="{ name: 'map' }">은행 지도</RouterLink>
         <RouterLink :to="{ name: 'article' }">게시판</RouterLink>
 
-        <!-- 만약 로그인 안된 상태라면 -->
-        <button class="login">LOGIN</button>
-        <button class="signin">SIGN IN</button>
-        <!-- 로그인 상태라면 -->
-        <!-- <button class="logout">logout</button> -->
+        <template v-if="store.isLogin">
+          <!-- <form @submit.prevent="store.logOut"> -->
+          <form @submit.prevent="customlogout">
+            <input type="submit" value="Logout" />
+          </form>
+        </template>
+        <template v-else>
+          <RouterLink :to="{ name: 'LogInView' }" class="login"
+            >LogIn</RouterLink
+          >
+          <RouterLink :to="{ name: 'SignUpView' }" class="signup"
+            >SignUp</RouterLink
+          >
+        </template>
       </div>
     </nav>
   </header>
@@ -47,16 +63,22 @@ button {
 }
 
 .login {
+  border: 1px solid #1c5f82;
   color: #1c5f82;
+  padding: 5px 12px;
+  border-radius: 13px;
+  font-weight: 700;
 }
 
-.signin {
+.signup {
   color: white;
   background-color: #1c5f82;
 }
 
-.logout {
+.signup {
+  border: 1px solid #1c5f82;
   color: white;
-  background-color: #1c5f82;
+  padding: 5px 12px;
+  border-radius: 13px;
 }
 </style>
