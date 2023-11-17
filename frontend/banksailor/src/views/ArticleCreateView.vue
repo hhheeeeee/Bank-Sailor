@@ -61,9 +61,9 @@ const createArticle = function () {
       // category: category.value,
       category: '잡담',
     },
-    // headers: {
-    //     Authorization: `Token ${store.token}`
-    //   }
+    headers: {
+        Authorization: `Token ${store.token}`
+      }
   })
     .then((res) => {
       // console.log(res)

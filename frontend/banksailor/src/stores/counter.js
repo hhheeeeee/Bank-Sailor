@@ -5,11 +5,21 @@ import axios from 'axios'
 export const useCounterStore = defineStore('counter', () => {
   const articles = ref([])  
   const comments = ref([])
+  const isLogin = computed(() => {
+    if (token.value === null) {
+      return false
+    } else {
+      return true
+    }
+  })
 
   const getArticles = function () {
     axios({
       method: 'get',
-      url: `${API_URL}/articles/articles/`
+      url: `${API_URL}/articles/articles/`,
+      headers: {
+        Authorization: `Token ${token.value}`
+      }
     })
       .then((res) => {
         articles.value = res.data
@@ -88,5 +98,5 @@ export const useCounterStore = defineStore('counter', () => {
       })
   }
 
-  return { articles, API_URL, getArticles, createArticle, getComments, deposits, getDeposits, savings, getSavings }
+  return { articles, API_URL, getArticles, createArticle, getComments, deposits, getDeposits, savings, getSavings, isLogin }
 }, {persist:true})
