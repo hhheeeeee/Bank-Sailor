@@ -7,7 +7,6 @@
       <ProductsDepositList :selected-bank="selectedBank" />
     </article>
   </div>
-  
 </template>
 
 <script setup>

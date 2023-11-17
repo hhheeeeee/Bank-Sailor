@@ -18,8 +18,6 @@
   <div v-else>
     <ProductsDepositItem v-for="product in store.deposits" :key="product.id" :product="product"/>
   </div>
-
-  
 </template>
 
 <script setup>
