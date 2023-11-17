@@ -333,3 +333,19 @@ def saving_list(request):
     products = get_list_or_404(SavingProductList)
     serializer = SavingProductListSerializer(products, many=True)
     return Response(serializer.data)
+
+
+# 예금 상품 상세 데이터 불러오는 view
+@api_view(['GET'])
+def deposit_detail(request, fin_prdt_cd):
+    product = get_object_or_404(DepositProduct, fin_prdt_cd=fin_prdt_cd)
+    serializer = DepositProductSerializer(product)
+    return Response(serializer.data)
+
+
+# 적금 상품 상세 데이터 불러오는 view
+@api_view(['GET'])
+def saving_detail(request, fin_prdt_cd):
+    product = get_object_or_404(SavingProduct, fin_prdt_cd=fin_prdt_cd)
+    serializer = SavingProductSerializer(product)
+    return Response(serializer.data)
