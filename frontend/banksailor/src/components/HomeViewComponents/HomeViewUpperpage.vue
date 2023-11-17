@@ -17,7 +17,7 @@ import { ref, onMounted } from "vue";
 const images = ref([]);
 
 onMounted(() => {
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 20; i++) {
     images.value.push({
       top: Math.random() * window.innerHeight,
       left: Math.random() * window.innerWidth,
