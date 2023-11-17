@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container1">
     <select class="select" v-model="address1" @change="onAddress1Change">
       <option disabled value="">Please select one</option>
       <option v-for="(areas, city) in address" :key="city">{{ city }}</option>
@@ -335,20 +335,17 @@ const sendMapKeyword = function () {
     console.warn("Unkwon Area Tag");
     return;
   } else {
-    emit(
-      "sendMapKeyword",
-      address1.value + address2.value + selectedBank.value
-    );
+    emit("sendMapKeyword", address2.value + selectedBank.value);
   }
 };
 </script>
 
 <style scoped>
-.container {
+.container1 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 20px;
+  margin-right: 50px;
 }
 
 .select {
