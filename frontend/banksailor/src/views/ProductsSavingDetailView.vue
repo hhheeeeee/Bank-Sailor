@@ -2,7 +2,7 @@
   <div>
     <a href="#" @click="goDeposit">정기예금</a>  |
     <a href="#" @click="goSaving">적금</a>
-    <h1>예금상품 상세정보</h1>
+    <h1>적금상품 상세정보</h1>
     <hr>
   </div>
   <div v-if="product">
@@ -43,7 +43,7 @@ const store = useCounterStore()
 onMounted(() => {
   axios({
     method: 'get',
-    url: `${store.API_URL}/products/deposit/${route.params.id}/`
+    url: `${store.API_URL}/products/saving/${route.params.id}/`
   })
   .then((response) => {
     product.value = response.data
