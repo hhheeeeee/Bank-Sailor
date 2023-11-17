@@ -15,6 +15,7 @@
     <p>우대 조건: {{ product.spcl_cnd }}</p>
     <p>기타 유의사항: {{ product.etc_note }}</p>
     <p>최고한도: {{ product.max_limit }}</p>
+    <button class="btn btn-primary signup">상품가입</button>
   </div>
 </template>
 
@@ -58,5 +59,8 @@ onMounted(() => {
 </script>
 
 <style scoped>
-
+  .signup{
+    width: 150px;
+    height: 50px;
+  }
 </style>

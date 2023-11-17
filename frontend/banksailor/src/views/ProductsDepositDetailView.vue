@@ -42,6 +42,7 @@
       <div class="info-title">기타 유의사항:</div>
       <div class="info-content">{{ product.etc_note }}</div>  
     </div>
+    <button class="btn btn-primary signup">상품가입</button>
   </div>
 </template>
 
@@ -107,5 +108,10 @@ onMounted(() => {
   }
   .info-content {
     width: 80%;
+  }
+
+  .signup{
+    width: 150px;
+    height: 50px;
   }
 </style>
