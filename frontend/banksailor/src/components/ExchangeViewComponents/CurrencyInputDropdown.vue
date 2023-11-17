@@ -2,14 +2,13 @@
   <div>
     <div class="btn-group" @click="ToKorea">
       <button
-        class="btn dropdown-toggle"
+        class="btn dropdown-toggle dropdownbutton"
         type="button"
         data-bs-toggle="dropdown"
         aria-expanded="false"
       >
         {{ selected || "" }}
       </button>
-      <!-- 만약에 처음에 원화를 선택했으면 다른거 다 선택 가능해야됨 -->
       <ul class="dropdown-menu" v-show="isshow">
         <li><a class="dropdown-item" @click="selectItem('AED')">AED</a></li>
         <li><a class="dropdown-item" @click="selectItem('ATS')">ATS</a></li>
@@ -36,6 +35,7 @@
         <li>
           <a class="dropdown-item" @click="selectItem('JPY(100)')">JPY</a>
         </li>
+        <!-- 만약에 처음에 원화를 선택했으면 다른거 다 선택 가능해야됨 -->
         <li v-show="korea">
           <a class="dropdown-item" @click="selectItem('KRW')">KRW</a>
         </li>
@@ -75,7 +75,6 @@ const selectItem = (item) => {
 };
 
 const ToKorea = () => {
-  console.log(props.order);
   if (props.order == "second") {
     if (props.firstinput === "KRW") {
       korea.value = false;
@@ -96,5 +95,9 @@ const ToKorea = () => {
 .dropdown-menu {
   max-height: 200px; /* 원하는 높이로 설정 */
   overflow-y: auto;
+}
+
+.dropdownbutton {
+  font-size: 100%;
 }
 </style>

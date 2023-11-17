@@ -16,20 +16,37 @@
 <script setup>
 import { ref } from "vue";
 import { useCounterStore } from "@/stores/counter";
+import axios from 'axios'
 
 const store = useCounterStore();
 const username = ref(null);
 const password1 = ref(null);
 const password2 = ref(null);
 
-const signUp = function () {
+const signUp = async function () {
   const payload = {
     username: username.value,
     password1: password1.value,
     password2: password2.value,
   };
-  console.log(payload)
-  store.signUp(payload);
+  try {
+    axios({
+      method: 'get',
+      urls: `${store.API_URL}/accounts/user/`,
+      headers: {
+        Authorization: `Token ${store.token}`
+      }
+    })
+    .then((res) => {
+      console.log(res)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  } catch (err) {
+    console.log(err)
+  }
+  store.signUp(payload)
 };
 </script>
 

@@ -24,6 +24,6 @@ def exchange(request, fromCountry, toCountry, price):
             if data.get('cur_unit') == fromCountry:
                 exchange_rate = float(data.get('deal_bas_r').replace(',',''))
                 break
-        exchangeresult = round(price * exchange_rate, 2)
-    
+        exchangeresult = price * exchange_rate, 2
+    exchangeresult = round(exchangeresult , 2)
     return Response({"exchangeresult": exchangeresult})
