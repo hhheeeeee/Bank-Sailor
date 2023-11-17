@@ -3,7 +3,9 @@
     <CurrencyInput />
   </div>
 </template>
-<script setup></script>
+<script setup>
+import CurrencyInput from "@/components/ExchangeViewComponents/CurrencyInput.vue";
+</script>
 <style lang="scss" scoped>
 .calculatorbody {
   background-color: white;
