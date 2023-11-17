@@ -23,7 +23,7 @@ const username = ref(null);
 const password1 = ref(null);
 const password2 = ref(null);
 
-const signUp = async function () {
+const signUp = function () {
   const payload = {
     username: username.value,
     password1: password1.value,
@@ -32,22 +32,20 @@ const signUp = async function () {
   try {
     axios({
       method: 'get',
-      urls: `${store.API_URL}/accounts/user/`,
-      headers: {
-        Authorization: `Token ${store.token}`
+      url: `${store.API_URL}/accounts/find/duplicateID/`,
+      data: {
+        username: username
       }
-    })
-    .then((res) => {
-      console.log(res)
-    })
-    .catch((err) => {
+    }) .then((res) => {
+      alert('이미 등록된 ID입니다!')
+    }) .catch((err) => {
       console.log(err)
     })
-  } catch (err) {
-    console.log(err)
+  } catch {
+    store.signUp(payload)
   }
-  store.signUp(payload)
 };
+
 </script>
 
 <style></style>
