@@ -1,5 +1,8 @@
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
+import { useCounterStore } from "@/stores/counter";
+const store = useCounterStore();
+const isLogin = store.isLogin;
 </script>
 
 <template>
@@ -26,6 +29,7 @@ import { RouterLink, RouterView } from "vue-router";
         <RouterLink :to="{ name: 'SignUpView' }" class="signup"
           >SignUp</RouterLink
         >
+        <p>{{ isLogin ? "로그인됨" : "로그인안됨" }}</p>
         <!-- 로그인 상태라면 -->
         <!-- <button class="logout">logout</button> -->
       </div>
