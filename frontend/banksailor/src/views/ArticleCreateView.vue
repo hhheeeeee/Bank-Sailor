@@ -2,8 +2,7 @@
   <div>
     <h1 class="title">게시판</h1>
     
-    <p>검색창 자리 게시판이랑 가로길이 똑같이</p>
-    <input type="text" v-model="searchQuery" placeholder="검색어를 입력하세요" />
+    <p></p>
     <hr>
 
     <form @submit.prevent="createArticle">

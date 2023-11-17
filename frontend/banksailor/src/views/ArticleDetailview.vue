@@ -9,7 +9,7 @@
         
         <div class="header" v-if="currentState">
           <p>{{ article.category }}</p> / <p>{{ article.title }}</p>
-          <p>작성일 : {{ article.created_at }}</p>
+          <p>작성일 : {{ article.created_at.substring(0, 10) }}</p>
           <div class="main">
             <p>{{ article.content }}</p>
           </div>
@@ -96,7 +96,7 @@ onMounted(() => {
     url: `${store.API_URL}/articles/articles/${route.params.id}/`
   })
     .then((res) => {
-      console.log(res.data)
+      // console.log(res.data)
       article.value = res.data
     })
     .catch((err) => {
