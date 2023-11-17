@@ -2,8 +2,8 @@
   <div>
     <h1 class="title">게시판</h1>
 
-    <div class="search-bar">
-      <select v-model="search_key">
+    <form @submit.prevent="searchArticle" class="search-bar">
+      <select v-model="key_for_search">
         <option value="all">전체</option>
         <option value="category">분류</option>
         <option value="title">제목</option>
@@ -11,33 +11,99 @@
         <option value="user">작성자</option>
       </select>
       &nbsp;   <!-- 줄바꿈없이 간격띄우는 인자 -->
-      <input type="text" v-model="search_value" @keyup.enter="fnPage()">
+      <input type="text" v-model="value_for_search">
       &nbsp;
-      <button @click="fnPage()">검색</button>
-    </div>
+      <input type="submit" label="검색">
+      <!-- <button @click="searchArticle()">검색</button> -->
+    </form>
 
     <hr>
-    
-    <ArticleList />
 
-    <RouterLink :to="{ name: 'ArticleCreateView' }">
-      <button>새글쓰기</button>
-    </RouterLink>
+    <div v-if="searchfinish===true">
+      <h3>총 {{ filtered_article.length }}건의 검색결과가 있습니다</h3>
+      <hr>
+      <div>
+        <table class="table">
+          <thead>
+              <th>번호</th>
+              <th>분류</th>
+              <th>제목</th>
+              <th>작성자</th>
+              <th>작성일</th>
+          </thead>
+          <tbody>
+            <tr v-for="article in filtered_article" :key="article.id">
+              <td>{{ article.id }}</td>
+              <td>{{ article.category }}</td>
+              <td>{{ article.title }}</td>
+              <td>{{ article.user }}</td>
+              <td>{{ article.created_at.substring(0, 10) }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <button @click="(searchfinish = !searchfinish)">목록가기</button>
+      </div>
+
+    </div>
+    
+    <div v-else>
+      <ArticleList />
+
+      <RouterLink :to="{ name: 'ArticleCreateView' }">
+        <button>새글쓰기</button>
+      </RouterLink>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, computed, ref } from 'vue';
 import { useCounterStore } from '@/stores/counter';
 import { RouterLink } from 'vue-router';
 import ArticleList from '@/components/ArticleViewComponents/ArticleList.vue'
 
 const store = useCounterStore()
+const searchfinish = ref(false)
+const key_for_search = ref(null)
+const value_for_search = ref(null)
 
 onMounted(() => {
   store.getArticles()
   store.getComments()
 })
+
+console.log(store.articles)
+
+const filtered_article = computed(() => {
+  if (key_for_search.value && value_for_search.value) {
+    const key = key_for_search.value
+    const value = value_for_search.value
+    if (key === 'all') {
+      return store.articles.filter(
+        (article) =>
+        store.articles.category.includes(value) ||
+        store.articles.title.includes(value) ||
+        store.articles.contents.includes(value) ||
+        store.articles.user.includes(value)
+      )
+    } else {
+      return store.articles.filter((article) =>
+        article[key].includes(value)
+      )
+    }
+  } else {
+    return store.articles.value
+  }
+});
+
+const searchArticle = function () {
+  if (value_for_search == '') {
+    alert('검색어를 입력해주세용!')
+  } else {
+    searchfinish.value = !searchfinish.value
+  }
+}
+
 </script>
 
 <style scoped>
