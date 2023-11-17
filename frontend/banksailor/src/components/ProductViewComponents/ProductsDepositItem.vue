@@ -2,7 +2,7 @@
   <div class="record">
     <div class="box1">{{ product.dcls_month }}</div>
     <div class="box2">{{ product.kor_co_nm }}</div>
-    <div class="box3"><a href='#' @click="goDetail">{{ product.fin_prdt_nm }}</a></div>
+    <div class="box3"><a href='#' @click.prevent="goDetail">{{ product.fin_prdt_nm }}</a></div>
     <div class="box4">{{ product.rate_6 }}</div>
     <div class="box5">{{ product.rate_12 }}</div>
     <div class="box6">{{ product.rate_24 }}</div>
@@ -25,10 +25,6 @@ const product = ref(props.product)
 const goDetail = () => {
   router.push({ name: 'depositdetail', params: { id: product.value.fin_prdt_cd } })
 }
-
-
-
-
 
 </script>
 

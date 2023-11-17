@@ -10,6 +10,7 @@ import ArticleDetailView from "@/views/ArticleDetailView.vue";
 import ProductsDepositView from "@/views/ProductsDepositView.vue";
 import ProductsSavingView from "@/views/ProductsSavingView.vue";
 import ProductsDepositDetailView from "@/views/ProductsDepositDetailView.vue";
+import ProductsSavingDetailView from "@/views/ProductsSavingDetailView.vue";
 
 
 const router = createRouter({
@@ -66,6 +67,11 @@ const router = createRouter({
       path: "/deposit/:id",
       name: "depositdetail",
       component: ProductsDepositDetailView,
+    },
+    {
+      path: "/saving/:id",
+      name: "savingdetail",
+      component: ProductsSavingDetailView,
     },
   ],
 });
