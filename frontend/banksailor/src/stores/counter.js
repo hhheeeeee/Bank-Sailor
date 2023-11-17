@@ -10,6 +10,7 @@ export const useCounterStore = defineStore(
     const articles = ref([]);
     const comments = ref([]);
     const API_URL = "http://127.0.0.1:8000";
+    const token = ref(null);
     const isLogin = computed(() => {
       if (token.value === null) {
         return false;
@@ -18,13 +19,67 @@ export const useCounterStore = defineStore(
       }
     });
 
+    const signUp = function (payload) {
+      const { username, password1, password2 } = payload;
+
+      axios({
+        method: "post",
+        url: `${API_URL}/accounts/signup/`,
+        data: {
+          username,
+          password1,
+          password2,
+        },
+      })
+        .then((res) => {
+          console.log(res);
+          const password = password1;
+          logIn({ username, password });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
+    const logIn = function (payload) {
+      const { username, password } = payload;
+
+      axios({
+        method: "post",
+        url: `${API_URL}/accounts/login/`,
+        data: {
+          username,
+          password,
+        },
+      })
+        .then((res) => {
+          console.log(res.data);
+          token.value = res.data.key;
+          router.push({ name: "home" });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
+    const logOut = function () {
+      axios({
+        method: "post",
+        url: `${API_URL}/accounts/logout/`,
+      })
+        .then((res) => {
+          token.value = null;
+          router.push({ name: "home" });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
     const getArticles = function () {
       axios({
         method: "get",
         url: `${API_URL}/articles/articles/`,
-        headers: {
-          Authorization: `Token ${token.value}`,
-        },
       })
         .then((res) => {
           articles.value = res.data;
@@ -99,62 +154,6 @@ export const useCounterStore = defineStore(
         })
         .catch((error) => {
           console.log(error);
-        });
-    };
-
-    const signUp = function (payload) {
-      const { username, password1, password2 } = payload;
-      axios({
-        method: "post",
-        url: `${API_URL}/accounts/signup/`,
-        data: {
-          username,
-          password1,
-          password2,
-        },
-      })
-        .then((res) => {
-          console.log(res);
-          const password = password1;
-          logIn({ username, password });
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
-
-    const logIn = function (payload) {
-      const { username, password } = payload;
-
-      axios({
-        method: "post",
-        url: `${API_URL}/accounts/login/`,
-        data: {
-          username,
-          password,
-        },
-      })
-        .then((res) => {
-          console.log(res.data);
-          token.value = res.data.key;
-          router.push({ name: "home" });
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
-
-    const logOut = function () {
-      axios({
-        method: "post",
-        url: `${API_URL}/accounts/logout/`,
-      })
-        .then((res) => {
-          token.value = null;
-          router.push({ name: "home" });
-        })
-        .catch((err) => {
-          console.log(err);
         });
     };
 
