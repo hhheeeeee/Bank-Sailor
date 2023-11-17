@@ -1,81 +1,57 @@
 <template>
-  <div class="index-bar">
-    <div class="box1">공시 제출월</div>
-    <div class="box2">금융회사명</div>
-    <div class="box3">상품명</div>
-    <div class="box4">6개월</div>
-    <div class="box5">12개월</div>
-    <div class="box6">24개월</div>
-    <div class="box7">36개월</div>
+  <div class="main">
+    <aside>
+      <ProductsDepositSearch :bank-list="bankList" @sendSelectedBank="handleSelectedBank" />
+    </aside>
+    <article>
+      <ProductsDepositList :selected-bank="selectedBank" />
+    </article>
   </div>
-    <ProductsDepositItem v-for="product in store.deposits" :key="product.id" :product="product"/>
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { ref, watchEffect } from 'vue'
 import { useCounterStore } from '@/stores/counter'
-import ProductsDepositItem from '@/components/ProductViewComponents/ProductsDepositItem.vue'
+import ProductsDepositList from '../components/ProductViewComponents/ProductsDepositList.vue';
+import ProductsDepositSearch from '../components/ProductViewComponents/ProductsDepositSearch.vue';
 
+const bankList = ref([])
+const selectedBank = ref('')
 const store = useCounterStore()
 
-onMounted(() => {
-  store.getDeposits()
+// 은행명 리스트 생성하기
+const getBankList = () => {
+  for (let prdt of store.deposits) {
+    const bankName = prdt.kor_co_nm
+
+    // 은행명 중복 검사
+    if (!bankList.value.includes(bankName)) {
+      bankList.value.push(bankName);
+    }
+  }
+}
+
+watchEffect(() => {
+  getBankList()
 })
 
+const handleSelectedBank = (bankname) => {
+  selectedBank.value = bankname
+}
 
 </script>
 
 <style scoped>
-  .index-bar {
-    width: 1000px;
-    height: 50px;
-    background-color: whitesmoke;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+ .main {
+  display: flex;
+  margin: 0;
+ }
+
+  aside {
+    width: 250px;
   }
 
-  .box1 {
-    width: 10%;
-    text-align: center;
-    font-size: small;
+  article {
+    width: 950px;
   }
-
-  .box2 {
-    width: 18%;
-    text-align: center;
-    font-size: small; 
-  }
-
-  .box3 {
-    width: 32%;
-    text-align: center; 
-    font-size: small;
-  }
-
-  .box4 {
-    width: 10%;
-    text-align: center; 
-    font-size: small;
-  }
-
-  .box5 {
-    width: 10%;
-    text-align: center; 
-    font-size: small;
-  }
-
-  .box6 {
-    width: 10%;
-    text-align: center; 
-    font-size: small;
-  }
-
-  .box7 {
-    width: 10%;
-    text-align: center; 
-    font-size: small;
-  }
-
 </style>
