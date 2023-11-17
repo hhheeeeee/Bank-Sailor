@@ -1,9 +1,9 @@
 <template>
   <div>
-    <a href="#" @click="goDeposit">정기예금</a>  |
+    <a href="#" @click="goDeposit">정기예금</a> |
     <a href="#" @click="goSaving">적금</a>
     <h1>예금상품 상세정보</h1>
-    <hr>
+    <hr />
   </div>
   <div v-if="product">
     <p>공시 제출월: {{ product.dcls_month }}</p>
@@ -19,44 +19,39 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
-import { onMounted } from 'vue';
-import { useCounterStore } from '@/stores/counter'
-import axios from 'axios'
+import { ref } from "vue";
+import { useRouter, useRoute } from "vue-router";
+import { onMounted } from "vue";
+import { useCounterStore } from "@/stores/counter";
+import axios from "axios";
 
-const router = useRouter()
-const route = useRoute()
+const router = useRouter();
+const route = useRoute();
 
-const product = ref(null)
+const product = ref(null);
 
 const goDeposit = () => {
-  router.push({ name: 'deposit' })
-}
+  router.push({ name: "deposit" });
+};
 
 const goSaving = () => {
-  router.push({ name: 'saving' })
-}
+  router.push({ name: "saving" });
+};
 
-const store = useCounterStore()
+const store = useCounterStore();
 
 onMounted(() => {
   axios({
-    method: 'get',
-    url: `${store.API_URL}/products/deposit/${route.params.id}/`
+    method: "get",
+    url: `${store.API_URL}/products/deposit/${route.params.id}/`,
   })
-  .then((response) => {
-    product.value = response.data
-  })
-  .catch((error) => {
-    console.log(error)
-  })
-})
-
-
-
+    .then((response) => {
+      product.value = response.data;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

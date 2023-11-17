@@ -22,8 +22,10 @@ import { RouterLink, RouterView } from "vue-router";
         <RouterLink :to="{ name: 'article' }">게시판</RouterLink>
 
         <!-- 만약 로그인 안된 상태라면 -->
-        <button class="login">LOGIN</button>
-        <button class="signin">SIGN IN</button>
+        <RouterLink :to="{ name: 'LogInView' }" class="login">LogIn</RouterLink>
+        <RouterLink :to="{ name: 'SignUpView' }" class="signup"
+          >SignUp</RouterLink
+        >
         <!-- 로그인 상태라면 -->
         <!-- <button class="logout">logout</button> -->
       </div>
@@ -50,7 +52,7 @@ button {
   color: #1c5f82;
 }
 
-.signin {
+.signup {
   color: white;
   background-color: #1c5f82;
 }
