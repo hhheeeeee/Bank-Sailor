@@ -9,6 +9,7 @@
         
         <div class="header" v-if="currentState">
           <p>{{ article.category }}</p> / <p>{{ article.title }}</p>
+          <p>작성자 : {{ article.user }}</p>
           <p>작성일 : {{ article.created_at.substring(0, 10) }}</p>
           <div class="main">
             <p>{{ article.content }}</p>
