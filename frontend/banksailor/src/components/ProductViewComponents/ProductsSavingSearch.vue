@@ -4,6 +4,7 @@
     <p>은행</p>
     <select v-model="selectedBank">
       <option disabled value="">원하시는 은행을 선택하세요</option>
+      <option>전체</option>
       <option v-for="bank in bankList" :key="bank">{{ bank }}</option>
     </select>
     <br>

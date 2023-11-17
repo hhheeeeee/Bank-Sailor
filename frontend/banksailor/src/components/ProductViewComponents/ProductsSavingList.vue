@@ -8,7 +8,10 @@
     <div class="box6">24개월</div>
     <div class="box7">36개월</div>
   </div>
-  <div v-if="selectedBank">
+  <div v-if="selectedBank === '전체'">
+    <ProductsSavingItem v-for="product in store.savings" :key="product.id" :product="product"/>
+  </div>
+  <div v-else-if="selectedBank">
     <div v-for="product in filteredProducts" :key="product.id">
       <div v-if="product.kor_co_nm === selectedBank">
         <ProductsSavingItem :product="product"/>
