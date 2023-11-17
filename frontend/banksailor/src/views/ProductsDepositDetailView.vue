@@ -1,11 +1,6 @@
 <template>
-<<<<<<< HEAD
   <div class="main">
     <a href="#" @click="goDeposit">정기예금</a>  |
-=======
-  <div>
-    <a href="#" @click="goDeposit">정기예금</a> |
->>>>>>> master
     <a href="#" @click="goSaving">적금</a>
     <h1>예금상품 상세정보</h1>
     <hr />
