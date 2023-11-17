@@ -3,7 +3,7 @@
     <div v-for="comment in comments" :key="comment.id">
       <li v-if="article && comment.article.title === article.title">
         {{ comment.content }}
-        {{ comment.updated_at }}
+        {{ comment.updated_at.substring(0, 10) }}
         <button @click="deleteComment(comment.id)">댓삭</button>
 
       </li>
