@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'articles',
     'exchange',
     'products',
+    'accounts',
     'rest_framework',
     'rest_framework.authtoken',
     'dj_rest_auth',
@@ -152,3 +153,5 @@ CORS_ALLOWED_ORIGINS = [
     'http://127.0.0.1:5173',
     'http://localhost:5173',
 ]
+
+AUTH_USER_MODEL = 'accounts.User'
