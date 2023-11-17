@@ -26,6 +26,7 @@
 <script setup>
 import { ref } from "vue";
 import { useCounterStore } from "@/stores/counter";
+import axios from 'axios'
 
 const store = useCounterStore();
 const username = ref(null);
@@ -38,8 +39,23 @@ const signUp = function () {
     password1: password1.value,
     password2: password2.value,
   };
-  store.signUp(payload);
+  try {
+    axios({
+      method: 'get',
+      url: `${store.API_URL}/accounts/find/duplicateID/`,
+      data: {
+        username: username
+      }
+    }) .then((res) => {
+      alert('이미 등록된 ID입니다!')
+    }) .catch((err) => {
+      console.log(err)
+    })
+  } catch {
+    store.signUp(payload)
+  }
 };
+
 </script>
 
 <style scoped>

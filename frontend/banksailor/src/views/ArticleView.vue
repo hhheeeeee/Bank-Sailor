@@ -7,7 +7,7 @@
         <option value="all">전체</option>
         <option value="category">분류</option>
         <option value="title">제목</option>
-        <option value="contents">내용</option>
+        <option value="content">내용</option>
         <option value="user">작성자</option>
       </select>
       &nbsp;   <!-- 줄바꿈없이 간격띄우는 인자 -->
@@ -83,7 +83,7 @@ const filtered_article = computed(() => {
         (article) =>
         store.articles.category.includes(value) ||
         store.articles.title.includes(value) ||
-        store.articles.contents.includes(value) ||
+        store.articles.content.includes(value) ||
         store.articles.user.includes(value)
       )
     } else {

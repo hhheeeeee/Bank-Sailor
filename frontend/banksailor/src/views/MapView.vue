@@ -39,7 +39,7 @@ import Mapinput from "@/components/MapViewComponents/Mapinput.vue";
 
 .mapcontents {
   display: flex;
-  width: 80%;
+  width: 45%;
   height: 60vh;
   border: 3px solid #1c5f82;
   background-color: #f6ddb4;

@@ -32,7 +32,7 @@ export const useCounterStore = defineStore(
         },
       })
         .then((res) => {
-          console.log(res);
+          console.log('counter.js : ', res);
           const password = password1;
           logIn({ username, password });
         })
@@ -177,3 +177,4 @@ export const useCounterStore = defineStore(
   },
   { persist: true }
 );
+

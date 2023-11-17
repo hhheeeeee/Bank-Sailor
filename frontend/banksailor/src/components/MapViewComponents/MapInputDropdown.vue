@@ -1,21 +1,21 @@
 <template>
-  <div>
-    <select v-model="address1" @change="onAddress1Change">
+  <div class="container1">
+    <select class="select" v-model="address1" @change="onAddress1Change">
       <option disabled value="">Please select one</option>
       <option v-for="(areas, city) in address" :key="city">{{ city }}</option>
     </select>
 
-    <select v-model="address2" @change="onAddress2Change">
+    <select class="select" v-model="address2" @change="onAddress2Change">
       <option disabled value="">Please select one</option>
       <option v-for="area in currentAreas" :key="area">{{ area }}</option>
     </select>
 
-    <select v-model="selectedBank">
+    <select class="select" v-model="selectedBank">
       <option disabled value="">Please select one</option>
       <option v-for="bank in banks" :key="bank">{{ bank }}</option>
     </select>
 
-    <button @click="sendMapKeyword">검색!</button>
+    <button class="search-btn" @click="sendMapKeyword">검색!</button>
   </div>
 </template>
 
@@ -335,12 +335,35 @@ const sendMapKeyword = function () {
     console.warn("Unkwon Area Tag");
     return;
   } else {
-    emit(
-      "sendMapKeyword",
-      address1.value + address2.value + selectedBank.value
-    );
+    emit("sendMapKeyword", address2.value + selectedBank.value);
   }
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.container1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 50px;
+}
+
+.select {
+  margin: 10px;
+  padding: 8px;
+  border: 1px solid #4db7e5;
+  border-radius: 5px;
+  background-color: white;
+  color: #1c5f82;
+}
+
+.search-btn {
+  margin-top: 10px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #1c5f82;
+  color: white;
+  cursor: pointer;
+}
+</style>
