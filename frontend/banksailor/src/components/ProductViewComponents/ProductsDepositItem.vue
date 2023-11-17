@@ -26,14 +26,15 @@ const goDetail = () => {
   router.push({ name: 'depositdetail', params: { id: product.value.fin_prdt_cd } })
 }
 
+
+
 </script>
 
 <style scoped>
   .record {
-    width: 1000px;
+    width: 100%;
     height: 50px;
-    border: 1px solid lightgray;
-    border-bottom: 0px;
+    border-bottom: 1px solid lightgray;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;

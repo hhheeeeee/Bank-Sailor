@@ -6,15 +6,7 @@
       <RouterLink :to="{ name: 'saving' }">적금</RouterLink>
       <hr>
     </header>
-    <div class="body">
-      <aside>
-        사이드바 들어갈 곳
-      </aside>
-      <article>
-      <RouterView />
-      </article>
-    </div>
-   
+    <RouterView />
   </main>
 </template>
 
@@ -30,17 +22,5 @@ import { RouterLink, RouterView } from 'vue-router'
   main {
     width: 1200px;
     margin: 0 auto;
-  }
-  
-  .body {
-    display: flex;
-  }
-
-  aside {
-    width: 200px;
-  }
-
-  article {
-    width: 1000px;
   }
 </style>
