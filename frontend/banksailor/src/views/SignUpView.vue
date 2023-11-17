@@ -23,12 +23,12 @@ const password1 = ref(null);
 const password2 = ref(null);
 
 const signUp = function () {
-  console.log("회원가입 여기 드러옴");
   const payload = {
     username: username.value,
     password1: password1.value,
     password2: password2.value,
   };
+  console.log(payload)
   store.signUp(payload);
 };
 </script>

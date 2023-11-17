@@ -3,9 +3,7 @@ import { defineStore } from "pinia";
 import { useRouter } from "vue-router";
 import axios from "axios";
 
-export const useCounterStore = defineStore(
-  "counter",
-  () => {
+export const useCounterStore = defineStore("counter", () => {
     const router = useRouter();
     const articles = ref([]);
     const comments = ref([]);
@@ -20,26 +18,25 @@ export const useCounterStore = defineStore(
     });
 
     const signUp = function (payload) {
-      const { username, password1, password2 } = payload;
-
+      const { username, password1, password2 } = payload
+  
       axios({
-        method: "post",
+        method: 'post',
         url: `${API_URL}/accounts/signup/`,
         data: {
-          username,
-          password1,
-          password2,
-        },
+          username, password1, password2
+        }
       })
         .then((res) => {
-          console.log(res);
-          const password = password1;
-          logIn({ username, password });
+          console.log(res)
+          const password = password1
+          logIn({ username, password })
         })
         .catch((err) => {
-          console.log(err);
-        });
-    };
+          console.log(err)
+        })
+    }
+  
 
     const logIn = function (payload) {
       const { username, password } = payload;
