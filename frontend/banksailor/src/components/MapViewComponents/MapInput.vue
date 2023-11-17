@@ -9,7 +9,7 @@
 import MapInputDropdown from "@/components/MapViewComponents/MapInputDropdown.vue";
 import { ref, onMounted } from "vue";
 
-const keyword = ref("강남 은행");
+const keyword = ref("역삼 멀티캠퍼스");
 
 onMounted(() => createmap());
 
@@ -84,9 +84,8 @@ const createmap = () => {
 .inputarea {
   width: 90%;
   height: 80%;
-  background-color: pink;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
 }
 
@@ -101,7 +100,7 @@ input {
 }
 
 #map {
-  width: 50%;
-  height: 80%;
+  width: 400px;
+  height: 400px;
 }
 </style>
