@@ -16,7 +16,7 @@ import { RouterLink, RouterView } from "vue-router";
           />
         </a>
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink :to="{ name: 'products' }">예금 비교</RouterLink>
+        <RouterLink :to="{ name: 'deposit' }">예금 비교</RouterLink>
         <RouterLink :to="{ name: 'exchange' }">환율 계산기</RouterLink>
         <RouterLink :to="{ name: 'map' }">은행 지도</RouterLink>
         <RouterLink :to="{ name: 'article' }">게시판</RouterLink>
