@@ -49,16 +49,9 @@
       <button @click="moveToList()">목록</button>
     </div>
   </div>
-  
-  <div class="comment-box">
-    <!-- <p>총 {{ article.value.comment_count }}건의 댓글이 있습니다</p> -->
-    <form @submit.prevent="createComment">
-      <label for="comments_content">댓글 달기 : </label>
-      <textarea type="text" id="comments_content" v-model.trim="comments_content"></textarea>
-      <input type="submit" label="댓글쓰기">
-    </form>
 
-    <CommentList :article="article"/>
+  <div>
+    <CommentList :article="article" />
   </div>
 
 </template>
@@ -147,24 +140,6 @@ const editArticle = function () {
       })
   }
 
-  const createComment = function () {
-    const content = ref('')
-    axios({
-      method: 'post',
-      url: `${store.API_URL}/articles/articles/${route.params.id}/comments/`,
-      data: {
-          content: comments_content.value,
-        },
-      })  
-      .then((res) => {
-        console.log(res)
-        console.log('된다고해!!!!!!!!!')
-        router.go(0)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-    }
 
 </script>
 

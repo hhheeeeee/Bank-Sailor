@@ -23,6 +23,6 @@ urlpatterns = [
     path('exchange/', include('exchange.urls')),
     path('products/', include('products.urls')),
     path('accounts/', include('dj_rest_auth.urls')),
-    path('accounts/find/', include('accounts.urls')),
     path('accounts/signup/', include('dj_rest_auth.registration.urls')),
+    path('accounts/find/', include('accounts.urls')),
 ]
