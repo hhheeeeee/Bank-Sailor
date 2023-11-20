@@ -4,7 +4,9 @@ from allauth.utils import get_username_max_length
 from allauth.account.adapter import get_adapter
 from .models import User
 from dj_rest_auth.registration.serializers import RegisterSerializer
+from django.contrib.auth import get_user_model
 
+User = get_user_model()
 
 class CustomRegisterSerializer(RegisterSerializer):
     nickname = serializers.CharField(
@@ -37,3 +39,9 @@ class CustomRegisterSerializer(RegisterSerializer):
         adapter.save_user(request, user, self)
         self.custom_signup(request, user)
         return user
+
+
+class CustomUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = '__all__'  # 혹은 필요한 필드만 선택하여 나열

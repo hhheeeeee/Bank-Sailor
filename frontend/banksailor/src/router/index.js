@@ -13,6 +13,10 @@ import ProductsDepositDetailView from "@/views/ProductsDepositDetailView.vue";
 import ProductsSavingDetailView from "@/views/ProductsSavingDetailView.vue";
 import SignUpView from "@/views/SignUpView.vue";
 import LogInView from "@/views/LogInView.vue";
+import ProfileView from "@/views/ProfileView.vue";
+import EditInfoView from "@/views/ProfieViewDetails/EditInfoView.vue";
+import EditProfileView from "@/views/ProfieViewDetails/EditProfileView.vue";
+import RecommendView from "@/views/ProfieViewDetails/RecommendView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -88,6 +92,28 @@ const router = createRouter({
       path: "/login",
       name: "LogInView",
       component: LogInView,
+    },
+    {
+      path: "/profile",
+      name: "ProfileView",
+      component: ProfileView,
+      children: [
+        {
+          path: "/editinfo",
+          name: "editinfo",
+          component: EditInfoView,
+        },
+        {
+          path: "/editprofile",
+          name: "editprofile",
+          component: EditProfileView,
+        },
+        {
+          path: "/recommend",
+          name: "recommend",
+          component: RecommendView,
+        },
+      ],
     },
   ],
 });

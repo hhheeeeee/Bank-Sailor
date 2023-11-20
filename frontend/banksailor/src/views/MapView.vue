@@ -14,15 +14,16 @@ import Mapinput from "@/components/MapViewComponents/Mapinput.vue";
 <style scoped>
 .containerbody1 {
   width: 100%;
-  height: 100vh;
-  background-image: linear-gradient(
+  height: 91vh;
+  /* background-image: linear-gradient(
       rgba(255, 255, 255, 0.4),
       rgba(255, 255, 255, 0.4)
     ),
     url("@/assets/backgroundimg.png");
 
   background-size: cover;
-  background-repeat: no-repeat;
+  background-repeat: no-repeat; */
+  background-color: rgb(214, 232, 255);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -32,18 +33,19 @@ import Mapinput from "@/components/MapViewComponents/Mapinput.vue";
 .maptitle {
   font-weight: 900;
   font-size: 3.5rem;
-  text-shadow: 2px 2px 2px grey;
+  /* text-shadow: 2px 2px 2px grey; */
   text-align: center;
   margin-bottom: 30px;
+  color: rgb(28, 54, 89);
 }
 
 .mapcontents {
   display: flex;
   width: 45%;
   height: 60vh;
-  border: 3px solid #1c5f82;
-  background-color: #f6ddb4;
-  justify-content: space-evenly;
+  /* border: 3px solid #1c5f82; */
+  /* background-color: #f6ddb4; */
+  justify-content: center;
   align-items: center;
   padding: 20px 20px;
   border-radius: 30px;
