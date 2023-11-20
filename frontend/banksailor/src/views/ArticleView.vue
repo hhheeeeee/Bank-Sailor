@@ -77,7 +77,6 @@ onMounted(() => {
   store.getUserInfo()
 })
 
-console.log("넌 어딨니 : ",store.articles)
 console.log(store.userInfo)
 
 const filtered_article = computed(() => {

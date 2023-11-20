@@ -51,6 +51,11 @@
   </div>
 
   <div>
+    <form @submit.prevent="createComment">
+      <label for="comments_content">댓글 달기 : </label>
+      <textarea type="text" id="comments_content" v-model.trim="comments_content"></textarea>
+      <input type="submit" label="댓글쓰기">
+    </form>
     <CommentList :article="article"/>
   </div>
 
@@ -86,6 +91,7 @@ const categoryList = [
 ]
 
 console.log(store.token)
+console.log(userInfo)
 
 onMounted(() => {
   axios({
@@ -128,7 +134,7 @@ const editArticle = function () {
         console.log(error)
       })
   }
-
+  console.log('userinfo:' , userInfo)
   const deleteArticle = function (request, article_pk) {
     axios({
       method: 'delete',
@@ -150,6 +156,7 @@ const editArticle = function () {
       method: 'post',
       url: `${store.API_URL}/articles/articles/${route.params.id}/comments/`,
       data: {
+          user: userInfo.id,
           content: comments_content.value,
         },
       headers: {

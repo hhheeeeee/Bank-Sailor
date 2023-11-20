@@ -2,17 +2,16 @@
   <div class="comment-box">
 
     <!-- <p>총 {{ article.value.comment_count }}건의 댓글이 있습니다</p> -->
-    <form @submit.prevent="createComment">
-      <label for="comments_content">댓글 달기 : </label>
-      <textarea type="text" id="comments_content" v-model.trim="comments_content"></textarea>
-      <input type="submit" label="댓글쓰기">
-    </form>
+
 
     <div v-for="comment in comments" :key="comment.id">
       <li v-if="article && comment.article.title === article.title">
         {{ comment.content }}
         {{ comment.updated_at.slice(0, 10) }}
-        <button @click="deleteComment(comment.id)">댓삭</button>
+        
+        <div v-show="comment && userInfo.id === comment.user">
+          <button @click="deleteComment(comment.id)">댓삭</button>
+        </div>
       </li>
     </div>
 
@@ -30,6 +29,7 @@ const store = useCounterStore()
 const route = useRoute()
 const router = useRouter()
 const comments = ref(null)
+const userInfo = store.userInfo
 const comments_content = ref(null)
 
 defineProps({
@@ -50,8 +50,6 @@ onMounted(() => {
       console.log(err)
     })
 })
-
-
 
 const deleteComment = function (commentId) {
   axios({
