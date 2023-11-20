@@ -10,12 +10,7 @@
     </td>
     <!-- <td><p>{{ article.user.nickname }}</p></td> -->
     <td><p>{{ article.username }}</p></td>
-<<<<<<< HEAD
-
-    <td>{{ article.created_at.slice(0, 10) }}</td>
-=======
     <td>{{ article.created_at }}</td>
->>>>>>> origin/feature/FE/ErrorFix
     <!-- </tr> -->
   </tbody>
 </template>

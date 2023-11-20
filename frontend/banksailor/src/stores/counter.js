@@ -87,17 +87,17 @@ export const useCounterStore = defineStore(
     const getArticles = function () {
       axios({
         method: "get",
-        url: `${API_URL}/articles/articles/`,
+        url: `${API_URL}/articles/articles/`
         // headers: {
         //   Authorization: `Token ${token}`,
         // },
       })
         .then((res) => {
-          console.log(res)
+          console.log("article : ",res.data)
           articles.value = res.data;
         })
         .catch((err) => {
-          console.log(err);
+          console.log("article : ",err);
         });
     };
     //
@@ -206,7 +206,6 @@ export const useCounterStore = defineStore(
       token,
       getUserInfo,
       userInfo
-
     };
   },
   { persist: true }
