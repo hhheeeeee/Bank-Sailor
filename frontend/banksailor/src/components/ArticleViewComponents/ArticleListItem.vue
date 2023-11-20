@@ -10,8 +10,7 @@
     </td>
     <!-- <td><p>{{ article.user.nickname }}</p></td> -->
     <td><p>{{ article.username }}</p></td>
-
-    <td>{{ article.created_at.substring(0, 10) }}</td>
+    <td>{{ article.created_at }}</td>
     <!-- </tr> -->
   </tbody>
 </template>

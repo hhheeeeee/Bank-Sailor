@@ -15,6 +15,7 @@ def article_list(request):
     if request.method == 'GET':
         # articles = Article.objects.all()
         articles = get_list_or_404(Article)
+        print(articles)
         serializer = ArticleListSerializer(articles, many=True)
         return Response(serializer.data)
 
@@ -49,8 +50,8 @@ def article_detail(request, article_pk):
 
 @api_view(['GET'])
 def comment_list(request):
-    # comments = Comment.objects.all()
-    comments = get_list_or_404(Comment)
+    comments = Comment.objects.all()
+    # comments = get_list_or_404(Comment)
     serializer = CommentSerializer(comments, many=True)
     return Response(serializer.data)
 
