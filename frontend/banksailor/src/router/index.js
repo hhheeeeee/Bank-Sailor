@@ -14,9 +14,9 @@ import ProductsSavingDetailView from "@/views/ProductsSavingDetailView.vue";
 import SignUpView from "@/views/SignUpView.vue";
 import LogInView from "@/views/LogInView.vue";
 import ProfileView from "@/views/ProfileView.vue";
-import EditInfoView from "@/views/ProfieViewDetails/EditInfoView.vue";
-import EditProfileView from "@/views/ProfieViewDetails/EditProfileView.vue";
-import RecommendView from "@/views/ProfieViewDetails/RecommendView.vue";
+import EditInfoView from "@/views/ProfileViewDetails/EditInfoView.vue";
+import EditProfileView from "@/views/ProfileViewDetails/EditProfileView.vue";
+import RecommendView from "@/views/ProfileViewDetails/RecommendView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -127,6 +127,16 @@ router.beforeEach((to, from) => {
   if ((to.name === "SignUpView" || to.name === "LogInView") && store.isLogin) {
     window.alert("이미 로그인 했습니다.");
     return { name: "ArticleView" };
+  }
+  if (
+    (to.name === "recommend" ||
+      to.name === "editprofile" ||
+      to.name === "editinfo" ||
+      to.name === "ProfileView") &&
+    !store.isLogin
+  ) {
+    window.alert("로그인이 필요합니다.");
+    return { name: "LogInView" };
   }
 });
 
