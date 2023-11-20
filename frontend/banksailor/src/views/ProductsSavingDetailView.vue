@@ -57,19 +57,23 @@ onMounted(() => {
 const signup = () => {
   axios({
     method: "post",
-    url: `${store.API_URL}/products/deposit/${route.params.id}/`,
+    url: `${store.API_URL}/products/saving/${route.params.id}/`,
     headers: {
       Authorization: `Token ${store.token}`
     }
   })
   .then((response) => {
-    console.log(response)
+    const status = response.data.message
+    if (status === 'true') {
+      alert('상품에 가입되었습니다.')
+    } else {
+      alert('이미 가입한 상품입니다.')
+    }
   })
   .catch((error) => {
     console.log(error)
   })
 }
-
 
 
 

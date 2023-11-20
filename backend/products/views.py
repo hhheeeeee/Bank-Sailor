@@ -356,8 +356,7 @@ def deposit_detail(request, fin_prdt_cd):
             prdt_list = []
             prdt_list = user.financial_products.split(',')
             if fin_prdt_cd in prdt_list:
-                print('이미 가입')
-                return Response({"message": "이미 가입한 상품입니다."})
+                return Response({"message": "false"})
             else:
                 user.financial_products += f',{fin_prdt_cd}'
         else:
@@ -367,12 +366,35 @@ def deposit_detail(request, fin_prdt_cd):
         # 유저 정보 저장
         user.save()
 
-        return Response({"message": "금융상품 업데이트 완료"})
+        return Response({"message": "true"})
 
 
 # 적금 상품 상세 데이터 불러오는 view
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 def saving_detail(request, fin_prdt_cd):
-    product = get_object_or_404(SavingProduct, fin_prdt_cd=fin_prdt_cd)
-    serializer = SavingProductSerializer(product)
-    return Response(serializer.data)
+    if request.method == 'GET':
+        product = get_object_or_404(SavingProduct, fin_prdt_cd=fin_prdt_cd)
+        serializer = SavingProductSerializer(product)
+        return Response(serializer.data)
+    elif request.method == 'POST':
+        # 유저정보 불러오기
+        user = request.user
+
+        # 유저의 financial_products 필드를 업데이트
+        if user.financial_products:
+            # 이미 값이 있는 경우 쉼표로 구분하여 더해줌
+            # 중복값 체크
+            prdt_list = []
+            prdt_list = user.financial_products.split(',')
+            if fin_prdt_cd in prdt_list:
+                return Response({"message": "false"})
+            else:
+                user.financial_products += f',{fin_prdt_cd}'
+        else:
+            # 값이 없는 경우 새로운 값으로 설정
+            user.financial_products = fin_prdt_cd
+
+        # 유저 정보 저장
+        user.save()
+
+        return Response({"message": "true"})

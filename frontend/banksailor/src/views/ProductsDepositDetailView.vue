@@ -90,7 +90,12 @@ const signup = () => {
     }
   })
   .then((response) => {
-    console.log(response)
+    const status = response.data.message
+    if (status === 'true') {
+      alert('상품에 가입되었습니다.')
+    } else {
+      alert('이미 가입한 상품입니다.')
+    }
   })
   .catch((error) => {
     console.log(error)
