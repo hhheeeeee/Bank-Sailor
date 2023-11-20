@@ -9,7 +9,7 @@
       </RouterLink>
     </td>
     <!-- <td><p>{{ article.user.nickname }}</p></td> -->
-    <td><p>{{ article.user }}</p></td>
+    <td><p>{{ article.username }}</p></td>
 
     <td>{{ article.created_at.substring(0, 10) }}</td>
     <!-- </tr> -->
@@ -25,8 +25,6 @@ const store = useCounterStore()
 defineProps({
   article: Object,
 })
-
-let index = ref(1)
 
 </script>
 

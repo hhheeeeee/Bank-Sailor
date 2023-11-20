@@ -165,6 +165,8 @@ const signUp = function () {
     };
     console.log(payload)
     store.signUp(payload)
+  } else {
+    alert('아이디 중복확인 해주세요')
   }
 };
 
