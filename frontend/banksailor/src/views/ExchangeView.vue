@@ -12,12 +12,13 @@ import Currency from "@/components/ExchangeViewComponents/Currency.vue";
 <style scoped>
 .containerbody {
   width: 100%;
-  height: 100vh;
-  background-image: linear-gradient(
+  height: 91vh;
+  background-color: rgb(214, 232, 255);
+  /* background-image: linear-gradient(
       rgba(255, 255, 255, 0.4),
       rgba(255, 255, 255, 0.4)
     ),
-    url("@/assets/backgroundimg.png");
+    url("@/assets/backgroundimg.png"); */
 
   background-size: cover;
   background-repeat: no-repeat;
@@ -28,8 +29,10 @@ import Currency from "@/components/ExchangeViewComponents/Currency.vue";
 }
 
 .calculatortitle {
-  font-weight: 900;
-  font-size: 3.5rem;
-  text-shadow: 2px 2px 2px grey;
+  background-color: rgb(214, 232, 255);
+  color: rgb(28, 54, 89);
+  font-weight: 700;
+  font-size: 40px;
+  margin-bottom: 50px;
 }
 </style>
