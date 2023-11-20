@@ -1,7 +1,7 @@
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
 import { useCounterStore } from "@/stores/counter";
-import { useRoute } from "vue-router";
+import { useRouter } from "vue-router";
 import { navbarLinks } from "/src/constants/navbarLinks";
 const store = useCounterStore();
 
@@ -9,17 +9,23 @@ const customlogout = function () {
   window.alert("정말 떠나실건가요..?");
   store.logOut();
 };
+
+const router = useRouter()
+
+const goHome = () => {
+  router.push({name: 'home'})
+}
+
 </script>
 
 <template>
   <header>
     <nav>
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand" href='#' @click.prevent="goHome">
         <img
-          src="@/assets/banksailor_logo.png"
+          src="@/assets/title_logo.png"
           alt="Logo"
-          width="30"
-          height="30"
+          height="50"
         />
       </a>
       <template v-for="(item, idx) in navbarLinks" key="item">

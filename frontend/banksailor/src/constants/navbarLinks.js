@@ -1,8 +1,8 @@
 export const navbarLinks = [
-  {
-    links: "home",
-    label: "홈",
-  },
+  // {
+  //   links: "home",
+  //   label: "홈",
+  // },
   {
     links: "deposit",
     label: "예금 비교",
