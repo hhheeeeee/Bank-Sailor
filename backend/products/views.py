@@ -1,7 +1,7 @@
 import requests
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.authtoken.models import Token
 from rest_framework import status
 
@@ -339,12 +339,16 @@ def saving_list(request):
 
 # 예금 상품 상세 데이터 불러오는 view
 # POST 요청일 경우, 해당 상세 상품을 로그인한 유저 계정의 financial_products 필드에 추가
-@api_view(['GET', 'POST'])
+@api_view(['GET', 'POST', 'PUT'])
+@permission_classes([IsAuthenticatedOrReadOnly])
 def deposit_detail(request, fin_prdt_cd):
+    # 상품 상세 정보 보기
     if request.method == 'GET':
         product = get_object_or_404(DepositProduct, fin_prdt_cd=fin_prdt_cd)
         serializer = DepositProductSerializer(product)
         return Response(serializer.data)
+    
+    # 해당 상품 가입하기
     elif request.method == 'POST':
         # 유저정보 불러오기
         user = request.user
@@ -368,9 +372,17 @@ def deposit_detail(request, fin_prdt_cd):
 
         return Response({"message": "true"})
 
+    # 해당 상품 금리 수정하기
+    elif request.method == 'PUT':
+        # 전달받은 신규 금리
+        new_rate = request.data.get('rate').get('_value')
+        
+        return Response({"message": "true"})
+
+
 
 # 적금 상품 상세 데이터 불러오는 view
-@api_view(['GET', 'POST'])
+@api_view(['GET', 'POST', 'PUT'])
 def saving_detail(request, fin_prdt_cd):
     if request.method == 'GET':
         product = get_object_or_404(SavingProduct, fin_prdt_cd=fin_prdt_cd)

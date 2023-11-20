@@ -13,6 +13,8 @@ import ProductsDepositDetailView from "@/views/ProductsDepositDetailView.vue";
 import ProductsSavingDetailView from "@/views/ProductsSavingDetailView.vue";
 import SignUpView from "@/views/SignUpView.vue";
 import LogInView from "@/views/LogInView.vue";
+import ProductsDepositDetailUpdateView from "@/views/ProductsDepositDetailUpdateView.vue";
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -88,6 +90,11 @@ const router = createRouter({
       path: "/login",
       name: "LogInView",
       component: LogInView,
+    },
+    {
+      path: "/deposit/:id/:rate",
+      name: "depositrateupdate",
+      component: ProductsDepositDetailUpdateView,
     },
   ],
 });
