@@ -14,7 +14,6 @@
       <input type="text" v-model="value_for_search">
       &nbsp;
       <input type="submit" label="검색">
-      <!-- <button @click="searchArticle()">검색</button> -->
     </form>
 
     <hr>
@@ -36,7 +35,7 @@
               <td>{{ article.id }}</td>
               <td>{{ article.category }}</td>
               <td>{{ article.title }}</td>
-              <td>{{ article.user }}</td>
+              <td>{{ article.username }}</td>
               <td>{{ article.created_at.substring(0, 10) }}</td>
             </tr>
           </tbody>
@@ -65,6 +64,7 @@
 import { onMounted, computed, ref } from 'vue';
 import { useCounterStore } from '@/stores/counter';
 import { RouterLink } from 'vue-router';
+import axios from 'axios'
 import ArticleList from '@/components/ArticleViewComponents/ArticleList.vue'
 
 const store = useCounterStore()

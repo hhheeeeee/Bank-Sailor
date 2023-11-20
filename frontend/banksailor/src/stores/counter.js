@@ -169,22 +169,24 @@ export const useCounterStore = defineStore(
         });
     };
 
-    const getUserInfo = () => {
+    const getUserInfo = function () {
       axios({
         method: 'get',
-        url: `http://${API_URL}/accounts/user/`,
+        url: `${API_URL}/accounts/user/`,
         headers: {
-          Authorization: `Token ${token}`
-        }
+          Authorization: `Token ${token.value}`,
+        },
       })
       .then((res) => {
         console.log('userinfo: ', res.data)
         userInfo.value = res.data
       })
       .catch((err) => {
-        console.log(err)
-      })
+        console.log(err);
+      });
     }
+
+
 
     return {
       articles,
@@ -202,7 +204,9 @@ export const useCounterStore = defineStore(
       signUp,
       isLogin,
       token,
-      getUserInfo
+      getUserInfo,
+      userInfo
+
     };
   },
   { persist: true }
