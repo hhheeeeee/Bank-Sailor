@@ -10,7 +10,7 @@
           order="first"
         />
       </div>
-      <div class="exchangeicon">⇄</div>
+      <Arrow />
       <div class="inputbox">
         <!-- <img :src="toContryflagimgurl" alt="" class="flagimg" /> -->
         <div class="exchangeresult">{{ exchangeresult }}</div>
@@ -22,7 +22,7 @@
       </div>
     </div>
     <p>* 엔화/인도네시아 루피아는 100단위, 나머지는 모두 1단위</p>
-    <button @click="getExchangeResult">환율 추적</button>
+    <button @click="getExchangeResult" class="currencybutton">환율 추적</button>
   </div>
 </template>
 
@@ -32,7 +32,7 @@ import CurrencyInput from "@/components/ExchangeViewComponents/CurrencyInput.vue
 import axios from "axios";
 import currencyInputDropdown from "@/components/ExchangeViewComponents/currencyInputDropdown.vue";
 import { useCounterStore } from "@/stores/counter";
-
+import Arrow from "@/components/ExchangeViewComponents/Arrow.vue";
 const store = useCounterStore();
 const exchangeresult = ref("");
 const fromCountry = ref(null);
@@ -82,46 +82,33 @@ const getExchangeResult = function () {
 
 <style scoped>
 .container1 {
-  width: 100%;
+  width: 80%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 }
 .exchangearea {
   width: 100%;
+  height: 90%;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 10px;
+  justify-content: space-between;
 }
 
 .inputbox {
   outline: none;
-  width: 37%;
-  height: 130px;
-  border: 1px solid #0d2a3b;
-  border-radius: 30px;
-  background-color: #eaf6f9;
-  font-size: 35px;
-  padding-left: 10px;
+  width: 45%;
+  border-radius: 10px;
   display: flex;
   align-items: center;
-}
-
-.exchangeicon {
-  font-size: 5rem;
-  margin: 0px 15px;
+  justify-content: center;
+  border-radius: 10px;
+  background-color: rgb(234, 218, 190);
+  font-size: 30px;
 }
 
 .exchangeresult {
   width: 70%;
-}
-
-.flagimg {
-  width: 100px;
-  height: 100px;
-  object-fit: fill;
 }
 
 .selectcountry {
@@ -141,36 +128,15 @@ const getExchangeResult = function () {
   outline: none;
 }
 
-button {
+.currencybutton {
   border: none;
   outline: none;
   width: 15%;
-  height: 55px;
+  height: 40px;
   border-radius: 50px;
-  background-color: #1c5f82;
-  color: white;
+  background-color: rgb(6, 152, 242);
+  color: rgb(28, 55, 89);
   font-size: 150%;
-}
-
-.exchangearea {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.inputbox {
-  outline: none;
-  width: 37%;
-  height: 120px;
-  border: 1px solid #0d2a3b;
-  border-radius: 30px;
-  background-color: #eaf6f9;
-  font-size: 35px;
-  padding-left: 10px;
-  display: flex;
-  align-items: center;
 }
 
 .exchangeicon {
@@ -195,7 +161,18 @@ button {
 
 p {
   align-self: flex-start;
-  margin-left: 80px;
-  margin-bottom: 30px;
+  width: 100%;
+}
+
+.currencybutton:hover {
+  background-color: rgb(28, 55, 89);
+  color: white;
+  box-shadow: 3px 3px 3px grey;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 </style>
