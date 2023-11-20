@@ -49,9 +49,14 @@
     <div v-else>
       <ArticleList />
 
-      <RouterLink :to="{ name: 'ArticleCreateView' }">
-        <button>새글쓰기</button>
-      </RouterLink>
+      <div v-show="store.isLogin===true">
+        <RouterLink :to="{ name: 'ArticleCreateView' }">
+          <button>새글쓰기</button>
+        </RouterLink>
+      </div>      
+      <div>
+        
+      </div>
     </div>
   </div>
 </template>

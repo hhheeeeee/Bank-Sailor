@@ -10,13 +10,12 @@ import CurrencyInput from "@/components/ExchangeViewComponents/CurrencyInput.vue
 .calculatorbody {
   background-color: white;
   width: 80%;
-  height: 50%;
+  height: 35%;
   margin-top: 30px;
-  border: 4px solid #0d2a3b;
+  border: 3px solid #0d2a3b;
   border-radius: 50px;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 }
 </style>

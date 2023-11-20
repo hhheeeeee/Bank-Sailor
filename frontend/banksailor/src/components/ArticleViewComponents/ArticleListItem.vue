@@ -8,7 +8,9 @@
         <p>{{ article.title }}</p>
       </RouterLink>
     </td>
-    <td><!-- <p>{{ article.users }}</p> --></td>
+    <!-- <td><p>{{ article.user.nickname }}</p></td> -->
+    <td><p>{{ article.user }}</p></td>
+
     <td>{{ article.created_at.substring(0, 10) }}</td>
     <!-- </tr> -->
   </tbody>

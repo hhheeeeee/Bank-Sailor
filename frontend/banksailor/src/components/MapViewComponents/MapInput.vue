@@ -82,7 +82,7 @@ const createmap = () => {
 
 <style scoped>
 .inputarea {
-  width: 90%;
+  width: 950%;
   height: 80%;
   display: flex;
   justify-content: center;
