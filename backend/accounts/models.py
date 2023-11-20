@@ -19,11 +19,11 @@ class User(AbstractUser):
 
 
 from allauth.account.adapter import DefaultAccountAdapter
+from allauth.account.utils import user_email, user_field, user_username
 
 class CustomAccountAdapter(DefaultAccountAdapter):
     def save_user(self, request, user, form, commit=True):
 
-        from allauth.account.utils import user_email, user_field, user_username
 
         # 기존 코드를 참고하여 새로운 필드들을 작성해줍니다.
         data = form.cleaned_data
@@ -46,6 +46,8 @@ class CustomAccountAdapter(DefaultAccountAdapter):
             user_field(user, "last_name", last_name)
         if nickname:
             user_field(user, "nickname", nickname)
+        if email:
+            user.email = email
         if age:
             user.age = age
         if money:

@@ -43,11 +43,11 @@
       </div>
 
     
-    <div>
+    <div v-if="article.username === user.username">
       <button v-show="currentState" @click="onClickEvent()">수정</button>
       <button @click="deleteArticle()">삭제</button>
-      <button @click="moveToList()">목록</button>
     </div>
+    <button @click="moveToList()">목록</button>
   </div>
 
   <div>

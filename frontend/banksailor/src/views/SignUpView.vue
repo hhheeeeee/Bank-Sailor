@@ -163,6 +163,7 @@ const signUp = function () {
       salary: salary.value,
       // financial_products: ['싸피금융']
     };
+    console.log(payload)
     store.signUp(payload)
   }
 };

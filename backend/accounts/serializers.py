@@ -17,23 +17,22 @@ class CustomRegisterSerializer(RegisterSerializer):
     salary = serializers.IntegerField(required=False)
     financial_products = serializers.ListField(child=serializers.IntegerField(), required=False)
 
+    def get_cleaned_data(self):
+        return {
+            'username': self.validated_data.get('username', ''),
+            'password1': self.validated_data.get('password1', ''),
+            'nickname': self.validated_data.get('nickname', ''),
+            'age': self.validated_data.get('age', ''),
+            'money': self.validated_data.get('money', ''),
+            'salary': self.validated_data.get('salary', ''),
+            'financial_products': self.validated_data.get('financial_products', ''),
+        }
 
-def get_cleaned_data(self):
-    return {
-        'username': self.validated_data.get('username', ''),
-        'password1': self.validated_data.get('password1', ''),
-        'nickname': self.validated_data.get('nickname', ''),
-        'age': self.validated_data.get('age', ''),
-        'money': self.validated_data.get('money', ''),
-        'salary': self.validated_data.get('salary', ''),
-        'financial_products': self.validated_data.get('financial_products', ''),
-    }
 
-
-def save(self, request):
-    adapter = get_adapter()
-    user = adapter.new_user(request)
-    self.cleaned_data = self.get_cleaned_data()
-    adapter.save_user(request, user, self)
-    self.custom_signup(request, user)
-    return user
+    def save(self, request):
+        adapter = get_adapter()
+        user = adapter.new_user(request)
+        self.cleaned_data = self.get_cleaned_data()
+        adapter.save_user(request, user, self)
+        self.custom_signup(request, user)
+        return user

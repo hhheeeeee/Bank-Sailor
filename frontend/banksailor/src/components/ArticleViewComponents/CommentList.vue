@@ -15,7 +15,6 @@
         {{ comment.content }}
         {{ comment.updated_at.substring(0, 10) }}
         <button @click="deleteComment(comment.id)">댓삭</button>
-
       </li>
     </div>
 
@@ -42,7 +41,6 @@ const createComment = function () {
         },
       })  
       .then((res) => {
-        console.log(res)
         console.log('된다고해!!!!!!!!!')
         router.go(0)
       })
