@@ -15,7 +15,7 @@
     <p>우대 조건: {{ product.spcl_cnd }}</p>
     <p>기타 유의사항: {{ product.etc_note }}</p>
     <p>최고한도: {{ product.max_limit }}</p>
-    <button class="btn btn-primary signup">상품가입</button>
+    <button class="btn btn-primary signup" @click="signup">상품가입</button>
   </div>
 </template>
 
@@ -53,6 +53,23 @@ onMounted(() => {
     console.log(error)
   })
 })
+
+const signup = () => {
+  axios({
+    method: "post",
+    url: `${store.API_URL}/products/deposit/${route.params.id}/`,
+    headers: {
+      Authorization: `Token ${store.token}`
+    }
+  })
+  .then((response) => {
+    console.log(response)
+  })
+  .catch((error) => {
+    console.log(error)
+  })
+}
+
 
 
 

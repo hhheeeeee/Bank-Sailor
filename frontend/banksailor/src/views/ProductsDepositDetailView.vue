@@ -42,7 +42,7 @@
       <div class="info-title">기타 유의사항:</div>
       <div class="info-content">{{ product.etc_note }}</div>  
     </div>
-    <button class="btn btn-primary signup">상품가입</button>
+    <button class="btn btn-primary signup" @click="signup">상품가입</button>
   </div>
 </template>
 
@@ -80,6 +80,24 @@ onMounted(() => {
       console.log(error);
     });
 });
+
+const signup = () => {
+  axios({
+    method: "post",
+    url: `${store.API_URL}/products/deposit/${route.params.id}/`,
+    headers: {
+      Authorization: `Token ${store.token}`
+    }
+  })
+  .then((response) => {
+    console.log(response)
+  })
+  .catch((error) => {
+    console.log(error)
+  })
+}
+
+
 </script>
 
 <style scoped>

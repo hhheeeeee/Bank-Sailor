@@ -1,12 +1,17 @@
 import requests
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authtoken.models import Token
 from rest_framework import status
 
 from django.shortcuts import get_list_or_404, get_object_or_404
 
 from .models import DepositProduct, DepositOption, SavingProduct, SavingOption, DepositProductList, SavingProductList
 from .serializers import DepositProductSerializer, DepositOptionSerializer, SavingProductSerializer, SavingOptionSerializer, DepositProductListSerializer, SavingProductListSerializer
+
+from accounts.models import User
+
 
 # 정기예금 실행 시 작동
 # 금융감독원의 "정기예금" API 로 부터 자료를 수신받아
@@ -168,9 +173,6 @@ def deposit_list(request):
     serializer = DepositProductListSerializer(products, many=True)
     return Response(serializer.data)
 
-
-
-#########################################################################################
 
 # 적금 실행 시 작동
 # 금융감독원의 "적금" API 로 부터 자료를 수신받아
@@ -336,11 +338,36 @@ def saving_list(request):
 
 
 # 예금 상품 상세 데이터 불러오는 view
-@api_view(['GET'])
+# POST 요청일 경우, 해당 상세 상품을 로그인한 유저 계정의 financial_products 필드에 추가
+@api_view(['GET', 'POST'])
 def deposit_detail(request, fin_prdt_cd):
-    product = get_object_or_404(DepositProduct, fin_prdt_cd=fin_prdt_cd)
-    serializer = DepositProductSerializer(product)
-    return Response(serializer.data)
+    if request.method == 'GET':
+        product = get_object_or_404(DepositProduct, fin_prdt_cd=fin_prdt_cd)
+        serializer = DepositProductSerializer(product)
+        return Response(serializer.data)
+    elif request.method == 'POST':
+        # 유저정보 불러오기
+        user = request.user
+
+        # 유저의 financial_products 필드를 업데이트
+        if user.financial_products:
+            # 이미 값이 있는 경우 쉼표로 구분하여 더해줌
+            # 중복값 체크
+            prdt_list = []
+            prdt_list = user.financial_products.split(',')
+            if fin_prdt_cd in prdt_list:
+                print('이미 가입')
+                return Response({"message": "이미 가입한 상품입니다."})
+            else:
+                user.financial_products += f',{fin_prdt_cd}'
+        else:
+            # 값이 없는 경우 새로운 값으로 설정
+            user.financial_products = fin_prdt_cd
+
+        # 유저 정보 저장
+        user.save()
+
+        return Response({"message": "금융상품 업데이트 완료"})
 
 
 # 적금 상품 상세 데이터 불러오는 view
