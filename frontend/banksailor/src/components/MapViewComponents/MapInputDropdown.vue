@@ -170,7 +170,8 @@ const sendMapKeyword = function () {
 .container1 {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
   margin-right: 50px;
 }
 
@@ -185,11 +186,20 @@ const sendMapKeyword = function () {
 
 .search-btn {
   margin-top: 10px;
-  padding: 10px;
   border: none;
   border-radius: 5px;
-  background-color: #1c5f82;
+  background-color: rgb(7, 152, 242);
   color: white;
   cursor: pointer;
+  margin-left: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-btn:hover {
+  background-color: rgb(17, 132, 222);
+  font-weight: 700;
+  color: white;
 }
 </style>

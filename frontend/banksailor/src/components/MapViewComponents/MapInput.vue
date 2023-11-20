@@ -102,5 +102,6 @@ input {
 #map {
   width: 400px;
   height: 400px;
+  border: 3px solid rgb(28, 54, 89);
 }
 </style>

@@ -10,23 +10,18 @@ const customlogout = function () {
   store.logOut();
 };
 
-const router = useRouter()
+const router = useRouter();
 
 const goHome = () => {
-  router.push({name: 'home'})
-}
-
+  router.push({ name: "home" });
+};
 </script>
 
 <template>
   <header>
     <nav>
-      <a class="navbar-brand" href='#' @click.prevent="goHome">
-        <img
-          src="@/assets/title_logo.png"
-          alt="Logo"
-          height="50"
-        />
+      <a class="navbar-brand" href="#" @click.prevent="goHome">
+        <img src="@/assets/title_logo.png" alt="Logo" height="50" />
       </a>
       <template v-for="(item, idx) in navbarLinks" key="item">
         <div
@@ -41,6 +36,10 @@ const goHome = () => {
           <form @submit.prevent="customlogout">
             <input type="submit" value="Logout" class="logout" />
           </form>
+
+          <RouterLink :to="{ name: 'editinfo' }" class="profile"
+            >프로필</RouterLink
+          >
         </template>
         <template v-else>
           <RouterLink :to="{ name: 'LogInView' }" class="login"
@@ -68,7 +67,7 @@ nav {
 
 a {
   text-decoration: none;
-  color: #1c5f82;
+  color: rgb(28, 54, 89);
 }
 
 .navbar-items {
@@ -106,5 +105,13 @@ a {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+
+.profile {
+  border: 1px solid #1c5f82;
+  color: #1c5f82;
+  padding: 5px 10px;
+  border-radius: 30px;
+  font-weight: 600;
 }
 </style>

@@ -21,8 +21,17 @@ export const useCounterStore = defineStore(
     });
 
     const signUp = function (payload) {
-      console.log(payload)
-      const { username, password1, password2, email, nickname, age, money, salary } = payload;
+      console.log(payload);
+      const {
+        username,
+        password1,
+        password2,
+        email,
+        nickname,
+        age,
+        money,
+        salary,
+      } = payload;
 
       axios({
         method: "post",
@@ -40,7 +49,7 @@ export const useCounterStore = defineStore(
         },
       })
         .then((res) => {
-          console.log('counter.js : ', res);
+          console.log("counter.js : ", res);
           const password = password1;
           logIn({ username, password });
         })
@@ -93,7 +102,7 @@ export const useCounterStore = defineStore(
         // },
       })
         .then((res) => {
-          console.log(res)
+          console.log(res);
           articles.value = res.data;
         })
         .catch((err) => {
@@ -171,22 +180,19 @@ export const useCounterStore = defineStore(
 
     const getUserInfo = function () {
       axios({
-        method: 'get',
+        method: "get",
         url: `${API_URL}/accounts/user/`,
         headers: {
           Authorization: `Token ${token.value}`,
         },
       })
-      .then((res) => {
-        console.log('userinfo: ', res.data)
-        userInfo.value = res.data
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    }
-
-
+        .then((res) => {
+          userInfo.value = res.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
 
     return {
       articles,
@@ -205,10 +211,8 @@ export const useCounterStore = defineStore(
       isLogin,
       token,
       getUserInfo,
-      userInfo
-
+      userInfo,
     };
   },
   { persist: true }
 );
-
