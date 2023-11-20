@@ -13,14 +13,8 @@ from rest_framework.permissions import IsAuthenticated
 # @permission_classes([IsAuthenticated])
 def article_list(request):
     if request.method == 'GET':
-<<<<<<< HEAD
-        # articles = Article.objects.all()
-        articles = get_list_or_404(Article)
-        print(articles)
-=======
         articles = Article.objects.all()
         # articles = get_list_or_404(Article)
->>>>>>> origin/FE/feature/articleError
         serializer = ArticleListSerializer(articles, many=True)
         return Response(serializer.data)
 
