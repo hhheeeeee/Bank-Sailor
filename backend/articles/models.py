@@ -13,6 +13,9 @@ class Article(models.Model):
     category = models.CharField(max_length=10)
 
 class Comment(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE
+    )
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
