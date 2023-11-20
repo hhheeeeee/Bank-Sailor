@@ -1,6 +1,6 @@
 <template>
   <Carousel class="custom-carousel" v-bind="settings">
-    <Slide v-for="img in imgLinks" :key="slide" :style="{ height }">
+    <Slide v-for="img in imgLinks" :style="{ height }">
       <div class="carousel__item">
         <img :src="img" alt="" width="100" height="100" />
       </div>
@@ -20,9 +20,9 @@ import { imgLinks } from "../../constants/imgLinks";
 
 const settings = {
   snapAlign: "center",
-  itemsToShow: "1",
-  wrapAround: "true",
-  autoplay: "2500",
+  itemsToShow: 1,
+  wrapAround: true,
+  autoplay: 2500,
 };
 const height = "100%";
 </script>

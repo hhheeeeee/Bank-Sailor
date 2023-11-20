@@ -75,6 +75,7 @@ export const useCounterStore = defineStore(
           router.push({ name: "home" });
         })
         .catch((err) => {
+          window.alert("아이디 혹은 비밀번호가 일치하지 않습니다.");
           console.log(err);
         });
     };
@@ -188,6 +189,7 @@ export const useCounterStore = defineStore(
       })
         .then((res) => {
           userInfo.value = res.data;
+          return res.data;
         })
         .catch((err) => {
           console.log(err);
