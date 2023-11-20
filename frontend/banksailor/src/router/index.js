@@ -13,6 +13,7 @@ import ProductsDepositDetailView from "@/views/ProductsDepositDetailView.vue";
 import ProductsSavingDetailView from "@/views/ProductsSavingDetailView.vue";
 import SignUpView from "@/views/SignUpView.vue";
 import LogInView from "@/views/LogInView.vue";
+import ProductsDepositDetailUpdateView from "@/views/ProductsDepositDetailUpdateView.vue";
 import ProfileView from "@/views/ProfileView.vue";
 import EditInfoView from "@/views/ProfileViewDetails/EditInfoView.vue";
 import EditProfileView from "@/views/ProfileViewDetails/EditProfileView.vue";
@@ -114,6 +115,11 @@ const router = createRouter({
           component: RecommendView,
         },
       ],
+    },
+    {
+      path: "/deposit/:id/:rate",
+      name: "depositrateupdate",
+      component: ProductsDepositDetailUpdateView,
     },
   ],
 });
