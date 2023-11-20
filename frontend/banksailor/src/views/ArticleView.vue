@@ -47,7 +47,6 @@
     
     <div v-else>
       <ArticleList />
-
       <div v-show="store.isLogin===true">
         <RouterLink :to="{ name: 'ArticleCreateView' }">
           <button>새글쓰기</button>
@@ -73,12 +72,12 @@ const key_for_search = ref(null)
 const value_for_search = ref(null)
 
 onMounted(() => {
-  store.getArticles()
-  store.getComments()
+  store.getArticles(),
+  store.getComments(),
   store.getUserInfo()
 })
 
-console.log(store.articles)
+console.log("넌 어딨니 : ",store.articles)
 console.log(store.userInfo)
 
 const filtered_article = computed(() => {

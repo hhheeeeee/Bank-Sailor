@@ -1,7 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .models import User
-
+from django.shortcuts import get_object_or_404
 # @api_view(['GET'])
 # def duplicateID(request):
 #     if request.method == 'GET':
@@ -14,7 +14,6 @@ from .models import User
 @api_view(['GET'])
 def duplicateID(request):
     if request.method == 'GET':
-        print(request.GET.get('username'))
         name = request.GET.get('username')
         # existing_user = User.objects.filter(username=name)
 
@@ -23,3 +22,4 @@ def duplicateID(request):
             return Response(2)
         # 실패시 1
         return Response(1)
+    

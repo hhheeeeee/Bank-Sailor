@@ -12,7 +12,6 @@
           <p>작성일 : {{ article.created_at.substring(0, 10) }}</p>
           <div class="main">
             <p>{{ article.content }}</p>
-            <p>{{ article.user }}</p>
 
           </div>
         </div>
@@ -51,16 +50,8 @@
     <button @click="moveToList()">목록</button>
   </div>
 
-  <div class="comment-box">
-    <!-- <p>총 {{ article.value.comment_count }}건의 댓글이 있습니다</p> -->
-    <form @submit.prevent="createComment">
-      <label for="comments_content">댓글 달기 : </label>
-      <textarea type="text" id="comments_content" v-model.trim="comments_content"></textarea>
-      <input type="submit" label="댓글쓰기">
-    </form>
-
+  <div>
     <CommentList :article="article"/>
-
   </div>
 
 </template>
@@ -93,6 +84,8 @@ const categoryList = [
     value: '리뷰',
   }
 ]
+
+console.log(store.token)
 
 onMounted(() => {
   axios({
@@ -159,6 +152,9 @@ const editArticle = function () {
       data: {
           content: comments_content.value,
         },
+      headers: {
+        Authorization: `Token ${store.token}`,
+      }
       })  
       .then((res) => {
         console.log(res)
