@@ -75,9 +75,11 @@ const value_for_search = ref(null)
 onMounted(() => {
   store.getArticles()
   store.getComments()
+  store.getUserInfo()
 })
 
 console.log(store.articles)
+console.log(store.userInfo)
 
 const filtered_article = computed(() => {
   if (key_for_search.value && value_for_search.value) {

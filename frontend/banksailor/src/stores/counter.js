@@ -9,6 +9,7 @@ export const useCounterStore = defineStore(
     const router = useRouter();
     const articles = ref([]);
     const comments = ref([]);
+    const userInfo = ref([]);
     const API_URL = "http://127.0.0.1:8000";
     const token = ref(null);
     const isLogin = computed(() => {
@@ -168,6 +169,23 @@ export const useCounterStore = defineStore(
         });
     };
 
+    const getUserInfo = () => {
+      axios({
+        method: 'get',
+        url: `http://${API_URL}/accounts/user/`,
+        headers: {
+          Authorization: `Token ${token}`
+        }
+      })
+      .then((res) => {
+        console.log('userinfo: ', res.data)
+        userInfo.value = res.data
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    }
+
     return {
       articles,
       API_URL,
@@ -184,6 +202,7 @@ export const useCounterStore = defineStore(
       signUp,
       isLogin,
       token,
+      getUserInfo
     };
   },
   { persist: true }
