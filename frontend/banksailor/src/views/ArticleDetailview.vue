@@ -134,7 +134,7 @@ const editArticle = function () {
         console.log(error)
       })
   }
-  console.log('userinfo:' , userInfo)
+
   const deleteArticle = function (request, article_pk) {
     axios({
       method: 'delete',
