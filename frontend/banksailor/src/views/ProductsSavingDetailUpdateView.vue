@@ -28,7 +28,7 @@ const newRate = ref(null)
 const updateRate = () => {
   axios({
     method: "put",
-    url: `${store.API_URL}/products/deposit/${route.params.id}/`,
+    url: `${store.API_URL}/products/saving/${route.params.id}/`,
     headers: {
       Authorization: `Token ${store.token}`,
     },
@@ -39,8 +39,8 @@ const updateRate = () => {
   })
     .then((response) => {
       alert('금리가 수정되었습니다.');
-      store.getDeposits()
-      router.push({ name: 'depositdetail', params: { id: route.params.id }})
+      store.getSavings()
+      router.push({ name: 'savingdetail', params: { id: route.params.id }})
     })
     .catch((error) => {
       console.log(error);
@@ -50,7 +50,7 @@ const updateRate = () => {
 
 
 const goBack = () => {
-  router.push({ name: 'depositdetail', params: { id: route.params.id } } )
+  router.push({ name: 'savingdetail', params: { id: route.params.id } } )
 }  
 </script>
 
