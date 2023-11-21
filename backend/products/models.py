@@ -2,6 +2,7 @@ from django.db import models
 from accounts.models import User
 
 
+
 # 정기예금 상품 테이블
 class DepositProduct(models.Model):
     dcls_month = models.CharField(max_length=50)   
@@ -105,8 +106,5 @@ class SavingProductList(models.Model):
     rate_24_max = models.FloatField(blank=True, null=True)
     rate_36 = models.FloatField(blank=True, null=True)
     rate_36_max = models.FloatField(blank=True, null=True)
-
-
-
 
     
