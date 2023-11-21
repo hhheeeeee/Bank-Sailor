@@ -28,6 +28,7 @@
 
 <script setup>
 import { ref } from "vue";
+import Swal from "sweetalert2";
 import CurrencyInput from "@/components/ExchangeViewComponents/CurrencyInput.vue";
 import axios from "axios";
 import currencyInputDropdown from "@/components/ExchangeViewComponents/currencyInputDropdown.vue";
@@ -38,6 +39,18 @@ const exchangeresult = ref("");
 const fromCountry = ref(null);
 const toCountry = ref(null);
 const price = ref(null);
+
+const Toast = Swal.mixin({
+  toast: true,
+  position: "top-end",
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener("mouseenter", Swal.stopTimer);
+    toast.addEventListener("mouseleave", Swal.resumeTimer);
+  },
+});
 
 const getFromCountry = function (arg) {
   fromCountry.value = arg;
@@ -53,16 +66,25 @@ const getToCountry = function (arg) {
 
 const getExchangeResult = function () {
   if (price.value == null) {
-    window.alert("금액를 입력해주세요");
+    Toast.fire({
+      icon: "warning",
+      title: "금액를 입력해주세요",
+    });
     return;
   }
   if (fromCountry.value == null) {
-    window.alert("현재 통화를 선택해주세요");
+    Toast.fire({
+      icon: "warning",
+      title: "현재 통화를 선택해주세요",
+    });
     return;
   }
 
   if (toCountry.value == null) {
-    window.alert("변환할 통화를 선택해주세요");
+    Toast.fire({
+      icon: "warning",
+      title: "변환할 통화를 선택해주세요",
+    });
     return;
   }
   axios({

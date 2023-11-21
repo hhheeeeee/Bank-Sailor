@@ -46,24 +46,69 @@
       <div class="info-title">금리</div>
       <div class="info-content">
         <p v-if="rateInfo.rate_6">
-          6개월: {{ rateInfo.rate_6 ? rateInfo.rate_6 : "없음" }}
-          (최고: {{ rateInfo.rate_6_max ? rateInfo.rate_6_max : "없음" }})
+<<<<<<< HEAD
+          6개월: {{ rateInfo.rate_6 ? rateInfo.rate_6 : "없음" }} (최고:
+          {{ rateInfo.rate_6_max ? rateInfo.rate_6_max : "없음" }})
+          <button
+            v-if="store.userInfo.is_superuser"
+            class="btn btn-warning p-0"
+            @click="goUpdate6"
+          >
+            수정
+          </button>
+        </p>
+        <p v-if="rateInfo.rate_12">
+          12개월: {{ rateInfo.rate_12 ? rateInfo.rate_12 : "없음" }} (최고:
+          {{ rateInfo.rate_12_max ? rateInfo.rate_12_max : "없음" }})
+          <button
+            v-if="store.userInfo.is_superuser"
+            class="btn btn-warning p-0"
+            @click="goUpdate12"
+          >
+            수정
+          </button>
+        </p>
+        <p v-if="rateInfo.rate_24">
+          24개월: {{ rateInfo.rate_24 ? rateInfo.rate_24 : "없음" }} (최고:
+          {{ rateInfo.rate_24_max ? rateInfo.rate_24_max : "없음" }})
+          <button
+            v-if="store.userInfo.is_superuser"
+            class="btn btn-warning p-0"
+            @click="goUpdate24"
+          >
+            수정
+          </button>
+        </p>
+        <p v-if="rateInfo.rate_36">
+          36개월: {{ rateInfo.rate_36 ? rateInfo.rate_36 : "없음" }} (최고:
+          {{ rateInfo.rate_36_max ? rateInfo.rate_36_max : "없음" }})
+          <button
+            v-if="store.userInfo.is_superuser"
+            class="btn btn-warning p-0"
+            @click="goUpdate36"
+          >
+            수정
+          </button>
+=======
+          6개월: {{ rateInfo.rate_6 ? `${rateInfo.rate_6}%` : "없음" }}
+          (최고: {{ rateInfo.rate_6_max ? `${rateInfo.rate_6_max}%` : "없음" }})
           <button v-if="store.userInfo.is_superuser" class="btn btn-warning p-0" @click="goUpdate6" >수정</button>
         </p>
         <p v-if="rateInfo.rate_12">
-          12개월: {{ rateInfo.rate_12 ? rateInfo.rate_12 : "없음" }}
-          (최고: {{ rateInfo.rate_12_max ? rateInfo.rate_12_max : "없음" }})
+          12개월: {{ rateInfo.rate_12 ? `${rateInfo.rate_12}%` : "없음" }}
+          (최고: {{ rateInfo.rate_12_max ? `${rateInfo.rate_12_max}%` : "없음" }})
           <button v-if="store.userInfo.is_superuser" class="btn btn-warning p-0" @click="goUpdate12">수정</button>
         </p>
         <p v-if="rateInfo.rate_24">
-          24개월: {{ rateInfo.rate_24 ? rateInfo.rate_24 : "없음" }}
-          (최고: {{ rateInfo.rate_24_max ? rateInfo.rate_24_max : "없음" }})
+          24개월: {{ rateInfo.rate_24 ? `${rateInfo.rate_24}%` : "없음" }}
+          (최고: {{ rateInfo.rate_24_max ? `${rateInfo.rate_24_max}%` : "없음" }})
           <button v-if="store.userInfo.is_superuser" class="btn btn-warning p-0" @click="goUpdate24">수정</button>
         </p>
         <p v-if="rateInfo.rate_36">
-          36개월: {{ rateInfo.rate_36 ? rateInfo.rate_36 : "없음" }}
-          (최고: {{ rateInfo.rate_36_max ? rateInfo.rate_36_max : "없음" }})
+          36개월: {{ rateInfo.rate_36 ? `${rateInfo.rate_36}%` : "없음" }}
+          (최고: {{ rateInfo.rate_36_max ? `${rateInfo.rate_36_max}%` : "없음" }})
           <button v-if="store.userInfo.is_superuser" class="btn btn-warning p-0" @click="goUpdate36">수정</button>
+>>>>>>> origin/feature/FE/ProductsView
         </p>
       </div>
     </div>
@@ -78,6 +123,19 @@ import { useRouter, useRoute } from "vue-router";
 import { onMounted } from "vue";
 import { useCounterStore } from "@/stores/counter";
 import axios from "axios";
+import Swal from "sweetalert2";
+
+const Toast = Swal.mixin({
+  toast: true,
+  position: "top-end",
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener("mouseenter", Swal.stopTimer);
+    toast.addEventListener("mouseleave", Swal.resumeTimer);
+  },
+});
 
 const router = useRouter();
 const route = useRoute();
@@ -155,14 +213,13 @@ onMounted(() => {
     .catch((error) => {
       console.log(error);
     });
-  getRate()
+  getRate();
 });
 
 // 이자정보 가져오기
 watchEffect(() => {
   getRate();
 });
-
 
 // watch(rateInfo, (tmp1, tmp2) => {
 //   getRate()
@@ -180,17 +237,22 @@ const signup = () => {
     .then((response) => {
       const status = response.data.message;
       if (status === "true") {
-        alert("상품에 가입되었습니다.");
+        Toast.fire({
+          icon: "success",
+          title: "상품에 가입되었습니다.",
+        });
         store.getUserInfo();
       } else {
-        alert("이미 가입한 상품입니다.");
+        Toast.fire({
+          icon: "warning",
+          title: "이미 가입한 상품입니다",
+        });
       }
     })
     .catch((error) => {
       console.log(error);
     });
 };
-
 </script>
 
 <style scoped>
