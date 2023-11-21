@@ -6,6 +6,7 @@ urlpatterns = [
     path('duplicateID/', views.duplicateID),
     path('get_portfolioData/<int:portfolio_pk>', views.get_portfolioData),
     path('input_portfolioData/', views.input_portfolioData),
-    path('check_password/', views.check_password)
+    path('check_password/', views.check_password),
+    path('update/', views.updateinfo)
 ]
 

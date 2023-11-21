@@ -127,7 +127,7 @@ const searchArticle = function () {
   font-size: 5rem;
   color: #1c5f82;
   -webkit-text-stroke-width: 2px;
-  -webkit-text-stroke-color: white;
+  /* -webkit-text-stroke-color: white; */
   font-weight: 900;
   margin: 35px;
   text-shadow: -2px 0px white, 0px 2px white, 2px 0px white, 0px -2px white;
