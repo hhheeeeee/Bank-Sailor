@@ -14,7 +14,7 @@
     <td>
       <p>{{ article.username }}</p>
     </td>
-    <td>{{ article.created_at }}</td>
+    <td>{{ article.created_at.slice(0,10) }}</td>
     <!-- </tr> -->
   </tbody>
 </template>
