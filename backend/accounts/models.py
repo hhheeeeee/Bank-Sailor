@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.conf import settings
 
 class User(AbstractUser):
     username = models.CharField(max_length=30, unique=True)
@@ -70,3 +71,10 @@ class CustomAccountAdapter(DefaultAccountAdapter):
             # this adapter by adding
             user.save()
         return user
+
+class CustomPortfolio(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE
+    )
+    saving_style = models.CharField(max_length=10, null=True)
+    favorite_bank = models.CharField(max_length=10, null=True)
