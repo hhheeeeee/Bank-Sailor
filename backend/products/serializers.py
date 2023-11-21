@@ -37,6 +37,7 @@ class DepositProductListSerializer(serializers.ModelSerializer):
     class Meta:
         model = DepositProductList
         fields = '__all__'
+        read_only_fields = ('savingproduct', 'like_users')
 
 
 # 적금상품 리스트
@@ -44,3 +45,4 @@ class SavingProductListSerializer(serializers.ModelSerializer):
     class Meta:
         model = SavingProductList
         fields = '__all__'
+        read_only_fields = ('like_users',)

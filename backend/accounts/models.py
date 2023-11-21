@@ -10,7 +10,7 @@ class User(AbstractUser):
     money = models.IntegerField(blank=True, null=True)
     salary = models.IntegerField(blank=True, null=True)
     # 리스트 데이터 저장을 위해 Text 형태로 저장
-    financial_products = models.TextField(blank=True, null=True)
+    # financial_products = models.TextField(blank=True, null=True)
     # superuser fields
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -36,7 +36,7 @@ class CustomAccountAdapter(DefaultAccountAdapter):
         age = data.get("age")
         money = data.get("money")
         salary = data.get("salary")
-        financial_product = data.get("financial_products")
+        # financial_product = data.get("financial_products")
 
         user_email(user, email)
         user_username(user, username)
@@ -55,12 +55,12 @@ class CustomAccountAdapter(DefaultAccountAdapter):
             user.money = money
         if salary:
             user.salary = salary
-        if financial_product:
-            financial_products = user.financial_products.split(',')
-            financial_products.append(financial_product)
-            if len(financial_products) > 1:
-                financial_products = ','.join(financial_products)
-            user_field(user, "financial_products", financial_products)
+        # if financial_product:
+        #     financial_products = user.financial_products.split(',')
+        #     financial_products.append(financial_product)
+        #     if len(financial_products) > 1:
+        #         financial_products = ','.join(financial_products)
+        #     user_field(user, "financial_products", financial_products)
         if "password1" in data:
             user.set_password(data["password1"])
         else:

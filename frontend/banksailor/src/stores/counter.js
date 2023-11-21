@@ -49,12 +49,12 @@ export const useCounterStore = defineStore(
         },
       })
         .then((res) => {
-          console.log("counter.js : ", res);
           const password = password1;
           logIn({ username, password });
         })
         .catch((err) => {
-          console.log(err);
+          console.log("??????????");
+          console.log(err.json);
         });
     };
 
@@ -72,6 +72,7 @@ export const useCounterStore = defineStore(
         .then((res) => {
           console.log(res.data);
           token.value = res.data.key;
+          getUserInfo();
           router.push({ name: "home" });
         })
         .catch((err) => {

@@ -4,6 +4,7 @@ from allauth.account.adapter import get_adapter
 from .models import User, CustomPortfolio
 from dj_rest_auth.registration.serializers import RegisterSerializer
 from django.contrib.auth import get_user_model
+from products.models import DepositProductList, SavingProductList
 
 User = get_user_model()
 
@@ -16,7 +17,7 @@ class CustomRegisterSerializer(RegisterSerializer):
     age = serializers.IntegerField(required=False)
     money = serializers.IntegerField(required=False)
     salary = serializers.IntegerField(required=False)
-    financial_products = serializers.ListField(child=serializers.IntegerField(), required=False)
+    # financial_products = serializers.ListField(child=serializers.IntegerField(), required=False)
 
     def get_cleaned_data(self):
         return {
@@ -27,7 +28,7 @@ class CustomRegisterSerializer(RegisterSerializer):
             'age': self.validated_data.get('age', ''),
             'money': self.validated_data.get('money', ''),
             'salary': self.validated_data.get('salary', ''),
-            'financial_products': self.validated_data.get('financial_products', ''),
+            # 'financial_products': self.validated_data.get('financial_products', ''),
         }
 
 
@@ -40,10 +41,26 @@ class CustomRegisterSerializer(RegisterSerializer):
         return user
 
 
+class DepositSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DepositProductList
+        fields = '__all__' 
+
+class SavingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SavingProductList
+        fields = '__all__' 
+
+
+
+# getuserinfo하면 deposit까지 한번에 나오게 하려고!
 class CustomUserSerializer(serializers.ModelSerializer):
+    like_deposit = DepositSerializer(many=True, read_only=True)
+    like_saving = SavingSerializer(many=True, read_only=True)
     class Meta:
         model = User
-        fields = '__all__'  # 혹은 필요한 필드만 선택하여 나열
+        fields = '__all__'  
+
 
 class CustomPortfolioSerializer(serializers.ModelSerializer):
     username = serializers.CharField(source='user.username', read_only=True)

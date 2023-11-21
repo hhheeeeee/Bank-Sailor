@@ -4,7 +4,6 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.authtoken.models import Token
 from rest_framework import status
-
 from django.shortcuts import get_list_or_404, get_object_or_404
 
 from .models import DepositProduct, DepositOption, SavingProduct, SavingOption, DepositProductList, SavingProductList
@@ -349,26 +348,13 @@ def deposit_detail(request, fin_prdt_cd):
     # 해당 상품 가입하기
     elif request.method == 'POST':
         # 유저정보 불러오기
-        user = request.user
-
-        # 유저의 financial_products 필드를 업데이트
-        if user.financial_products:
-            # 이미 값이 있는 경우 쉼표로 구분하여 더해줌
-            # 중복값 체크
-            prdt_list = []
-            prdt_list = user.financial_products.split(',')
-            if fin_prdt_cd in prdt_list:
-                return Response({"message": "false"})
-            else:
-                user.financial_products += f',{fin_prdt_cd}'
+        deposit = DepositProductList.objects.get(fin_prdt_cd=fin_prdt_cd)
+        if request.user in deposit.like_users.all():
+            return Response({"message": "false"})
         else:
-            # 값이 없는 경우 새로운 값으로 설정
-            user.financial_products = fin_prdt_cd
+            deposit.like_users.add(request.user)
+            return Response({"message": "true"})
 
-        # 유저 정보 저장
-        user.save()
-
-        return Response({"message": "true"})
 
     # 해당 상품 금리 수정하기
     elif request.method == 'PUT':
@@ -386,25 +372,14 @@ def saving_detail(request, fin_prdt_cd):
         product = get_object_or_404(SavingProduct, fin_prdt_cd=fin_prdt_cd)
         serializer = SavingProductSerializer(product)
         return Response(serializer.data)
+    
     elif request.method == 'POST':
         # 유저정보 불러오기
-        user = request.user
-
-        # 유저의 financial_products 필드를 업데이트
-        if user.financial_products:
-            # 이미 값이 있는 경우 쉼표로 구분하여 더해줌
-            # 중복값 체크
-            prdt_list = []
-            prdt_list = user.financial_products.split(',')
-            if fin_prdt_cd in prdt_list:
-                return Response({"message": "false"})
-            else:
-                user.financial_products += f',{fin_prdt_cd}'
+        saving = SavingProductList.objects.get(fin_prdt_cd=fin_prdt_cd)
+        if request.user in saving.like_users.all():
+            return Response({"message": "false"})
         else:
-            # 값이 없는 경우 새로운 값으로 설정
-            user.financial_products = fin_prdt_cd
+            saving.like_users.add(request.user)
+            return Response({"message": "true"})
 
-        # 유저 정보 저장
-        user.save()
-
-        return Response({"message": "true"})
+        # return Response({"message": "true"})
