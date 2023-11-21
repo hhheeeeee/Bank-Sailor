@@ -118,9 +118,13 @@ def deposit_list(request):
 
         # 6개월, 12개월, 24개월, 36개월 이자 정보를 저장할 인스턴스
         rate_6 = None
+        rate_6_max = None
         rate_12 = None
+        rate_12_max = None
         rate_24 = None
+        rate_24_max = None
         rate_36 = None
+        rate_36_max = None
 
         # 기간별로 이자 정보 등록하기
         for option in options:
@@ -129,26 +133,17 @@ def deposit_list(request):
             rate2 = option.intr_rate2
 
             if period == '6':
-                # null 값을 대비하여 유효성 검사하기
-                if rate1:
-                    rate_6 = rate1
-                else:
-                    rate_6 = rate2
+                rate_6 = rate1
+                rate_6_max = rate2
             elif period == '12':
-                if rate1:
-                    rate_12 = rate1
-                else:
-                    rate_12 = rate2
+                rate_12 = rate1
+                rate_12_max = rate2
             elif period == '24':
-                if rate1:
-                    rate_24 = rate1
-                else:
-                    rate_24 = rate2
+                rate_24 = rate1
+                rate_24_max = rate2
             elif period == '36':
-                if rate1:
-                    rate_36 = rate1
-                else:
-                    rate_36 = rate2
+                rate_36 = rate1
+                rate_36_max = rate2
 
 
         # DB 에 넣을 data 취합하기
@@ -158,9 +153,13 @@ def deposit_list(request):
             'kor_co_nm': product.kor_co_nm,
             'fin_prdt_nm': product.fin_prdt_nm,
             'rate_6': rate_6,
+            'rate_6_max': rate_6_max,
             'rate_12': rate_12,
+            'rate_12_max': rate_12_max,
             'rate_24': rate_24,
+            'rate_24_max': rate_24_max,
             'rate_36': rate_36,
+            'rate_36_max': rate_36_max,
         }
 
         serializer = DepositProductListSerializer(data=prdt_with_rate)
@@ -281,9 +280,13 @@ def saving_list(request):
 
         # 6개월, 12개월, 24개월, 36개월 이자 정보를 저장할 인스턴스
         rate_6 = None
+        rate_6_max = None
         rate_12 = None
+        rate_12_max = None
         rate_24 = None
+        rate_24_max = None
         rate_36 = None
+        rate_36_max = None
 
         # 기간별로 이자 정보 등록하기
         for option in options:
@@ -292,26 +295,17 @@ def saving_list(request):
             rate2 = option.intr_rate2
 
             if period == '6':
-                # null 값을 대비하여 유효성 검사하기
-                if rate1:
-                    rate_6 = rate1
-                else:
-                    rate_6 = rate2
+                rate_6 = rate1
+                rate_6_max = rate2
             elif period == '12':
-                if rate1:
-                    rate_12 = rate1
-                else:
-                    rate_12 = rate2
+                rate_12 = rate1
+                rate_12_max = rate2
             elif period == '24':
-                if rate1:
-                    rate_24 = rate1
-                else:
-                    rate_24 = rate2
+                rate_24 = rate1
+                rate_24_max = rate2
             elif period == '36':
-                if rate1:
-                    rate_36 = rate1
-                else:
-                    rate_36 = rate2
+                rate_36 = rate1
+                rate_36_max = rate2
 
 
         # DB 에 넣을 data 취합하기
@@ -321,9 +315,13 @@ def saving_list(request):
             'kor_co_nm': product.kor_co_nm,
             'fin_prdt_nm': product.fin_prdt_nm,
             'rate_6': rate_6,
+            'rate_6_max': rate_6_max,
             'rate_12': rate_12,
+            'rate_12_max': rate_12_max,
             'rate_24': rate_24,
+            'rate_24_max': rate_24_max,
             'rate_36': rate_36,
+            'rate_36_max': rate_36_max,
         }
 
         serializer = SavingProductListSerializer(data=prdt_with_rate)
