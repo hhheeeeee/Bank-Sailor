@@ -46,19 +46,23 @@
       <div class="info-title">금리</div>
       <div class="info-content">
         <p>
-          6개월: {{ rateInfo.rate_6 ? rateInfo.rate_6 : "없음" }}
+          6개월: {{ rateInfo.rate_6 ? `${rateInfo.rate_6}%` : "없음" }}
+          (최고 {{ rateInfo.rate_6_max ? `${rateInfo.rate_6_max}%` : "없음" }})
           <button class="btn btn-warning p-0" @click="goUpdate6">수정</button>
         </p>
         <p>
-          12개월: {{ rateInfo.rate_12 ? rateInfo.rate_12 : "없음" }}
+          12개월: {{ rateInfo.rate_12 ? `${rateInfo.rate_12}%` : "없음" }}
+          (최고 {{ rateInfo.rate_12_max ? `${rateInfo.rate_12_max}%` : "없음" }})
           <button class="btn btn-warning p-0" @click="goUpdate12">수정</button>
         </p>
         <p>
-          24개월: {{ rateInfo.rate_24 ? rateInfo.rate_24 : "없음" }}
+          24개월: {{ rateInfo.rate_24 ? `${rateInfo.rate_24}%` : "없음" }}
+          (최고 {{ rateInfo.rate_24_max ? `${rateInfo.rate_24_max}%` : "없음" }})
           <button class="btn btn-warning p-0" @click="goUpdate24">수정</button>
         </p>
         <p>
-          36개월: {{ rateInfo.rate_36 ? rateInfo.rate_36 : "없음" }}
+          36개월: {{ rateInfo.rate_36 ? `${rateInfo.rate_36}%` : "없음" }}
+          (최고 {{ rateInfo.rate_36_max ? `${rateInfo.rate_36_max}%` : "없음" }})
           <button class="btn btn-warning p-0" @click="goUpdate36">수정</button>
         </p>
       </div>
@@ -103,7 +107,7 @@ const goUpdate6 = () => {
   router.push({
     name: "depositrateupdate",
     params: { id: product.value.fin_prdt_cd, rate: 6 },
-    query: { rateValue: rateInfo.rate_6 },
+    query: { rateValue: rateInfo.value.rate_6 },
   });
 };
 const goUpdate12 = () => {
@@ -111,6 +115,7 @@ const goUpdate12 = () => {
     name: "depositrateupdate",
     params: { id: product.value.fin_prdt_cd, rate: 12 },
     rate: rateInfo.rate_12,
+    query: { rateValue: rateInfo.value.rate_12 },
   });
 };
 const goUpdate24 = () => {
@@ -118,6 +123,7 @@ const goUpdate24 = () => {
     name: "depositrateupdate",
     params: { id: product.value.fin_prdt_cd, rate: 24 },
     rate: rateInfo.rate_24,
+    query: { rateValue: rateInfo.value.rate_24 },
   });
 };
 const goUpdate36 = () => {
@@ -125,6 +131,7 @@ const goUpdate36 = () => {
     name: "depositrateupdate",
     params: { id: product.value.fin_prdt_cd, rate: 36 },
     rate: rateInfo.rate_36,
+    query: { rateValue: rateInfo.value.rate_36 },
   });
 };
 

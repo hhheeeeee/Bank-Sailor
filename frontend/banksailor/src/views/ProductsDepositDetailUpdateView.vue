@@ -3,7 +3,7 @@
     <a href="#" @click.prevent="goBack">뒤로가기</a>
     <h1>금리 수정</h1>
     <hr>
-    <p>현재 금리: {{ rate }}</p>
+    <p>현재 금리: {{ this.$route.query.rateValue }}</p>
   </div>
 </template>
 
