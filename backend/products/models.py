@@ -1,4 +1,5 @@
 from django.db import models
+from accounts.models import User
 
 
 # 정기예금 상품 테이블
@@ -24,7 +25,6 @@ class DepositProduct(models.Model):
 class DepositOption(models.Model):
     # 상품참조할 외래키 설정
     depositproduct = models.ForeignKey(DepositProduct, on_delete=models.CASCADE)
-    
     dcls_month = models.CharField(max_length=50)
     fin_co_no = models.CharField(max_length=50)
     fin_prdt_cd = models.CharField(max_length=50)
@@ -37,6 +37,8 @@ class DepositOption(models.Model):
 
 # 정기예금 상품 리스트화 모델
 class DepositProductList(models.Model):
+    # 유저랑 연결
+    like_users = models.ManyToManyField(User, related_name='like_deposit')
     dcls_month = models.CharField(max_length=50)                  
     fin_prdt_cd = models.CharField(max_length=50)
     kor_co_nm = models.CharField(max_length=50)
@@ -89,6 +91,8 @@ class SavingOption(models.Model):
 
 # 적금 상품 리스트화 모델
 class SavingProductList(models.Model):
+    # 유저랑 연결
+    like_users = models.ManyToManyField(User, related_name='like_saving')
     dcls_month = models.CharField(max_length=50)                  
     fin_prdt_cd = models.CharField(max_length=50)
     kor_co_nm = models.CharField(max_length=50)

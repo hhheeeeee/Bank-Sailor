@@ -1,5 +1,5 @@
 <template>
-  <Form
+  <!-- <Form
     @submit.prevent="UpdateInfo"
     :validation-schema="schema"
     v-slot="{ errors }"
@@ -31,7 +31,7 @@
       <template v-for="item in financial_products" :key="item">
         <p>{{ item }} <button>x</button></p>
       </template>
-      <!-- <input type="text" v-model="financial_products" /> -->
+      <input type="text" v-model="financial_products" /> 
 
       <button
         :disabled="!isFormValid"
@@ -42,7 +42,9 @@
         제ㅐ출
       </button>
     </form>
-  </Form>
+  </Form> -->
+  <p>{{ store.userInfo }}</p>
+  <p>{{ typeof store.userInfo }}</p>
 </template>
 
 <script setup>
@@ -60,6 +62,7 @@ const money = ref("");
 const salary = ref("");
 const financial_products = ref([]);
 const isChecked = ref(null);
+const test = ref(null);
 
 onMounted(() => {
   // username.value = store.userInfo.username;
@@ -68,10 +71,12 @@ onMounted(() => {
   age.value = store.userInfo.age;
   money.value = store.userInfo.money;
   salary.value = store.userInfo.salary;
-  financial_products.value = store.userInfo.financial_products.split(",");
+  financial_products.value = store.userInfo.financial_products;
 });
 
-// watchEffect(() => {});
+watchEffect(() => {
+  store.getUserInfo();
+});
 
 const UpdateInfo = function () {
   const payload = {

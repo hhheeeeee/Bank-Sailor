@@ -49,7 +49,7 @@ const router = useRouter();
 
 const title = ref(null);
 const content = ref(null);
-const category = ref(null);
+const selectedCategory = ref(null);
 const categoryList = [
   {
     id: 1,
@@ -68,8 +68,7 @@ const createArticle = function () {
     data: {
       title: title.value,
       content: content.value,
-      // category: category.value,
-      category: "잡담",
+      category: selectedCategory.value,
     },
     headers: {
       Authorization: `Token ${store.token}`,
