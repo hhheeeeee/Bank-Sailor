@@ -8,7 +8,8 @@
       <input type="text" v-model="userInfo.username">
     </div>
     
-    <form v-if="portfolio.length > 0 && portfolio[0].user === userInfo.id" @submit.prevent="editPortfolio">
+    <form v-if="portfolio.length > 0 && portfolio[0].user === userInfo.id" @submit.prevent="editPortfolio(portfolio[0].id)">
+      수정폼
       <div>
         <label for="ID">비밀번호 : </label>
         <input type="text">
@@ -77,7 +78,6 @@ import axios from 'axios'
 
 const store = useCounterStore()
 const userInfo = store.userInfo
-const getUserInfo = store.getUserInfo()
 const portfolio = ref([])
 const saving_style = ref('')
 const favorite_bank = ref('')
@@ -108,9 +108,9 @@ onMounted(() => {
   getPortfolio()
 })
 
-console.log(store.token)
-console.log('포폴', portfolio)
-console.log('userInfo', userInfo)
+// console.log(store.token)
+// console.log('포폴', portfolio)
+// console.log('userInfo', userInfo)
 
 const getPortfolio = function () {
       axios({
@@ -118,9 +118,8 @@ const getPortfolio = function () {
         url: `${store.API_URL}/accounts/find/input_portfolioData/`,
       })
         .then((res) => {
-          console.log('포폴겟: ', res.data)
           portfolio.value = res.data;
-          userInfo.value = getUserInfo()
+          console.log(portfolio)
         })
         .catch((err) => {
           console.log(err);
@@ -142,13 +141,14 @@ const getPortfolio = function () {
       })
         .then((res) => {
           console.log(res.data);
+          alert('정상적으로 저장되었습니다!')
         })
         .catch((error) => {
           console.log(error);
         });
     };
 
-    const editPortfolio = function () {
+    const editPortfolio = function (portfolioId) {
       axios({
         method: "put",
         url: `${store.API_URL}/accounts/find/get_portfolioData/`,
