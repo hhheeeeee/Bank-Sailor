@@ -11,6 +11,12 @@ from .serializers import DepositProductSerializer, DepositOptionSerializer, Savi
 
 from accounts.models import User
 
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.core.mail import send_mail
+import time
+
+
 
 # 정기예금 실행 시 작동
 # 금융감독원의 "정기예금" API 로 부터 자료를 수신받아
@@ -417,3 +423,33 @@ def saving_detail(request, fin_prdt_cd):
             return Response({"message": "true"})
         else:
             return Response({"message": "false"})
+
+
+
+
+# @receiver(post_save, sender=DepositProductList)
+# def send_email_on_change(sender, instance, **kwargs):
+#     if kwargs.get('created', False):
+#         return
+
+#     # print('실행!!!!!!')
+#     # 이메일 내용
+#     send_mail(
+#         'Subject',
+#         'Message.',
+#         'xorms5712@naver.com',
+#         ['xorms5712@gmail.com'],
+#     )
+#     time.sleep(1)
+
+
+
+@api_view(['GET'])
+def send_email_on_change(request):
+    send_mail(
+        'Subject',
+        'Message.',
+        'xorms5712@naver.com',
+        ['xorms1119@naver.com',],
+    )
+    return Response(request.data)

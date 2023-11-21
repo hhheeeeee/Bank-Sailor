@@ -176,3 +176,11 @@ AUTHENTICATION_BACKENDS = (
     # django-allauth 패키지에서 제공하는 인증 백엔드 클래스.
     "allauth.account.auth_backends.AuthenticationBackend",
 )
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.naver.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'xorms5712'
+EMAIL_HOST_PASSWORD = 'yeonrang'
+DEFAULT_FROM_EMAIL = 'xorms5712@naver.com'
