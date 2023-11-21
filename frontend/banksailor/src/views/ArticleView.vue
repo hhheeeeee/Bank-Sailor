@@ -1,29 +1,32 @@
 <template>
-  <div>
-    <h1 class="title">게시판</h1>
+  <div class = container1>
 
-    <form @submit.prevent="searchArticle" class="search-bar">
-      <select v-model="key_for_search">
-        <option value="all">전체</option>
-        <option value="category">분류</option>
-        <option value="title">제목</option>
-        <option value="content">내용</option>
-        <option value="user">작성자</option>
-      </select>
-      &nbsp;   <!-- 줄바꿈없이 간격띄우는 인자 -->
-      <input type="text" v-model="value_for_search">
-      &nbsp;
-      <input type="submit" label="검색">
-    </form>
+    <div class="head">
+      <h1 class="title">게시판</h1>
+      <form @submit.prevent="searchArticle" class="search-bar">
+        <select v-model="key_for_search">
+          <option disabled value="">선택</option>
+          <option value="category">분류</option>
+          <option value="title" :selected="true">제목</option>
+          <option value="content">내용</option>
+          <option value="user">작성자</option>
+        </select>
+        &nbsp;   <!-- 줄바꿈없이 간격띄우는 인자 -->
+        <input type="text" v-model="value_for_search">
+        &nbsp;
+        <input type="submit" value="검색">
+      </form>
+    </div>
 
     <hr>
 
-    <div v-if="searchfinish===true">
-      <h3>총 {{ filtered_article.length }}건의 검색결과가 있습니다</h3>
-      <hr>
-      <div>
-        <table class="table">
-          <thead>
+    <div class="board">
+      <div v-if="searchfinish===true">
+        <h3>총 {{ filtered_article.length }}건의 검색결과가 있습니다</h3>
+        <hr>
+        <div>
+          <table class="table">
+            <thead>
               <th>번호</th>
               <th>분류</th>
               <th>제목</th>
@@ -36,13 +39,13 @@
               <td>{{ article.category }}</td>
               <td>{{ article.title }}</td>
               <td>{{ article.username }}</td>
-              <td>{{ article.created_at.substring(0, 10) }}</td>
+              <td>{{ article.created_at.slice(0, 10) }}</td>
             </tr>
           </tbody>
         </table>
         <button @click="(searchfinish = !searchfinish)">목록가기</button>
       </div>
-
+      
     </div>
     
     <div v-else>
@@ -53,6 +56,7 @@
         </RouterLink>
       </div>      
       <div>
+      </div>
         
       </div>
     </div>
@@ -69,15 +73,11 @@ import ArticleList from '@/components/ArticleViewComponents/ArticleList.vue'
 const store = useCounterStore()
 const searchfinish = ref(false)
 const key_for_search = ref(null)
-const value_for_search = ref(null)
+const value_for_search = ref('')
 
 onMounted(() => {
-  store.getArticles(),
-  store.getComments(),
-  store.getUserInfo()
+  store.getArticles()
 })
-
-console.log(store.userInfo)
 
 const filtered_article = computed(() => {
   if (key_for_search.value && value_for_search.value) {
@@ -94,6 +94,7 @@ const filtered_article = computed(() => {
     } else {
       return store.articles.filter((article) =>
         article[key].includes(value)
+        
       )
     }
   } else {
@@ -102,7 +103,7 @@ const filtered_article = computed(() => {
 });
 
 const searchArticle = function () {
-  if (value_for_search == '') {
+  if (!value_for_search.value) {
     alert('검색어를 입력해주세용!')
   } else {
     searchfinish.value = !searchfinish.value
@@ -112,6 +113,7 @@ const searchArticle = function () {
 </script>
 
 <style scoped>
+
 .title {
   text-align: center;
   font-size: 5rem;

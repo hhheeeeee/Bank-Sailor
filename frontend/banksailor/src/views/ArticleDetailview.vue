@@ -94,6 +94,7 @@ console.log(store.token)
 console.log(userInfo)
 
 onMounted(() => {
+  store.getComments(),
   axios({
     method: 'get',
     url: `${store.API_URL}/articles/articles/${route.params.id}/`
