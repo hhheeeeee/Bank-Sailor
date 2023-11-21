@@ -35,6 +35,22 @@ class DepositOption(models.Model):
     intr_rate2 = models.FloatField(blank=True, null=True)
 
 
+# 정기예금 상품 리스트화 모델
+class DepositProductList(models.Model):
+    dcls_month = models.CharField(max_length=50)                  
+    fin_prdt_cd = models.CharField(max_length=50)
+    kor_co_nm = models.CharField(max_length=50)
+    fin_prdt_nm = models.CharField(max_length=100)
+    rate_6 = models.FloatField(blank=True, null=True)
+    rate_6_max = models.FloatField(blank=True, null=True)
+    rate_12 = models.FloatField(blank=True, null=True)
+    rate_12_max = models.FloatField(blank=True, null=True)
+    rate_24 = models.FloatField(blank=True, null=True)
+    rate_24_max = models.FloatField(blank=True, null=True)
+    rate_36 = models.FloatField(blank=True, null=True)
+    rate_36_max = models.FloatField(blank=True, null=True)
+
+
 # 적금 상품 테이블
 class SavingProduct(models.Model):
     dcls_month = models.CharField(max_length=50)   
@@ -71,18 +87,6 @@ class SavingOption(models.Model):
     intr_rate2 = models.FloatField(blank=True, null=True)
 
 
-# 정기예금 상품 리스트화 모델
-class DepositProductList(models.Model):
-    dcls_month = models.CharField(max_length=50)                  
-    fin_prdt_cd = models.CharField(max_length=50)
-    kor_co_nm = models.CharField(max_length=50)
-    fin_prdt_nm = models.CharField(max_length=100)
-    rate_6 = models.FloatField(blank=True, null=True)
-    rate_12 = models.FloatField(blank=True, null=True)
-    rate_24 = models.FloatField(blank=True, null=True)
-    rate_36 = models.FloatField(blank=True, null=True)
-
-
 # 적금 상품 리스트화 모델
 class SavingProductList(models.Model):
     dcls_month = models.CharField(max_length=50)                  
@@ -90,8 +94,15 @@ class SavingProductList(models.Model):
     kor_co_nm = models.CharField(max_length=50)
     fin_prdt_nm = models.CharField(max_length=100)
     rate_6 = models.FloatField(blank=True, null=True)
+    rate_6_max = models.FloatField(blank=True, null=True)
     rate_12 = models.FloatField(blank=True, null=True)
+    rate_12_max = models.FloatField(blank=True, null=True)
     rate_24 = models.FloatField(blank=True, null=True)
+    rate_24_max = models.FloatField(blank=True, null=True)
     rate_36 = models.FloatField(blank=True, null=True)
+    rate_36_max = models.FloatField(blank=True, null=True)
+
+
+
 
     
