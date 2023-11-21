@@ -8,8 +8,9 @@
       <input type="text" v-model="userInfo.username">
     </div>
     
-    <form v-if="portfolio.length > 0 && portfolio[0].user === userInfo.id" @submit.prevent="editPortfolio(portfolio[0].id)">
+    <form v-if="portfolio.length > 0 && portfolio.some(item => item.user === userInfo.id)" @submit.prevent="editPortfolio(portfolio.find(item => item.user === userInfo.id).id)">
       수정폼
+      {{ portfolio }}
       <div>
         <label for="ID">비밀번호 : </label>
         <input type="text">
@@ -151,7 +152,7 @@ const getPortfolio = function () {
     const editPortfolio = function (portfolioId) {
       axios({
         method: "put",
-        url: `${store.API_URL}/accounts/find/get_portfolioData/`,
+        url: `${store.API_URL}/accounts/find/get_portfolioData/${portfolioId}`,
         data: {
           user: userInfo.id,
           saving_style: saving_style.value,
@@ -163,6 +164,7 @@ const getPortfolio = function () {
       })
         .then((res) => {
           console.log(res.data);
+          alert('수정 완료')
         })
         .catch((error) => {
           console.log(error);
