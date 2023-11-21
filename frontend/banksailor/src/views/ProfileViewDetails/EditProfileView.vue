@@ -3,52 +3,70 @@
 
     <h1>포트폴리오 수정</h1>
 
-    <form @submit.prevent="createPortfolio">
     <div>
       <label for="ID">ID : </label>
-      <!-- <input type="text" v-model="userInfo.user"> -->
+      <input type="text" v-model="userInfo.username">
     </div>
-
-    <div>
-      <label for="password">비밀번호 : </label>
-      <input type="text" v-model="password">
-    </div>
-
-    <div>
-      저축성향 : 
-
-      <div>
-        <input v-if="portfolio" type="radio" id="economy" name="saving_style" value="economy" v-model="portfolio.saving_style"/>
-        
-        <input v-else type="radio" id="economy" name="saving_style" value="economy" v-model="savingstyle"/>
-          <label for="savingstyle">알뜰형</label>
-      </div>
-      <div>
-        <input v-if="portfolio" type="radio" id="challenge" name="saving_style" value="challenge" v-model="portfolio.saving_style"/>
-
-        <input v-else type="radio" id="challenge" name="saving_style" value="challenge" v-model="savingstyle"/>
-        <label for="savingstyle">도전형</label>
-      </div>
-      <div>
-        <input v-if="portfolio" type="radio" id="diligent" name="saving_style" value="diligent" v-model="portfolio.saving_style"/>
-
-        <input v-else type="radio" id="diligent" name="saving_style" value="diligent" v-model="savingstyle"/>
-        <label for="savingstyle">성실형</label>
-      </div>
-    </div>
-
-    <div>
-        <label for="favorite_bank">최애은행 : </label>
-        <select v-if="portfolio" v-model="portfolio.favorite_bank">
-          <option v-for="bank in banks" :key="bank" :value="bank">{{ bank }}</option>
-        </select>
-        <select v-else v-model="favoritebank">
-          <option v-for="bank in banks" :key="bank" :value="bank">{{ bank }}</option>
-        </select>
-      </div>
     
-    <input type="submit" value="저장하기">
+    <form v-if="portfolio.length > 0 && portfolio.some(item => item.user === userInfo.id)" @submit.prevent="editPortfolio(portfolio.find(item => item.user === userInfo.id).id)">
+      수정폼
+      {{ portfolio }}
+      <div>
+        <label for="ID">비밀번호 : </label>
+        <input type="text">
+      </div>
+      <div>
+        저축성향 : 
+        <div>
+          <input type="radio" id="economy" name="saving_style" value="economy" v-model="saving_style">
+          <label for="economy">알뜰형</label>
+        </div>
+        <div>
+          <input type="radio" id="challenge" name="saving_style" value="challenge" v-model="saving_style">
+          <label for="challenge">도전형</label>
+        </div>
+        <div>
+          <input type="radio" id="ecnonomy" name="saving_style" value="diligent" v-model="saving_style">
+          <label for="diligent">성실형</label>
+        </div>
+      </div>
+      <div>
+        <label for="favorite_bank">최애은행 : </label>
+          <select v-model="favorite_bank">
+            <option v-for="bank in banks" :key="bank" :value="bank">{{ bank }}</option>
+          </select>
+        </div>
+      <input type="submit" value="저장하기">
+    </form>
 
+    <form v-else @submit.prevent="createPortfolio">
+      크리에이트 폼
+      <div>
+        <label for="ID">비밀번호 : </label>
+        <input type="text">
+      </div>
+      <div>
+        저축성향 : 
+        <div>
+          <input type="radio" id="economy" name="saving_style" value="economy" v-model="saving_style">
+          <label for="economy">알뜰형</label>
+        </div>
+        <div>
+          <input type="radio" id="challenge" name="saving_style" value="challenge" v-model="saving_style">
+          <label for="challenge">도전형</label>
+        </div>
+        <div>
+          <input type="radio" id="ecnonomy" name="saving_style" value="diligent" v-model="saving_style">
+          <label for="diligent">성실형</label>
+        </div>
+      </div>
+      <div>
+        <label for="favorite_bank">최애은행 : </label>
+          <select v-model="favorite_bank">
+            <option v-for="bank in banks" :key="bank" :value="bank">{{ bank }}</option>
+          </select>
+        </div>
+      <input type="submit" value="저장하기">
     </form>
 
   </div>
@@ -61,9 +79,9 @@ import axios from 'axios'
 
 const store = useCounterStore()
 const userInfo = store.userInfo
-const portfolio = ref(null)
-const savingstyle = ref('')
-const favoritebank = ref('')
+const portfolio = ref([])
+const saving_style = ref('')
+const favorite_bank = ref('')
 const banks = [
   "KEB하나은행",
   "SC제일은행",
@@ -91,9 +109,9 @@ onMounted(() => {
   getPortfolio()
 })
 
-console.log(store.token)
-console.log('포폴', portfolio)
-console.log('userInfo', store.getUserInfo)
+// console.log(store.token)
+// console.log('포폴', portfolio)
+// console.log('userInfo', userInfo)
 
 const getPortfolio = function () {
       axios({
@@ -101,9 +119,8 @@ const getPortfolio = function () {
         url: `${store.API_URL}/accounts/find/input_portfolioData/`,
       })
         .then((res) => {
-          console.log('포폴겟: ', res.data)
           portfolio.value = res.data;
-
+          console.log(portfolio)
         })
         .catch((err) => {
           console.log(err);
@@ -115,8 +132,9 @@ const getPortfolio = function () {
         method: "post",
         url: `${store.API_URL}/accounts/find/input_portfolioData/`,
         data: {
-          saving_style: savingstyle.value,
-          favorite_bank: favoritebank.value,
+          user: userInfo.id,
+          saving_style: saving_style.value,
+          favorite_bank: favorite_bank.value,
         },
         headers: {
           Authorization: `Token ${store.token}`
@@ -124,6 +142,29 @@ const getPortfolio = function () {
       })
         .then((res) => {
           console.log(res.data);
+          alert('정상적으로 저장되었습니다!')
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
+    const editPortfolio = function (portfolioId) {
+      axios({
+        method: "put",
+        url: `${store.API_URL}/accounts/find/get_portfolioData/${portfolioId}`,
+        data: {
+          user: userInfo.id,
+          saving_style: saving_style.value,
+          favorite_bank: favorite_bank.value,
+        },
+        headers: {
+          Authorization: `Token ${store.token}`
+        }
+      })
+        .then((res) => {
+          console.log(res.data);
+          alert('수정 완료')
         })
         .catch((error) => {
           console.log(error);

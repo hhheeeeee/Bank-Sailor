@@ -18,6 +18,21 @@ def duplicateID(request):
         return Response(1)
 
 
+@api_view(['GET', 'PUT'])
+def get_portfolioData(request, portfolio_pk):
+    portfolio = CustomPortfolio.objects.get(pk=portfolio_pk)
+
+    if request.method == 'GET':
+        serializer = CustomPortfolioSerializer(portfolio)
+        return Response(serializer.data)
+
+    elif request.method == 'PUT':
+        serializer = CustomPortfolioSerializer(portfolio, data=request.data, partial=True)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data)
+
+
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticatedOrReadOnly])
 def input_portfolioData(request):
@@ -25,10 +40,12 @@ def input_portfolioData(request):
         portfolios = CustomPortfolio.objects.all()
         serializer = CustomPortfolioSerializer(portfolios, many=True)
         return Response(serializer.data)
-    
+
     if request.method == 'POST':
         serializer = CustomPortfolioSerializer(data=request.data)
+        print(serializer)
         if serializer.is_valid(raise_exception=True):
+            print(serializer)
             serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         
