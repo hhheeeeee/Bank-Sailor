@@ -1,53 +1,48 @@
 <template>
-  <!-- <Form
-    @submit.prevent="UpdateInfo"
-    :validation-schema="schema"
-    v-slot="{ errors }"
-  >
-    <h1>가입 폼</h1>
-    <form @submit.prevent="signUp">
-      <br />
-      <p>닉넴</p>
-      <Field name="nickname" v-model="nickname" />
-      <span class="warning">{{ errors.nickname }}</span>
+  <div class="container1">
+    <Form
+      @submit.prevent="UpdateInfo"
+      :validation-schema="schema"
+      v-slot="{ errors }"
+      class="FF"
+    >
+      <form @submit.prevent="signUp" class="customform">
+        <br />
+        <p>닉넴</p>
+        <Field name="nickname" v-model="nickname" />
+        <span class="warning">{{ errors.nickname }}</span>
 
-      <p>이메일</p>
-      <Field name="email" v-model="email" />
-      <span class="warning">{{ errors.email }}</span>
+        <p>이메일</p>
+        <Field name="email" v-model="email" />
+        <span class="warning">{{ errors.email }}</span>
 
-      <p>나이</p>
-      <Field name="age" type="number" v-model="age" />
-      <span class="warning">{{ errors.age }}</span>
+        <p>나이</p>
+        <Field name="age" type="number" v-model="age" />
+        <span class="warning">{{ errors.age }}</span>
 
-      <p>money</p>
-      <Field name="money" type="number" v-model="money" />
-      <span class="warning">{{ errors.money }}</span>
+        <p>money</p>
+        <Field name="money" type="number" v-model="money" />
+        <span class="warning">{{ errors.money }}</span>
 
-      <p>salary</p>
-      <Field name="salary" type="number" v-model="salary" />
-      <span class="warning">{{ errors.salary }}</span>
-      <br />
-      <p>내가 가입한것들</p>
-      <template v-for="item in financial_products" :key="item">
-        <p>{{ item }} <button>x</button></p>
-      </template>
-      <input type="text" v-model="financial_products" /> 
-
-      <button
-        :disabled="!isFormValid"
-        type="submit"
-        value="가입하기"
-        class="submit"
-      >
-        제ㅐ출
-      </button>
-    </form>
-  </Form> -->
-  <p>{{ store.userInfo }}</p>
-  <p>{{ typeof store.userInfo }}</p>
+        <p>salary</p>
+        <Field name="salary" type="number" v-model="salary" />
+        <span class="warning">{{ errors.salary }}</span>
+        <br />
+        <button type="submit" value="가입하기" class="submit">제ㅐ출</button>
+        <p>내가 가입한것들</p>
+        <p>deposit :</p>
+        <DepositChart />
+        <hr />
+        <p>saving :</p>
+        <SavingChart />
+      </form>
+    </Form>
+  </div>
 </template>
 
 <script setup>
+import DepositChart from "../../components/ProfileViewComponents/DepositChart.vue";
+import SavingChart from "../../components/ProfileViewComponents/SavingChart.vue";
 import { useCounterStore } from "@/stores/counter";
 import { onMounted, watchEffect, ref, computed } from "vue";
 import { Form, Field, defineRule } from "vee-validate";
@@ -60,9 +55,8 @@ const nickname = ref("");
 const age = ref("");
 const money = ref("");
 const salary = ref("");
-const financial_products = ref([]);
-const isChecked = ref(null);
-const test = ref(null);
+const like_deposit = ref(null);
+const like_saving = ref(null);
 
 onMounted(() => {
   // username.value = store.userInfo.username;
@@ -71,7 +65,8 @@ onMounted(() => {
   age.value = store.userInfo.age;
   money.value = store.userInfo.money;
   salary.value = store.userInfo.salary;
-  financial_products.value = store.userInfo.financial_products;
+  like_deposit.value = store.userInfo.like_deposit;
+  like_saving.value = store.userInfo.like_saving;
 });
 
 watchEffect(() => {
@@ -84,9 +79,8 @@ const UpdateInfo = function () {
     email: email.value,
     nickname: nickname.value,
     age: age.value,
-    money: money.value,
     salary: salary.value,
-    financial_products: financial_products.value,
+    money: money.value,
   };
   console.log(payload);
   // store.signUp(payload);
@@ -125,16 +119,16 @@ const schema = {
   salary: "required|validPositiveNumber",
 };
 
-const isFormValid = computed(() => {
-  return;
-  // username.value &&
-  email.value &&
-    nickname.value &&
-    age.value &&
-    money.value &&
-    salary.value &&
-    isChecked.value === 1;
-});
+// const isFormValid = computed(() => {
+// return;
+// username.value &&
+//   email.value &&
+//     nickname.value &&
+//     age.value &&
+//     money.value &&
+//     salary.value &&
+//     isChecked.value === 1;
+// });
 </script>
 
 <style scoped>
@@ -142,5 +136,13 @@ const isFormValid = computed(() => {
   width: 70%;
   background-color: white;
   border-radius: 30px;
+}
+
+.customform {
+  width: 100%;
+}
+
+.FF {
+  width: 600px;
 }
 </style>
