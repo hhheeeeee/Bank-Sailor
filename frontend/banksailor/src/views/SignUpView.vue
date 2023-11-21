@@ -116,7 +116,6 @@ const age = ref(null);
 const money = ref(null);
 const salary = ref(null);
 const isChecked = ref(null);
-// const financial_products = ref(null);
 
 const checkId = function () {
   // 아이디 값이 존재하면 axios 요청

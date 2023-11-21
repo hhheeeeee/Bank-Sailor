@@ -13,5 +13,6 @@ import NewHome from "@/components/HomeViewComponents/NewHome.vue";
 .containerbody {
   width: 100%;
   height: 91vh;
+  background-color: white;
 }
 </style>

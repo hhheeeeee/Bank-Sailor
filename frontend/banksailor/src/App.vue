@@ -63,6 +63,7 @@ nav {
   align-items: center;
   height: 9dvh;
   flex-wrap: nowrap;
+  background-color: white;
 }
 
 a {
