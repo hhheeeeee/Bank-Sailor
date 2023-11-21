@@ -1,9 +1,9 @@
 <template>
   <div>
-    <a href="#" @click="goDeposit">정기예금</a>  |
+    <a href="#" @click="goDeposit">정기예금</a> |
     <a href="#" @click="goSaving">적금</a>
     <h1>적금상품 상세정보</h1>
-    <hr>
+    <hr />
   </div>
   <div v-if="product" class="info-list">
     <div class="info">
@@ -46,24 +46,48 @@
       <div class="info-title">금리</div>
       <div class="info-content">
         <p v-if="rateInfo.rate_6">
-          6개월: {{ rateInfo.rate_6 ? rateInfo.rate_6 : "없음" }}
-          (최고: {{ rateInfo.rate_6_max ? rateInfo.rate_6_max : "없음" }})
-          <button v-if="store.userInfo.is_superuser" class="btn btn-warning p-0" @click="goUpdate6">수정</button>
+          6개월: {{ rateInfo.rate_6 ? rateInfo.rate_6 : "없음" }} (최고:
+          {{ rateInfo.rate_6_max ? rateInfo.rate_6_max : "없음" }})
+          <button
+            v-if="store.userInfo.is_superuser"
+            class="btn btn-warning p-0"
+            @click="goUpdate6"
+          >
+            수정
+          </button>
         </p>
         <p v-if="rateInfo.rate_12">
-          12개월: {{ rateInfo.rate_12 ? rateInfo.rate_12 : "없음" }}
-          (최고: {{ rateInfo.rate_12_max ? rateInfo.rate_12_max : "없음" }})
-          <button v-if="store.userInfo.is_superuser" class="btn btn-warning p-0" @click="goUpdate12">수정</button>
+          12개월: {{ rateInfo.rate_12 ? rateInfo.rate_12 : "없음" }} (최고:
+          {{ rateInfo.rate_12_max ? rateInfo.rate_12_max : "없음" }})
+          <button
+            v-if="store.userInfo.is_superuser"
+            class="btn btn-warning p-0"
+            @click="goUpdate12"
+          >
+            수정
+          </button>
         </p>
         <p v-if="rateInfo.rate_24">
-          24개월: {{ rateInfo.rate_24 ? rateInfo.rate_24 : "없음" }}
-          (최고: {{ rateInfo.rate_24_max ? rateInfo.rate_24_max : "없음" }})
-          <button v-if="store.userInfo.is_superuser" class="btn btn-warning p-0" @click="goUpdate24">수정</button>
+          24개월: {{ rateInfo.rate_24 ? rateInfo.rate_24 : "없음" }} (최고:
+          {{ rateInfo.rate_24_max ? rateInfo.rate_24_max : "없음" }})
+          <button
+            v-if="store.userInfo.is_superuser"
+            class="btn btn-warning p-0"
+            @click="goUpdate24"
+          >
+            수정
+          </button>
         </p>
         <p v-if="rateInfo.rate_36">
-          36개월: {{ rateInfo.rate_36 ? rateInfo.rate_36 : "없음" }}
-          (최고: {{ rateInfo.rate_36_max ? rateInfo.rate_36_max : "없음" }})
-          <button v-if="store.userInfo.is_superuser" class="btn btn-warning p-0" @click="goUpdate36">수정</button>
+          36개월: {{ rateInfo.rate_36 ? rateInfo.rate_36 : "없음" }} (최고:
+          {{ rateInfo.rate_36_max ? rateInfo.rate_36_max : "없음" }})
+          <button
+            v-if="store.userInfo.is_superuser"
+            class="btn btn-warning p-0"
+            @click="goUpdate36"
+          >
+            수정
+          </button>
         </p>
       </div>
     </div>
@@ -74,14 +98,25 @@
 
 <script setup>
 import { ref, watch, watchEffect } from "vue";
-import { useRouter, useRoute } from 'vue-router';
-import { onMounted } from 'vue';
-import { useCounterStore } from '@/stores/counter'
-import axios from 'axios'
+import { useRouter, useRoute } from "vue-router";
+import { onMounted } from "vue";
+import { useCounterStore } from "@/stores/counter";
+import axios from "axios";
+import Swal from "sweetalert2";
 
-const router = useRouter()
-const route = useRoute()
-
+const router = useRouter();
+const route = useRoute();
+const Toast = Swal.mixin({
+  toast: true,
+  position: "top-end",
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener("mouseenter", Swal.stopTimer);
+    toast.addEventListener("mouseleave", Swal.resumeTimer);
+  },
+});
 // axios 를 통해 불러온 단일 상품 데이터가 담길 변수
 const product = ref(null);
 
@@ -142,82 +177,82 @@ const getRate = () => {
   }
 };
 
-
-
 onMounted(() => {
   axios({
-    method: 'get',
-    url: `${store.API_URL}/products/saving/${route.params.id}/`
+    method: "get",
+    url: `${store.API_URL}/products/saving/${route.params.id}/`,
   })
-  .then((response) => {
-    product.value = response.data
-  })
-  .catch((error) => {
-    console.log(error)
-  })
-})
+    .then((response) => {
+      product.value = response.data;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
 
 // 이자정보 가져오기
 watchEffect(() => {
   getRate();
 });
 
-
 const signup = () => {
   axios({
     method: "post",
     url: `${store.API_URL}/products/saving/${route.params.id}/`,
     headers: {
-      Authorization: `Token ${store.token}`
-    }
+      Authorization: `Token ${store.token}`,
+    },
   })
-  .then((response) => {
-    const status = response.data.message
-    if (status === 'true') {
-      alert('상품에 가입되었습니다.')
-    } else {
-      alert('이미 가입한 상품입니다.')
-    }
-  })
-  .catch((error) => {
-    console.log(error)
-  })
-}
-
-
-
+    .then((response) => {
+      const status = response.data.message;
+      if (status === "true") {
+        Toast.fire({
+          icon: "success",
+          title: "상품에 가입되었습니다.",
+        });
+      } else {
+        Toast.fire({
+          icon: "warning",
+          title: "이미 가입한 상품입니다.",
+        });
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
 </script>
 
 <style scoped>
-  .main {
-    width: 80%;
-    margin: 0 auto;
-  }
+.main {
+  width: 80%;
+  margin: 0 auto;
+}
 
-  .datail-info {
-    width: 80%;
-    margin: 0 auto;
-  }
+.datail-info {
+  width: 80%;
+  margin: 0 auto;
+}
 
-  .info-list {
-    width: 80%;
-    margin: 0 auto;
-  }
+.info-list {
+  width: 80%;
+  margin: 0 auto;
+}
 
-  .info {
-    display: flex;
-    margin: 30px 0;
-  }
+.info {
+  display: flex;
+  margin: 30px 0;
+}
 
-  .info-title {
-    width: 20%;
-  }
-  .info-content {
-    width: 80%;
-  }
+.info-title {
+  width: 20%;
+}
+.info-content {
+  width: 80%;
+}
 
-  .signup {
-    width: 150px;
-    height: 50px;
-  }
+.signup {
+  width: 150px;
+  height: 50px;
+}
 </style>

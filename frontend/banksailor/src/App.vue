@@ -1,13 +1,32 @@
 <script setup>
+import Swal from "sweetalert2";
 import { RouterLink, RouterView } from "vue-router";
 import { useCounterStore } from "@/stores/counter";
 import { useRouter } from "vue-router";
 import { navbarLinks } from "/src/constants/navbarLinks";
+
 const store = useCounterStore();
 
-const customlogout = function () {
-  window.alert("정말 떠나실건가요..?");
-  store.logOut();
+const customlogout = async function () {
+  // Toast.fire({
+  //   icon: "error",
+  //   title: "",
+  // });
+  Swal.fire({
+    title: "정말 로그아웃하실건가요?",
+    text: "다시 되돌릴 수 없습니다",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "YES",
+    cancelButtonText: "NO",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire("로그아웃!", "성공적으로 로그아웃되었습니다", "success");
+      store.logOut();
+    }
+  });
 };
 
 const router = useRouter();
