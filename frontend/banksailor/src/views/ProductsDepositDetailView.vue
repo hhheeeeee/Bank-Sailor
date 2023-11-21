@@ -46,6 +46,7 @@
       <div class="info-title">금리</div>
       <div class="info-content">
         <p v-if="rateInfo.rate_6">
+<<<<<<< HEAD
           6개월: {{ rateInfo.rate_6 ? rateInfo.rate_6 : "없음" }} (최고:
           {{ rateInfo.rate_6_max ? rateInfo.rate_6_max : "없음" }})
           <button
@@ -88,6 +89,26 @@
           >
             수정
           </button>
+=======
+          6개월: {{ rateInfo.rate_6 ? `${rateInfo.rate_6}%` : "없음" }}
+          (최고: {{ rateInfo.rate_6_max ? `${rateInfo.rate_6_max}%` : "없음" }})
+          <button v-if="store.userInfo.is_superuser" class="btn btn-warning p-0" @click="goUpdate6" >수정</button>
+        </p>
+        <p v-if="rateInfo.rate_12">
+          12개월: {{ rateInfo.rate_12 ? `${rateInfo.rate_12}%` : "없음" }}
+          (최고: {{ rateInfo.rate_12_max ? `${rateInfo.rate_12_max}%` : "없음" }})
+          <button v-if="store.userInfo.is_superuser" class="btn btn-warning p-0" @click="goUpdate12">수정</button>
+        </p>
+        <p v-if="rateInfo.rate_24">
+          24개월: {{ rateInfo.rate_24 ? `${rateInfo.rate_24}%` : "없음" }}
+          (최고: {{ rateInfo.rate_24_max ? `${rateInfo.rate_24_max}%` : "없음" }})
+          <button v-if="store.userInfo.is_superuser" class="btn btn-warning p-0" @click="goUpdate24">수정</button>
+        </p>
+        <p v-if="rateInfo.rate_36">
+          36개월: {{ rateInfo.rate_36 ? `${rateInfo.rate_36}%` : "없음" }}
+          (최고: {{ rateInfo.rate_36_max ? `${rateInfo.rate_36_max}%` : "없음" }})
+          <button v-if="store.userInfo.is_superuser" class="btn btn-warning p-0" @click="goUpdate36">수정</button>
+>>>>>>> origin/feature/FE/ProductsView
         </p>
       </div>
     </div>
