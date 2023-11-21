@@ -76,7 +76,7 @@ const goHome = () => {
 
 <style scoped>
 nav {
-  border-bottom: 1px solid rgb(28, 54, 89);
+  /* border-bottom: 1px solid rgb(28, 54, 89); */
   display: flex;
   justify-content: center;
   align-items: center;

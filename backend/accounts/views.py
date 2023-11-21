@@ -66,3 +66,19 @@ def check_password(request):
         return Response({'verified': True}, status=status.HTTP_200_OK)
     else:
         return Response({'verified': False}, status=status.HTTP_401_UNAUTHORIZED)
+    
+
+
+@api_view(['PUT'])
+def updateinfo(request):
+    if request.method == 'PUT':
+        print(f'+++++++++++++++++++++++++++++++++++{request.user}')
+        user = User.objects.get(username=request.user)
+        print(f'&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&{user}')
+        user.email = request.data.get('email')
+        user.nickname = request.data.get('nickname')
+        user.age = request.data.get('age')
+        user.salary = request.data.get('salary')
+        user.money = request.data.get('money')
+        user.save()
+        return Response(status=status.HTTP_200_OK)
