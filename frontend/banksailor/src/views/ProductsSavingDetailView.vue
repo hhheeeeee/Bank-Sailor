@@ -5,22 +5,75 @@
     <h1>적금상품 상세정보</h1>
     <hr>
   </div>
-  <div v-if="product">
-    <p>공시 제출월: {{ product.dcls_month }}</p>
-    <p>금융회사명: {{ product.kor_co_nm }}</p>
-    <p>상품명: {{ product.fin_prdt_nm }}</p>
-    <p>가입제한: {{ product.join_deny }}</p>
-    <p>가입대상: {{ product.join_member }}</p>
-    <p>가입방법: {{ product.join_way }}</p>
-    <p>우대 조건: {{ product.spcl_cnd }}</p>
-    <p>기타 유의사항: {{ product.etc_note }}</p>
-    <p>최고한도: {{ product.max_limit }}</p>
+  <div v-if="product" class="info-list">
+    <div class="info">
+      <div class="info-title">공시 제출월:</div>
+      <div class="info-content">{{ product.dcls_month }}</div>
+    </div>
+    <div class="info">
+      <div class="info-title">상품명:</div>
+      <div class="info-content">{{ product.kor_co_nm }}</div>
+    </div>
+    <div class="info">
+      <div class="info-title">금융회사명:</div>
+      <div class="info-content">{{ product.fin_prdt_nm }}</div>
+    </div>
+    <div class="info">
+      <div class="info-title">가입제한:</div>
+      <div class="info-content">{{ product.join_deny }}</div>
+    </div>
+    <div class="info">
+      <div class="info-title">가입대상:</div>
+      <div class="info-content">{{ product.join_member }}</div>
+    </div>
+    <div class="info">
+      <div class="info-title">가입방법:</div>
+      <div class="info-content">{{ product.join_way }}</div>
+    </div>
+    <div class="info">
+      <div class="info-title">최고한도:</div>
+      <div class="info-content">{{ product.max_limit }}</div>
+    </div>
+    <div class="info">
+      <div class="info-title">우대 조건:</div>
+      <div class="info-content">{{ product.spcl_cnd }}</div>
+    </div>
+    <div class="info">
+      <div class="info-title">기타 유의사항:</div>
+      <div class="info-content">{{ product.etc_note }}</div>
+    </div>
+    <div class="info">
+      <div class="info-title">금리</div>
+      <div class="info-content">
+        <p v-if="rateInfo.rate_6">
+          6개월: {{ rateInfo.rate_6 ? rateInfo.rate_6 : "없음" }}
+          (최고: {{ rateInfo.rate_6_max ? rateInfo.rate_6_max : "없음" }})
+          <button v-if="store.userInfo.is_superuser" class="btn btn-warning p-0" @click="goUpdate6">수정</button>
+        </p>
+        <p v-if="rateInfo.rate_12">
+          12개월: {{ rateInfo.rate_12 ? rateInfo.rate_12 : "없음" }}
+          (최고: {{ rateInfo.rate_12_max ? rateInfo.rate_12_max : "없음" }})
+          <button v-if="store.userInfo.is_superuser" class="btn btn-warning p-0" @click="goUpdate12">수정</button>
+        </p>
+        <p v-if="rateInfo.rate_24">
+          24개월: {{ rateInfo.rate_24 ? rateInfo.rate_24 : "없음" }}
+          (최고: {{ rateInfo.rate_24_max ? rateInfo.rate_24_max : "없음" }})
+          <button v-if="store.userInfo.is_superuser" class="btn btn-warning p-0" @click="goUpdate24">수정</button>
+        </p>
+        <p v-if="rateInfo.rate_36">
+          36개월: {{ rateInfo.rate_36 ? rateInfo.rate_36 : "없음" }}
+          (최고: {{ rateInfo.rate_36_max ? rateInfo.rate_36_max : "없음" }})
+          <button v-if="store.userInfo.is_superuser" class="btn btn-warning p-0" @click="goUpdate36">수정</button>
+        </p>
+      </div>
+    </div>
+    <hr />
     <button class="btn btn-primary signup" @click="signup">상품가입</button>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watch, watchEffect } from "vue";
 import { useRouter, useRoute } from 'vue-router';
 import { onMounted } from 'vue';
 import { useCounterStore } from '@/stores/counter'
@@ -29,17 +82,67 @@ import axios from 'axios'
 const router = useRouter()
 const route = useRoute()
 
-const product = ref(null)
+// axios 를 통해 불러온 단일 상품 데이터가 담길 변수
+const product = ref(null);
 
+// 정기예금으로 이동
 const goDeposit = () => {
-  router.push({ name: 'deposit' })
-}
+  router.push({ name: "deposit" });
+};
+5;
 
+// 적금으로 이동
 const goSaving = () => {
-  router.push({ name: 'saving' })
-}
+  router.push({ name: "saving" });
+};
 
-const store = useCounterStore()
+// store
+const store = useCounterStore();
+
+// 금리정보가 담긴 객체
+const rateInfo = ref();
+
+// 금리수정으로 이동
+const goUpdate6 = () => {
+  router.push({
+    name: "savingrateupdate",
+    params: { id: product.value.fin_prdt_cd, rate: 6 },
+    query: { rateValue: rateInfo.value.rate_6 },
+  });
+};
+const goUpdate12 = () => {
+  router.push({
+    name: "savingrateupdate",
+    params: { id: product.value.fin_prdt_cd, rate: 12 },
+    query: { rateValue: rateInfo.value.rate_12 },
+  });
+};
+const goUpdate24 = () => {
+  router.push({
+    name: "savingrateupdate",
+    params: { id: product.value.fin_prdt_cd, rate: 24 },
+    query: { rateValue: rateInfo.value.rate_24 },
+  });
+};
+const goUpdate36 = () => {
+  router.push({
+    name: "savingrateupdate",
+    params: { id: product.value.fin_prdt_cd, rate: 36 },
+    query: { rateValue: rateInfo.value.rate_36 },
+  });
+};
+
+const getRate = () => {
+  for (const saving of store.savings) {
+    if (product.value) {
+      if (saving.fin_prdt_cd === product.value.fin_prdt_cd) {
+        rateInfo.value = saving;
+      }
+    }
+  }
+};
+
+
 
 onMounted(() => {
   axios({
@@ -53,6 +156,12 @@ onMounted(() => {
     console.log(error)
   })
 })
+
+// 이자정보 가져오기
+watchEffect(() => {
+  getRate();
+});
+
 
 const signup = () => {
   axios({
@@ -80,7 +189,34 @@ const signup = () => {
 </script>
 
 <style scoped>
-  .signup{
+  .main {
+    width: 80%;
+    margin: 0 auto;
+  }
+
+  .datail-info {
+    width: 80%;
+    margin: 0 auto;
+  }
+
+  .info-list {
+    width: 80%;
+    margin: 0 auto;
+  }
+
+  .info {
+    display: flex;
+    margin: 30px 0;
+  }
+
+  .info-title {
+    width: 20%;
+  }
+  .info-content {
+    width: 80%;
+  }
+
+  .signup {
     width: 150px;
     height: 50px;
   }

@@ -359,14 +359,28 @@ def deposit_detail(request, fin_prdt_cd):
     # 해당 상품 금리 수정하기
     elif request.method == 'PUT':
         # 전달받은 신규 금리
-        new_rate = request.data.get('rate').get('_value')
+        new_rate = request.data.get('rate')     # 신규 금리
+        rateType = request.data.get('rateType') # 금리 타입
         
-        return Response({"message": "true"})
+        option = DepositOption.objects.get(fin_prdt_cd=fin_prdt_cd, save_trm=rateType)
+        
+        list_new_rate = DepositProductList.objects.get(fin_prdt_cd=fin_prdt_cd)
+
+        serializer1 = DepositOptionSerializer(option, data={'intr_rate': new_rate}, partial=True)
+        serializer2 = DepositProductListSerializer(list_new_rate, data={f'rate_{rateType}': new_rate}, partial=True)
+
+        if serializer1.is_valid() and serializer2.is_valid():
+            serializer1.save()
+            serializer2.save()
+            return Response({"message": "true"})
+        else:
+            return Response({"message": "false"})
 
 
 
 # 적금 상품 상세 데이터 불러오는 view
 @api_view(['GET', 'POST', 'PUT'])
+@permission_classes([IsAuthenticatedOrReadOnly])
 def saving_detail(request, fin_prdt_cd):
     if request.method == 'GET':
         product = get_object_or_404(SavingProduct, fin_prdt_cd=fin_prdt_cd)
@@ -382,4 +396,24 @@ def saving_detail(request, fin_prdt_cd):
             saving.like_users.add(request.user)
             return Response({"message": "true"})
 
-        # return Response({"message": "true"})
+    # 해당 상품 금리 수정하기
+    elif request.method == 'PUT':
+        # 전달받은 신규 금리
+        new_rate = request.data.get('rate')     # 신규 금리
+        rateType = request.data.get('rateType') # 금리 타입
+        print(new_rate, rateType)
+
+        option = SavingOption.objects.get(fin_prdt_cd=fin_prdt_cd, save_trm=rateType)
+        
+
+        list_new_rate = SavingProductList.objects.get(fin_prdt_cd=fin_prdt_cd)
+
+        serializer1 = SavingOptionSerializer(option, data={'intr_rate': new_rate}, partial=True)
+        serializer2 = SavingProductListSerializer(list_new_rate, data={f'rate_{rateType}': new_rate}, partial=True)
+
+        if serializer1.is_valid() and serializer2.is_valid():
+            serializer1.save()
+            serializer2.save()
+            return Response({"message": "true"})
+        else:
+            return Response({"message": "false"})

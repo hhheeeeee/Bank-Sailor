@@ -45,25 +45,25 @@
     <div class="info">
       <div class="info-title">금리</div>
       <div class="info-content">
-        <p>
-          6개월: {{ rateInfo.rate_6 ? `${rateInfo.rate_6}%` : "없음" }}
-          (최고 {{ rateInfo.rate_6_max ? `${rateInfo.rate_6_max}%` : "없음" }})
-          <button class="btn btn-warning p-0" @click="goUpdate6">수정</button>
+        <p v-if="rateInfo.rate_6">
+          6개월: {{ rateInfo.rate_6 ? rateInfo.rate_6 : "없음" }}
+          (최고: {{ rateInfo.rate_6_max ? rateInfo.rate_6_max : "없음" }})
+          <button v-if="store.userInfo.is_superuser" class="btn btn-warning p-0" @click="goUpdate6" >수정</button>
         </p>
-        <p>
-          12개월: {{ rateInfo.rate_12 ? `${rateInfo.rate_12}%` : "없음" }}
-          (최고 {{ rateInfo.rate_12_max ? `${rateInfo.rate_12_max}%` : "없음" }})
-          <button class="btn btn-warning p-0" @click="goUpdate12">수정</button>
+        <p v-if="rateInfo.rate_12">
+          12개월: {{ rateInfo.rate_12 ? rateInfo.rate_12 : "없음" }}
+          (최고: {{ rateInfo.rate_12_max ? rateInfo.rate_12_max : "없음" }})
+          <button v-if="store.userInfo.is_superuser" class="btn btn-warning p-0" @click="goUpdate12">수정</button>
         </p>
-        <p>
-          24개월: {{ rateInfo.rate_24 ? `${rateInfo.rate_24}%` : "없음" }}
-          (최고 {{ rateInfo.rate_24_max ? `${rateInfo.rate_24_max}%` : "없음" }})
-          <button class="btn btn-warning p-0" @click="goUpdate24">수정</button>
+        <p v-if="rateInfo.rate_24">
+          24개월: {{ rateInfo.rate_24 ? rateInfo.rate_24 : "없음" }}
+          (최고: {{ rateInfo.rate_24_max ? rateInfo.rate_24_max : "없음" }})
+          <button v-if="store.userInfo.is_superuser" class="btn btn-warning p-0" @click="goUpdate24">수정</button>
         </p>
-        <p>
-          36개월: {{ rateInfo.rate_36 ? `${rateInfo.rate_36}%` : "없음" }}
-          (최고 {{ rateInfo.rate_36_max ? `${rateInfo.rate_36_max}%` : "없음" }})
-          <button class="btn btn-warning p-0" @click="goUpdate36">수정</button>
+        <p v-if="rateInfo.rate_36">
+          36개월: {{ rateInfo.rate_36 ? rateInfo.rate_36 : "없음" }}
+          (최고: {{ rateInfo.rate_36_max ? rateInfo.rate_36_max : "없음" }})
+          <button v-if="store.userInfo.is_superuser" class="btn btn-warning p-0" @click="goUpdate36">수정</button>
         </p>
       </div>
     </div>
@@ -73,7 +73,7 @@
 </template>
 
 <script setup>
-import { ref, watchEffect } from "vue";
+import { ref, watch, watchEffect } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { onMounted } from "vue";
 import { useCounterStore } from "@/stores/counter";
@@ -114,7 +114,6 @@ const goUpdate12 = () => {
   router.push({
     name: "depositrateupdate",
     params: { id: product.value.fin_prdt_cd, rate: 12 },
-    rate: rateInfo.rate_12,
     query: { rateValue: rateInfo.value.rate_12 },
   });
 };
@@ -122,7 +121,6 @@ const goUpdate24 = () => {
   router.push({
     name: "depositrateupdate",
     params: { id: product.value.fin_prdt_cd, rate: 24 },
-    rate: rateInfo.rate_24,
     query: { rateValue: rateInfo.value.rate_24 },
   });
 };
@@ -130,7 +128,6 @@ const goUpdate36 = () => {
   router.push({
     name: "depositrateupdate",
     params: { id: product.value.fin_prdt_cd, rate: 36 },
-    rate: rateInfo.rate_36,
     query: { rateValue: rateInfo.value.rate_36 },
   });
 };
@@ -158,12 +155,18 @@ onMounted(() => {
     .catch((error) => {
       console.log(error);
     });
+  getRate()
 });
 
 // 이자정보 가져오기
 watchEffect(() => {
   getRate();
 });
+
+
+// watch(rateInfo, (tmp1, tmp2) => {
+//   getRate()
+// })
 
 // 상품가입 버튼 누르면 동작
 const signup = () => {
@@ -188,27 +191,6 @@ const signup = () => {
     });
 };
 
-// 입력받은 수정금리
-const newRate = ref();
-// 금리수정 버튼 누르면 동작
-const rateUpdate = () => {
-  axios({
-    method: "put",
-    url: `${store.API_URL}/products/deposit/${route.params.id}/`,
-    headers: {
-      Authorization: `Token ${store.token}`,
-    },
-    data: {
-      rate: newRate,
-    },
-  })
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-};
 </script>
 
 <style scoped>
