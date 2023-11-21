@@ -1,89 +1,86 @@
 <template>
   <div class="container1">
-
     <h1>포트폴리오 수정</h1>
 
-    <div>
-      <label for="ID">ID : </label>
-      <input type="text" v-model="userInfo.username">
-    </div>
-    
-    <form v-if="portfolio.length > 0 && portfolio.some(item => item.user === userInfo.id)" @submit.prevent="editPortfolio(portfolio.find(item => item.user === userInfo.id).id)">
-      수정폼
-      {{ portfolio }}
-      <div>
-        <label for="ID">비밀번호 : </label>
-        <input type="text">
-      </div>
-      <div>
-        저축성향 : 
+    <div v-if="shouldShowEditForm" class="form">
+      내 유형 수정하기
+      <form @submit.prevent="handleSubmit">
         <div>
-          <input type="radio" id="economy" name="saving_style" value="economy" v-model="saving_style">
-          <label for="economy">알뜰형</label>
+          <label for="ID">ID : </label>
+          <input type="text" v-model="userInfo.username">
+        </div>
+        
+        <div>
+          <label for="ID">비밀번호 : </label>
+          <input type="text">
         </div>
         <div>
-          <input type="radio" id="challenge" name="saving_style" value="challenge" v-model="saving_style">
-          <label for="challenge">도전형</label>
+          저축성향 :
         </div>
+          <div class="radio-group">
+          <div v-for="style in savingStyles" :key="style" class="radio-item">
+            <input type="radio" :id="style" name="saving_style" :value="style" v-model="saving_style">
+            <label :for="style">{{ style }}</label>
+          </div>
+        </div>
+        
         <div>
-          <input type="radio" id="ecnonomy" name="saving_style" value="diligent" v-model="saving_style">
-          <label for="diligent">성실형</label>
-        </div>
-      </div>
-      <div>
-        <label for="favorite_bank">최애은행 : </label>
+          <label for="favorite_bank">최애은행 : </label>
           <select v-model="favorite_bank">
             <option v-for="bank in banks" :key="bank" :value="bank">{{ bank }}</option>
           </select>
         </div>
-      <input type="submit" value="저장하기">
-    </form>
+        <input type="submit" value="저장하기">
+      </form>
 
-    <form v-else @submit.prevent="createPortfolio">
-      크리에이트 폼
       <div>
-        <label for="ID">비밀번호 : </label>
-        <input type="text">
+        현재 당신의 유형은
+        {{ myPortfolio[0].saving_style }} !!
+        제일 선호하는 은행은
+        {{ myPortfolio[0].favorite_bank }} 입니다!
       </div>
-      <div>
-        저축성향 : 
-        <div>
-          <input type="radio" id="economy" name="saving_style" value="economy" v-model="saving_style">
-          <label for="economy">알뜰형</label>
+
+
+    </div>
+
+    <div v-else class="form">
+      나만의 유형 저장하기
+      <form @submit.prevent="handleSubmit">
+        <div v-for="style in savingStyles" :key="style">
+          <input type="radio" :id="style" name="saving_style" :value="style" v-model="saving_style">
+          <label :for="style">{{ style }}</label>
         </div>
         <div>
-          <input type="radio" id="challenge" name="saving_style" value="challenge" v-model="saving_style">
-          <label for="challenge">도전형</label>
-        </div>
-        <div>
-          <input type="radio" id="ecnonomy" name="saving_style" value="diligent" v-model="saving_style">
-          <label for="diligent">성실형</label>
-        </div>
-      </div>
-      <div>
-        <label for="favorite_bank">최애은행 : </label>
+          <label for="favorite_bank">최애은행 : </label>
           <select v-model="favorite_bank">
             <option v-for="bank in banks" :key="bank" :value="bank">{{ bank }}</option>
           </select>
         </div>
-      <input type="submit" value="저장하기">
-    </form>
+        <input type="submit" value="저장하기">
+      </form>
+
+      당신의 유형을 선택하고 맞춤 상품을 확인하세요!
+    </div>
+      
+
 
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useCounterStore } from '@/stores/counter'
+import { useRouter } from 'vue-router'
 import axios from 'axios'
 
 const store = useCounterStore()
+const router = useRouter()
 const userInfo = store.userInfo
 const portfolio = ref([])
 const saving_style = ref('')
 const favorite_bank = ref('')
 const banks = [
-  "KEB하나은행",
+"KEB하나은행",
   "SC제일은행",
   "국민은행",
   "신한은행",
@@ -104,72 +101,86 @@ const banks = [
   "한국산업은행",
   "한국수출입은행",
 ];
+const savingStyles = ['알뜰형', '도전형', '성실형'];
+
+const myPortfolio = computed(() => {
+  return portfolio.value.filter(item => item.user === userInfo.id);
+});
 
 onMounted(() => {
   getPortfolio()
 })
 
-// console.log(store.token)
-// console.log('포폴', portfolio)
-// console.log('userInfo', userInfo)
-
 const getPortfolio = function () {
-      axios({
-        method: "get",
-        url: `${store.API_URL}/accounts/find/input_portfolioData/`,
-      })
-        .then((res) => {
-          portfolio.value = res.data;
-          console.log(portfolio)
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
+  axios({
+    method: "get",
+    url: `${store.API_URL}/accounts/find/input_portfolioData/`,
+  })
+    .then((res) => {
+      portfolio.value = res.data;
+      console.log(portfolio)
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 
-    const createPortfolio = function () {
-      axios({
-        method: "post",
-        url: `${store.API_URL}/accounts/find/input_portfolioData/`,
-        data: {
-          user: userInfo.id,
-          saving_style: saving_style.value,
-          favorite_bank: favorite_bank.value,
-        },
-        headers: {
-          Authorization: `Token ${store.token}`
-        }
-      })
-        .then((res) => {
-          console.log(res.data);
-          alert('정상적으로 저장되었습니다!')
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    };
+const shouldShowEditForm = computed(() => {
+  return portfolio.value.some(item => item.user === userInfo.id);
+});
 
-    const editPortfolio = function (portfolioId) {
-      axios({
-        method: "put",
-        url: `${store.API_URL}/accounts/find/get_portfolioData/${portfolioId}`,
-        data: {
-          user: userInfo.id,
-          saving_style: saving_style.value,
-          favorite_bank: favorite_bank.value,
-        },
-        headers: {
-          Authorization: `Token ${store.token}`
-        }
-      })
-        .then((res) => {
-          console.log(res.data);
-          alert('수정 완료')
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    };
+const handleSubmit = function () {
+  if (shouldShowEditForm.value) {
+    editPortfolio(portfolio.value.find(item => item.user === userInfo.id).id);
+  } else {
+    createPortfolio();
+  }
+};
+
+const createPortfolio = function () {
+  axios({
+    method: "post",
+    url: `${store.API_URL}/accounts/find/input_portfolioData/`,
+    data: {
+      user: userInfo.id,
+      saving_style: saving_style.value,
+      favorite_bank: favorite_bank.value,
+    },
+    headers: {
+      Authorization: `Token ${store.token}`
+    }
+  })
+    .then((res) => {
+      console.log(res.data);
+      alert('정상적으로 저장되었습니다!')
+      router.go(0)
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+const editPortfolio = function (portfolioId) {
+  axios({
+    method: "put",
+    url: `${store.API_URL}/accounts/find/get_portfolioData/${portfolioId}`,
+    data: {
+      user: userInfo.id,
+      saving_style: saving_style.value,
+      favorite_bank: favorite_bank.value,
+    },
+    headers: {
+      Authorization: `Token ${store.token}`
+    }
+  })
+    .then((res) => {
+      console.log(res.data);
+      alert('수정 완료')
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
 
 </script>
 
@@ -179,4 +190,67 @@ const getPortfolio = function () {
   background-color: white;
   border-radius: 30px;
 }
+.form {
+  width: 60%;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f8f8f8;
+}
+
+.form label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form input[type="text"],
+.form select {
+  width: calc(100% - 10px);
+  padding: 8px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.form input[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #1c5f82;
+  color: white;
+  cursor: pointer;
+}
+
+.form input[type="submit"]:hover {
+  background-color: #144362;
+}
+.radio-group {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.radio-item {
+  margin-right: 20px;
+  margin-bottom: 10px;
+}
+
+.radio-label {
+  display: inline-block;
+  padding: 8px 12px;
+  border: 1px solid #1c5f82;
+  border-radius: 20px;
+  color: #1c5f82;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.radio-label:hover {
+  background-color: #1c5f82;
+  color: white;
+}
+
 </style>
+
