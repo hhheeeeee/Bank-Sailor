@@ -18,7 +18,7 @@ import ProfileView from "@/views/ProfileView.vue";
 import EditInfoView from "@/views/ProfileViewDetails/EditInfoView.vue";
 import EditProfileView from "@/views/ProfileViewDetails/EditProfileView.vue";
 import RecommendView from "@/views/ProfileViewDetails/RecommendView.vue";
-import ProductsSavingDetailUpdateView from "@/views/ProductsSavingDetailUpdateView.vue"
+import ProductsSavingDetailUpdateView from "@/views/ProductsSavingDetailUpdateView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

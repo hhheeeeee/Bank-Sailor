@@ -1,6 +1,5 @@
 <template>
   <div class="container1">
-    <h1>---프로필페이지----</h1>
     <div class="sidebar">
       <RouterLink :to="{ name: 'editinfo' }" class="link"
         >기본정보수정</RouterLink
@@ -21,7 +20,8 @@ import { RouterLink, RouterView } from "vue-router";
 <style scoped>
 .container1 {
   width: 100vw;
-  height: 91vh;
+  height: 87vh;
+  margin-top: 30px;
   background-color: rgb(214, 232, 255);
   background-size: cover;
   background-repeat: no-repeat;
@@ -37,6 +37,7 @@ import { RouterLink, RouterView } from "vue-router";
   left: 2%;
   width: 15%;
   background-color: rgb(126, 206, 252);
+  opacity: 0.8;
   border-radius: 30px;
   display: flex;
   flex-direction: column;

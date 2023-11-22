@@ -2,6 +2,7 @@ import { ref, computed } from "vue";
 import { defineStore } from "pinia";
 import { useRouter } from "vue-router";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 export const useCounterStore = defineStore(
   "counter",
@@ -18,6 +19,17 @@ export const useCounterStore = defineStore(
       } else {
         return true;
       }
+    });
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener("mouseenter", Swal.stopTimer);
+        toast.addEventListener("mouseleave", Swal.resumeTimer);
+      },
     });
 
     const signUp = function (payload) {
@@ -76,7 +88,10 @@ export const useCounterStore = defineStore(
           router.push({ name: "home" });
         })
         .catch((err) => {
-          window.alert("아이디 혹은 비밀번호가 일치하지 않습니다.");
+          Toast.fire({
+            icon: "error",
+            title: "아이디 또는 비밀번호가 일치하지 않습니다",
+          });
           console.log(err);
         });
     };
@@ -215,6 +230,7 @@ export const useCounterStore = defineStore(
       token,
       getUserInfo,
       userInfo,
+      Toast,
     };
   },
   { persist: true }
