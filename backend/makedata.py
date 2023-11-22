@@ -24,11 +24,8 @@ N = 20  # 생성할 가상 사용자 수
 i = 0
 
 for i in range(N):
-    rn = random_name()
-    if User.objects.filter(username=rn).exists():
-        continue
     user = User.objects.create(
-        username=rn,
+        username=str(i) + '이름이라네',
         age=random.randint(1, 100),
         money=random.randrange(0, 100000000, 100000),
         salary=random.randrange(0, 1500000000, 1000000),
@@ -48,27 +45,27 @@ for i in range(N):
 
 print(f'가상의 사용자 데이터 생성 완료')
 
-# 생성된 가상 사용자 데이터를 fixture 파일로 저장
-fixture_data = []
-for idx, user in enumerate(user_data, start=1):
-    fixture_data.append({
-        "model": "accounts.User",
-        "pk": idx,
-        "fields": {
-            "username": user.username,
-            "age": user.age,
-            "money": user.money,
-            "salary": user.salary,
-            "password": "1234",
-            "nickname": None,
-            "is_active": user.is_active,
-            "is_staff": user.is_staff,
-            "is_superuser": user.is_superuser
-        }
-    })
+# # 생성된 가상 사용자 데이터를 fixture 파일로 저장
+# fixture_data = []
+# for idx, user in enumerate(user_data, start=1):
+#     fixture_data.append({
+#         "model": "accounts.User",
+#         "pk": idx,
+#         "fields": {
+#             "username": user.username,
+#             "age": user.age,
+#             "money": user.money,
+#             "salary": user.salary,
+#             "password": "1234",
+#             "nickname": None,
+#             "is_active": user.is_active,
+#             "is_staff": user.is_staff,
+#             "is_superuser": user.is_superuser
+#         }
+#     })
 
-fixture_file_path = '../backend/accounts/fixtures/user_data.json'
-with open(fixture_file_path, 'w', encoding="utf-8") as f:
-    json.dump(fixture_data, f, ensure_ascii=False, indent="\t")
+# fixture_file_path = '../backend/accounts/fixtures/user_data.json'
+# with open(fixture_file_path, 'w', encoding="utf-8") as f:
+#     json.dump(fixture_data, f, ensure_ascii=False, indent="\t")
 
-print(f'fixture 파일 생성 완료 / 저장 위치: {fixture_file_path}')
+# print(f'fixture 파일 생성 완료 / 저장 위치: {fixture_file_path}')

@@ -4,32 +4,35 @@
       <option value="null" disabled selected hidden>
         특별시/광역시/도를 선택하세요
       </option>
-
+      <option disabled value="">Please select one</option>
       <option v-for="item in address1" :key="item.code" :value="item.code">
         {{ item.name }}
       </option>
     </select>
+
     <select class="select" @change="onAddress2Change">
       <option value="null" disabled selected hidden>
         구 / 군을 선택하세요
       </option>
-      <option
-        v-for="(item, index) in address2"
-        :key="item.code"
-        :value="item.code"
-      >
-        <template v-if="index > 0">{{ item.name.split(" ").pop() }}</template>
-      </option>
+      <option disabled value="">Please select one</option>
+      <template v-for="item in address2" :key="item.code">
+        <option v-if="item.name != selectedAddress1" :value="item.code">
+          {{ item.name.split(" ").pop() }}
+        </option>
+      </template>
     </select>
+
     <select class="select" @change="onAddress3Change">
-      <option value="null" disabled selected hidden>동을 선택</option>
-      <option
-        v-for="(item, index) in address3"
-        :key="item.code"
-        :value="item.code"
-      >
-        <template v-if="index > 0">{{ item.name.split(" ").pop() }}</template>
-      </option>
+      <option value="null" disabled selected hidden>동을 선택하세요</option>
+      <option disabled value="">Please select one</option>
+      <template v-for="item in address3" :key="item.code">
+        <option
+          v-if="item.name != selectedAddress1 + ' ' + selectedAddress2"
+          :value="item.code"
+        >
+          {{ item.name.split(" ").pop() }}
+        </option>
+      </template>
     </select>
 
     <select class="select" v-model="selectedBank">
@@ -87,6 +90,8 @@ const onAddress1Change = (event) => {
   selectedBank.value = null;
   selectedAddress1.value = event.target.selectedOptions[0].textContent;
   selectedAddress1Code.value = event.target.value.slice(0, 2);
+  console.log(selectedAddress1.value);
+  console.log(selectedAddress1Code.value);
 
   axios({
     method: "get",
@@ -105,6 +110,8 @@ const onAddress2Change = (event) => {
   selectedBank.value = null;
   selectedAddress2.value = event.target.selectedOptions[0].textContent;
   selectedAddress2Code.value = event.target.value.slice(0, 4);
+  console.log(selectedAddress2.value);
+  console.log(selectedAddress2Code.value);
   axios({
     method: "get",
     url: `https://grpc-proxy-server-mkvo6j4wsq-du.a.run.app/v1/regcodes?regcode_pattern=${selectedAddress2Code.value}*`,

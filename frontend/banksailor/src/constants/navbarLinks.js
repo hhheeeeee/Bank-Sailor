@@ -5,7 +5,7 @@ export const navbarLinks = [
   // },
   {
     links: "deposit",
-    label: "예금 비교",
+    label: "예적금 비교",
   },
   {
     links: "exchange",

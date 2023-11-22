@@ -11,7 +11,7 @@ from rest_framework import status
 from django.shortcuts import get_list_or_404, get_object_or_404
 from accounts.models import User, CustomPortfolio
 from .models import DepositProduct, DepositOption, SavingProduct, SavingOption, DepositProductList, SavingProductList
-from .serializers import DepositProductSerializer, DepositOptionSerializer, SavingProductSerializer, SavingOptionSerializer, DepositProductListSerializer, SavingProductListSerializer,DepositProductListSerializer1, SavingProductListSerializer1
+from .serializers import DepositProductSerializer, DepositOptionSerializer, SavingProductSerializer, SavingOptionSerializer, DepositProductListSerializer, SavingProductListSerializer
 from accounts.models import User
 from django.core.mail import send_mail
 

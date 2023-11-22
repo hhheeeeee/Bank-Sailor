@@ -7,31 +7,29 @@
       <option>전체</option>
       <option v-for="bank in bankList" :key="bank">{{ bank }}</option>
     </select>
-    <br>
-    <br>
+    <br />
+    <br />
     <button @click="buttonClick">검색</button>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { ref } from "vue";
+import { useRouter } from "vue-router";
 
-const selectedBank = ref('')
+const selectedBank = ref("");
 
 const props = defineProps({
-  bankList: Array
-})
+  bankList: Array,
+});
 
-const router = useRouter()
+const router = useRouter();
 
-const emit = defineEmits(['sendSelectedBank'])
+const emit = defineEmits(["sendSelectedBank"]);
 const buttonClick = () => {
-  emit('sendSelectedBank', selectedBank.value)
-  router.push({ name: 'deposit' })
-}
-
-
+  emit("sendSelectedBank", selectedBank.value);
+  router.push({ name: "deposit" });
+};
 </script>
 
 <style lang="scss" scoped>
