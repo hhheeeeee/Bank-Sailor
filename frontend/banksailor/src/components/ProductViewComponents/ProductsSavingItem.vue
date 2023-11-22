@@ -36,6 +36,7 @@ const goDetail = () => {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    transition: background-color 0.1s;
   }
 
   .box1 {
@@ -83,4 +84,9 @@ const goDetail = () => {
   a {
     color: black;
   }
+
+  .record:hover {
+  background-color: rgb(255, 245, 191);
+  }
+
 </style>

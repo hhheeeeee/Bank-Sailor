@@ -3,23 +3,40 @@
     <div class="box1">공시 제출월</div>
     <div class="box2">금융회사명</div>
     <div class="box3">상품명</div>
-    <div class="box4">6개월</div>
-    <div class="box5">12개월</div>
-    <div class="box6">24개월</div>
-    <div class="box7">36개월</div>
-  </div>
-  <div v-if="selectedBank === '전체'">
-    <ProductsDepositItem v-for="product in store.deposits" :key="product.id" :product="product"/>
-  </div>
-  <div v-else-if="selectedBank">
-    <div v-for="product in filteredProducts" :key="product.id">
-      <div v-if="product.kor_co_nm === selectedBank">
-        <ProductsDepositItem :product="product"/>
+    <div class="box4">
+      <div class="rate">6개월</div>
+      <div class="sortbutton">
+        <div class="sortup" @click="selectSortValue(6, false, $event)">up</div>
+        <div class="sortdown" @click="selectSortValue(6, true, $event)">down</div>
       </div>
     </div>
+    <div class="box5">
+      <div class="rate">12개월</div>
+      <div class="sortbutton">
+        <div class="sortup" @click="selectSortValue(12, false, $event)">up</div>
+        <div class="sortdown" @click="selectSortValue(12, true, $event)">down</div>
+      </div>  
+    </div>
+    <div class="box6">
+      <div class="rate">24개월</div>
+      <div class="sortbutton">
+        <div class="sortup" @click="selectSortValue(24, false, $event)">up</div>
+        <div class="sortdown" @click="selectSortValue(24, true, $event)">down</div>
+      </div>  
+    </div>
+    <div class="box7">
+      <div class="rate">36개월</div>
+      <div class="sortbutton">
+        <div class="sortup" @click="selectSortValue(36, false, $event)">up</div>
+        <div class="sortdown" @click="selectSortValue(36, true, $event)">down</div>
+      </div>  
+    </div>
+  </div>
+  <div v-if="isReverse">
+    <ProductsDepositItem v-for="product in sortedReverseProducts" :key="product.id" :product="product"/>
   </div>
   <div v-else>
-    <ProductsDepositItem v-for="product in store.deposits" :key="product.id" :product="product"/>
+    <ProductsDepositItem v-for="product in sortedProducts" :key="product.id" :product="product"/>
   </div>
 </template>
 
@@ -30,6 +47,7 @@ import ProductsDepositItem from '@/components/ProductViewComponents/ProductsDepo
 
 const store = useCounterStore()
 
+
 onMounted(() => {
   store.getDeposits()
 })
@@ -38,9 +56,96 @@ const props = defineProps({
   selectedBank: String
 })
 
-const filteredProducts = computed(() => {
-  return props.selectedBank ? store.deposits.filter((product) => product.kor_co_nm === props.selectedBank) : store.deposits
-})
+// 정렬기준 담길 변수
+const sortValue = ref(null)
+const isReverse = ref(null)
+
+// 버튼으로 부터 정렬 기준 받아오기
+const selectSortValue = (param1, param2, event) => {
+  sortValue.value = param1
+  isReverse.value = param2
+}
+
+// 오름차순 정렬
+const sortedProducts = computed(() => {
+  // 여기에서 정렬 기준을 선택하고 정렬한 후 반환합니다.
+  // sortValue 값에 따라 정렬 여부를 결정합니다.
+  if (sortValue.value) {
+    const sortingKey = `rate_${sortValue.value}`
+    if (props.selectedBank === '전체') {
+      return store.deposits.sort((a, b) => {
+        if (a[sortingKey] === null) return 1;
+        if (b[sortingKey] === null) return -1;
+        return a[sortingKey] - b[sortingKey];
+      })
+    } else {
+      return props.selectedBank
+      ? store.deposits
+          .filter((product) => product.kor_co_nm === props.selectedBank)
+          .sort((a, b) => {           
+            // null 값을 뒤로 보내기 위한 처리
+            if (a[sortingKey] === null) return 1;
+            if (b[sortingKey] === null) return -1;
+            return a[sortingKey] - b[sortingKey];
+          })
+      : store.deposits.sort((a, b) => {
+        // null 값을 뒤로 보내기 위한 처리
+        if (a[sortingKey] === null) return 1;
+        if (b[sortingKey] === null) return -1;
+        return a[sortingKey] - b[sortingKey];
+      });
+    }
+  } else {
+    if (props.selectedBank === '전체') {
+      return store.deposits
+    } else {
+      return props.selectedBank
+      ? store.deposits.filter((product) => product.kor_co_nm === props.selectedBank)
+      : store.deposits;
+    }
+  }
+});
+
+
+// 내림차순 정렬
+const sortedReverseProducts = computed(() => {
+  // 여기에서 정렬 기준을 선택하고 정렬한 후 반환합니다.
+  // sortValue 값에 따라 정렬 여부를 결정합니다.
+  if (sortValue.value) {
+    const sortingKey = `rate_${sortValue.value}`
+    if (props.selectedBank === '전체') {
+      return store.deposits.sort((a, b) => {
+        if (a[sortingKey] === null) return 1;
+        if (b[sortingKey] === null) return -1;
+        return b[sortingKey] - a[sortingKey]; // 역순으로 수정
+      }); // 역순으로 수정
+    } else {
+      return props.selectedBank
+      ? store.deposits
+          .filter((product) => product.kor_co_nm === props.selectedBank)
+          .sort((a, b) => {           
+            // null 값을 뒤로 보내기 위한 처리
+            if (a[sortingKey] === null) return 1;
+            if (b[sortingKey] === null) return -1;
+            return b[sortingKey] - a[sortingKey]; // 역순으로 수정
+          })
+      : store.deposits.sort((a, b) => {
+        // null 값을 뒤로 보내기 위한 처리
+        if (a[sortingKey] === null) return 1;
+        if (b[sortingKey] === null) return -1;
+        return b[sortingKey] - a[sortingKey]; // 역순으로 수정
+      });
+    }
+  } else {
+    if (props.selectedBank === '전체') {
+      return store.deposits;
+    } else {
+      return props.selectedBank
+      ? store.deposits.filter((product) => product.kor_co_nm === props.selectedBank)
+      : store.deposits;
+    }
+  }
+});
 
 </script>
 
@@ -73,28 +178,37 @@ const filteredProducts = computed(() => {
     font-size: small;
   }
 
-  .box4 {
+  .box4,
+  .box5,
+  .box6,
+  .box7
+   {
     width: 10%;
     text-align: center; 
     font-size: small;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
   }
 
-  .box5 {
-    width: 10%;
-    text-align: center; 
-    font-size: small;
+  .sortbutton {
+    width: 40%;
+    background-color: aquamarine;
+    display: flex;
+    flex-direction: column;
   }
 
-  .box6 {
-    width: 10%;
-    text-align: center; 
-    font-size: small;
+  .sortup {
+    width: 100%;
+    background-color: crimson;
   }
 
-  .box7 {
-    width: 10%;
-    text-align: center; 
-    font-size: small;
+  .sortdown {
+    width: 100%;
+    background-color: blue;
   }
-
+  .rate {
+    display: flex;
+    align-items: center;
+  }
 </style>
