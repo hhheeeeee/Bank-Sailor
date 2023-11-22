@@ -11,5 +11,7 @@ urlpatterns = [
     # 적금 상세정보 url
     path('saving/<str:fin_prdt_cd>/', views.saving_detail),
     # 금리 변동시 이메일 발송
-    path('email/', views.send_email_on_change)
+    path('email/', views.send_email_on_change),
+    # 금리 변동시 이메일 발송
+    path('recommend/', views.recommend),
 ]
