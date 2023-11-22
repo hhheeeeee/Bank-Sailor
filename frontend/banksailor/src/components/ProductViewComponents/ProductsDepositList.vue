@@ -41,19 +41,12 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed, watch } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useCounterStore } from '@/stores/counter'
 import ProductsDepositItem from '@/components/ProductViewComponents/ProductsDepositItem.vue'
 
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
-
-library.add(faUserSecret)
-
-
-
 const store = useCounterStore()
+
 
 onMounted(() => {
   store.getDeposits()
