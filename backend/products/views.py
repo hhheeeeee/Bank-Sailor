@@ -1,11 +1,15 @@
 import requests
+import numpy as np
+import pandas as pd
+from sklearn.decomposition import TruncatedSVD
+
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.authtoken.models import Token
 from rest_framework import status
 from django.shortcuts import get_list_or_404, get_object_or_404
-
+from accounts.models import User, CustomPortfolio
 from .models import DepositProduct, DepositOption, SavingProduct, SavingOption, DepositProductList, SavingProductList
 from .serializers import DepositProductSerializer, DepositOptionSerializer, SavingProductSerializer, SavingOptionSerializer, DepositProductListSerializer, SavingProductListSerializer,DepositProductListSerializer1, SavingProductListSerializer1
 from accounts.models import User
