@@ -195,21 +195,33 @@ export const useCounterStore = defineStore(
         });
     };
 
-    const getUserInfo = function () {
-      axios({
-        method: "get",
-        url: `${API_URL}/accounts/user/`,
-        headers: {
-          Authorization: `Token ${token.value}`,
-        },
-      })
-        .then((res) => {
-          userInfo.value = res.data;
-          return res.data;
-        })
-        .catch((err) => {
-          console.log(err);
+    const getUserInfo = async function () {
+      try {
+        await axios({
+          method: "get",
+          url: `${API_URL}/accounts/user/`,
+          headers: {
+            Authorization: `Token ${token.value}`,
+          },
         });
+
+        // getUserInfo 호출 후에 프로필 정보가 업데이트될 때까지 기다림
+        await new Promise((resolve) => setTimeout(resolve, 5)); // 적절한 대기 시간 설정
+
+        // 업데이트된 프로필 정보를 가져옴
+        const response = await axios({
+          method: "get",
+          url: `${API_URL}/accounts/user/`,
+          headers: {
+            Authorization: `Token ${token.value}`,
+          },
+        });
+
+        userInfo.value = response.data;
+        return response.data;
+      } catch (error) {
+        console.log(error);
+      }
     };
 
     return {

@@ -208,32 +208,35 @@ watchEffect(() => {
 // })
 
 // 상품가입 버튼 누르면 동작
-const signup = () => {
-  axios({
-    method: "post",
-    url: `${store.API_URL}/products/deposit/${route.params.id}/`,
-    headers: {
-      Authorization: `Token ${store.token}`,
-    },
-  })
-    .then((response) => {
-      const status = response.data.message;
-      if (status === "true") {
-        Toast.fire({
-          icon: "success",
-          title: "상품에 가입되었습니다.",
-        });
-        store.getUserInfo();
-      } else {
-        Toast.fire({
-          icon: "warning",
-          title: "이미 가입한 상품입니다",
-        });
-      }
-    })
-    .catch((error) => {
-      console.log(error);
+const signup = async () => {
+  try {
+    await axios({
+      method: "post",
+      url: `${store.API_URL}/products/deposit/${route.params.id}/`,
+      headers: {
+        Authorization: `Token ${store.token}`,
+      },
     });
+
+    await store.getUserInfo(); // 상품 가입 후에 getUserInfo 호출
+
+    Toast.fire({
+      icon: "success",
+      title: "상품에 가입되었습니다.",
+    });
+  } catch (error) {
+    // Handle the error without logging to the console
+    // You can add more specific error handling logic here if needed
+    if (error.response && error.response.status === 409) {
+      Toast.fire({
+        icon: "error",
+        title: "이미 가입된 상품입니다.",
+      });
+    } else {
+      // Handle other types of errors or log them if necessary
+      // console.error("An error occurred:", error);
+    }
+  }
 };
 </script>
 
