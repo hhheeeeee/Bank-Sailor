@@ -46,3 +46,8 @@ class SavingProductListSerializer(serializers.ModelSerializer):
         model = SavingProductList
         fields = '__all__'
         read_only_fields = ('like_users',)
+
+
+
+
+

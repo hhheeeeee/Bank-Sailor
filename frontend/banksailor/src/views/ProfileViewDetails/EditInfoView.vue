@@ -95,7 +95,7 @@ onMounted(async () => {
     like_saving.value = store.userInfo.like_saving;
     isLoading.value = false;
   } catch (err) {
-    console.error(err);
+    // console.error(err);
   }
 });
 
@@ -117,13 +117,13 @@ const UpdateInfo = async function () {
   })
     .then((res) => {
       store.getUserInfo();
-      email.value = store.userInfo.email;
-      nickname.value = store.userInfo.nickname;
-      age.value = store.userInfo.age;
-      money.value = store.userInfo.money;
-      salary.value = store.userInfo.salary;
-      like_deposit.value = store.userInfo.like_deposit;
-      like_saving.value = store.userInfo.like_saving;
+      // email.value = store.userInfo.email;
+      // nickname.value = store.userInfo.nickname;
+      // age.value = store.userInfo.age;
+      // money.value = store.userInfo.money;
+      // salary.value = store.userInfo.salary;
+      // like_deposit.value = store.userInfo.like_deposit;
+      // like_saving.value = store.userInfo.like_saving;
       alert("수 정 완 료");
     })
     .catch((err) => {

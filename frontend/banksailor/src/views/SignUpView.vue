@@ -132,7 +132,7 @@ const checkId = function () {
       // 요청 성공시
     })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         // isChecked 로 p 태그 조작
         if (isChecked.value) {
           // res.data == 1인 경우 아이디가 존재하지않는 경우이므로 사용 문구

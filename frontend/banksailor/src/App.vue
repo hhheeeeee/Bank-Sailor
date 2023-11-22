@@ -19,8 +19,11 @@ const customlogout = async function () {
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
-    confirmButtonText: "YES",
-    cancelButtonText: "NO",
+    confirmButtonText: "네",
+    cancelButtonText: "아니요",
+    customClass: {
+      container: "swal-container",
+    },
   }).then((result) => {
     if (result.isConfirmed) {
       Swal.fire("로그아웃!", "성공적으로 로그아웃되었습니다", "success");
@@ -48,11 +51,15 @@ const goHome = () => {
             class="navbar-item"
             :class="{ active: $route.fullPath.includes(item.links) }"
           >
-            <RouterLink :to="{ name: item.links }" style="font-family: 'Noto Sans KR', sans-serif;">{{ item.label }}</RouterLink>
+            <RouterLink
+              :to="{ name: item.links }"
+              style="font-family: 'Noto Sans KR', sans-serif"
+              >{{ item.label }}</RouterLink
+            >
           </div>
         </template>
       </div>
-      
+
       <div class="auth">
         <template v-if="store.isLogin">
           <form @submit.prevent="customlogout">
@@ -83,8 +90,8 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 1300px;
-  height: 90px;
+  width: 100%;
+  height: 9vh;
   margin: 0 auto;
   flex-wrap: nowrap;
   background-color: white;
@@ -138,7 +145,7 @@ nav {
 .active {
   color: #00082e;
   font-weight: 800;
-  border-bottom: 3px solid #00082e ;
+  border-bottom: 3px solid #00082e;
 }
 
 .profile {
@@ -157,6 +164,6 @@ a {
 .gradation {
   width: 100%;
   height: 10px;
-  background: linear-gradient( to bottom, lightgrey, white );
+  background: linear-gradient(to bottom, lightgrey, white);
 }
 </style>

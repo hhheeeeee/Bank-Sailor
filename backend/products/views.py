@@ -1,18 +1,23 @@
 import requests
+import numpy as np
+import pandas as pd
+from sklearn.decomposition import TruncatedSVD
+
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.authtoken.models import Token
 from rest_framework import status
 from django.shortcuts import get_list_or_404, get_object_or_404
-
+from accounts.models import User, CustomPortfolio
 from .models import DepositProduct, DepositOption, SavingProduct, SavingOption, DepositProductList, SavingProductList
 from .serializers import DepositProductSerializer, DepositOptionSerializer, SavingProductSerializer, SavingOptionSerializer, DepositProductListSerializer, SavingProductListSerializer
-
 from accounts.models import User
 from django.core.mail import send_mail
 
-
+import pandas as pd
+from sklearn.preprocessing import StandardScaler
+from sklearn.neighbors import NearestNeighbors
 
 
 # 정기예금 실행 시 작동
@@ -172,6 +177,7 @@ def deposit_list(request):
     # 프론트로 리스트 데이터 전송하기
     products = get_list_or_404(DepositProductList)
     serializer = DepositProductListSerializer(products, many=True)
+
     return Response(serializer.data)
 
 
@@ -465,3 +471,65 @@ def send_email_on_change(request):
 
 
     return Response(status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+def recommend(request):
+    if request.method == 'POST':
+
+        USERPK = request.user.pk
+
+        # 1. age, salary, money 비슷한 유저들 뽑고 그 유저들은 뭐 쓰는지 보여주기
+        data = User.objects.all()
+        data_list = list(data.values('id', 'money', 'age', 'salary'))
+        df = pd.DataFrame.from_records(data_list)
+        # index를 id로 지정
+        df.set_index('id', inplace=True)
+        # 사용할 특성 선택
+        features = ['age', 'money', 'salary']
+        # 특성 스케일링
+        scaler = StandardScaler()
+        df[features] = scaler.fit_transform(df[features]) 
+
+        # Find the features of the current user
+        user_data = df.loc[USERPK].values.reshape(1, -1)
+
+        # KNN 모델 생성
+        knn_model = NearestNeighbors(n_neighbors=2, algorithm='ball_tree')
+        knn_model.fit(df[features])
+
+        # Find the nearest neighbors based on the features of the current user
+        distances, indices = knn_model.kneighbors(user_data)
+
+        # 가장 가까운 이웃의 인덱스를 이용하여 pk(id) 값을 가져오기
+        closest_neighbors_ids = df.index[indices[0]]
+
+        # 결과 출력
+        print("가장 가까운 이웃의 pk(id) 값:", closest_neighbors_ids)
+
+        recommend_deposit = []
+        recommend_saving = []
+        myassets = []
+        nowuser = User.objects.get(pk=request.user.pk)
+        now_user_liked_deposits = nowuser.like_deposit.all()
+        now_user_liked_savings = nowuser.like_saving.all()
+        for id in closest_neighbors_ids:
+            if id != USERPK:
+                other_user = User.objects.get(pk=id)
+                other_user_liked_deposits = other_user.like_deposit.all()
+                other_user_liked_savings = other_user.like_saving.all()
+                for d in other_user_liked_deposits:
+                    if d not in now_user_liked_deposits:
+                        recommend_deposit.append(d)
+                for s in other_user_liked_savings:
+                    if s not in now_user_liked_savings:
+                        recommend_saving.append(s)
+        deposit_serializer = DepositProductListSerializer(recommend_deposit, many=True)
+        saving_serializer = SavingProductListSerializer(recommend_saving, many=True)
+
+        serialized_data = {
+            'deposits': deposit_serializer.data,
+            'savings' : saving_serializer.data
+        }
+        print(serialized_data)
+        return Response(serialized_data)
