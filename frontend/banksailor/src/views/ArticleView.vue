@@ -116,7 +116,7 @@ const searchArticle = function () {
       title: "검색어를 입력해주세용!",
     });
   } else {
-    searchfinish.value = !searchfinish.value;
+    searchfinish.value = true;
   }
 };
 </script>
