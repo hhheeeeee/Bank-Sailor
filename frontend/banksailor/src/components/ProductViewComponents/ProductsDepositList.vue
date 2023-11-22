@@ -6,29 +6,29 @@
     <div class="box4">
       <div class="rate">6개월</div>
       <div class="sortbutton">
-        <a href="#" @click.prevent="selectSortValue(6, false, $event)"><img src="@/assets/ProductsView/sortup.png" alt="" width="20"></a>
-        <a href="#" @click.prevent="selectSortValue(6, true, $event)"><img src="@/assets/ProductsView/sortdown.png" alt="" width="20"></a>
+        <a href="#" @click.prevent="selectSortValue(6, false, $event)"><img src="@/assets/ProductsView/sortup.png" alt="" width="15"></a>
+        <a href="#" @click.prevent="selectSortValue(6, true, $event)"><img src="@/assets/ProductsView/sortdown.png" alt="" width="15"></a>
       </div>
     </div>
     <div class="box5">
       <div class="rate">12개월</div>
       <div class="sortbutton">
-        <div class="sortup" @click="selectSortValue(12, false, $event)">up</div>
-        <div class="sortdown" @click="selectSortValue(12, true, $event)">down</div>
+        <a href="#" @click.prevent="selectSortValue(12, false, $event)"><img src="@/assets/ProductsView/sortup.png" alt="" width="15"></a>
+        <a href="#" @click.prevent="selectSortValue(12, true, $event)"><img src="@/assets/ProductsView/sortdown.png" alt="" width="15"></a>
       </div>  
     </div>
     <div class="box6">
       <div class="rate">24개월</div>
       <div class="sortbutton">
-        <div class="sortup" @click="selectSortValue(24, false, $event)">up</div>
-        <div class="sortdown" @click="selectSortValue(24, true, $event)">down</div>
+        <a href="#" @click.prevent="selectSortValue(24, false, $event)"><img src="@/assets/ProductsView/sortup.png" alt="" width="15"></a>
+        <a href="#" @click.prevent="selectSortValue(24, true, $event)"><img src="@/assets/ProductsView/sortdown.png" alt="" width="15"></a>
       </div>  
     </div>
     <div class="box7">
       <div class="rate">36개월</div>
       <div class="sortbutton">
-        <div class="sortup" @click="selectSortValue(36, false, $event)">up</div>
-        <div class="sortdown" @click="selectSortValue(36, true, $event)">down</div>
+        <a href="#" @click.prevent="selectSortValue(36, false, $event)"><img src="@/assets/ProductsView/sortup.png" alt="" width="15"></a>
+        <a href="#" @click.prevent="selectSortValue(36, true, $event)"><img src="@/assets/ProductsView/sortdown.png" alt="" width="15"></a>
       </div>  
     </div>
   </div>
@@ -196,10 +196,11 @@ const sortedReverseProducts = computed(() => {
     display: flex;
     flex-direction: column;
     align-items: center;
+    row-gap: 5px;
   }
 
-  .sortbutton a {
-    margin: 0;
+  a {
+    display: flex;
   }
 
   .sortup {
