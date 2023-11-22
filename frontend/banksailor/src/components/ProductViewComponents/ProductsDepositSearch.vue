@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="content">
     <h4>정기예금</h4>
     <p>은행</p>
     <select v-model="selectedBank">
@@ -9,7 +9,7 @@
     </select>
     <br />
     <br />
-    <button @click="buttonClick">검색</button>
+    <button class="searchbutton" @click="buttonClick">검색</button>
   </div>
 </template>
 
@@ -32,10 +32,35 @@ const buttonClick = () => {
 };
 </script>
 
-<style lang="scss" scoped>
-select {
-  width: 90%;
+<style scoped>
+.content {
+  width: 100%;
+  height: 10%;
+  border-left: 5px solid hsl(216, 100%, 26%);
+  padding: 10px 10px;
+  background-color: rgb(189, 217, 252);
+  /* margin: 10px 10px; */
 }
+
+.searchbutton {
+  margin-left: 30px;
+  border: none;
+  border-radius: 5px;
+  background-color: rgb(7, 152, 242);
+  color: white;
+  cursor: pointer;
+}
+
+.searchbutton:hover {
+  background-color: rgb(17, 132, 222);
+  font-weight: 700;
+  color: white;
+}
+
+select {
+  width: 100%;
+}
+
 p {
   margin: 0;
   margin-top: 20px;

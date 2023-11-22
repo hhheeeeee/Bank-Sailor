@@ -6,57 +6,56 @@
     <div class="box4">
       <div class="rate">6개월</div>
       <div class="sortbutton">
-        <div class="sortup" @click="selectSortValue(6, false, $event)">up</div>
-        <div class="sortdown" @click="selectSortValue(6, true, $event)">
-          down
-        </div>
+        <div @click="selectSortValue(6, false, $event)"><upicon /></div>
+        <div @click="selectSortValue(6, true, $event)"><downicon /></div>
       </div>
     </div>
     <div class="box5">
       <div class="rate">12개월</div>
       <div class="sortbutton">
-        <div class="sortup" @click="selectSortValue(12, false, $event)">up</div>
-        <div class="sortdown" @click="selectSortValue(12, true, $event)">
-          down
-        </div>
+        <div @click="selectSortValue(12, false, $event)"><upicon /></div>
+        <div @click="selectSortValue(12, true, $event)"><downicon /></div>
       </div>
     </div>
     <div class="box6">
       <div class="rate">24개월</div>
       <div class="sortbutton">
-        <div class="sortup" @click="selectSortValue(24, false, $event)">up</div>
-        <div class="sortdown" @click="selectSortValue(24, true, $event)">
-          down
-        </div>
+        <div @click="selectSortValue(24, false, $event)"><upicon /></div>
+        <div @click="selectSortValue(24, true, $event)"><downicon /></div>
+        <!-- <div class="sortdown" @click="selectSortValue(24, true, $event)"> down </div>-->
       </div>
     </div>
     <div class="box7">
       <div class="rate">36개월</div>
       <div class="sortbutton">
-        <div class="sortup" @click="selectSortValue(36, false, $event)">up</div>
-        <div class="sortdown" @click="selectSortValue(36, true, $event)">
-          down
-        </div>
+        <div @click="selectSortValue(36, false, $event)"><upicon /></div>
+        <div @click="selectSortValue(36, true, $event)"><downicon /></div>
+
+        <!-- <div class="sortdown" @click="selectSortValue(36, true, $event)"> down </div>-->
       </div>
     </div>
   </div>
-  <div v-if="isReverse">
-    <ProductsDepositItem
-      v-for="product in sortedReverseProducts"
-      :key="product.id"
-      :product="product"
-    />
-  </div>
-  <div v-else>
-    <ProductsDepositItem
-      v-for="product in sortedProducts"
-      :key="product.id"
-      :product="product"
-    />
+  <div class="itemlist">
+    <div v-if="isReverse">
+      <ProductsDepositItem
+        v-for="product in sortedReverseProducts"
+        :key="product.id"
+        :product="product"
+      />
+    </div>
+    <div v-else>
+      <ProductsDepositItem
+        v-for="product in sortedProducts"
+        :key="product.id"
+        :product="product"
+      />
+    </div>
   </div>
 </template>
 
 <script setup>
+import upicon from "@/components/ProductViewComponents/upicon.vue";
+import downicon from "@/components/ProductViewComponents/downicon.vue";
 import { ref, onMounted, computed } from "vue";
 import { useCounterStore } from "@/stores/counter";
 import ProductsDepositItem from "@/components/ProductViewComponents/ProductsDepositItem.vue";
@@ -170,7 +169,7 @@ const sortedReverseProducts = computed(() => {
 .index-bar {
   width: 100%;
   height: 50px;
-  background-color: whitesmoke;
+  background-color: rgb(225, 225, 225);
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
@@ -209,22 +208,17 @@ const sortedReverseProducts = computed(() => {
 
 .sortbutton {
   width: 40%;
-  background-color: aquamarine;
+  background-color: transparent;
   display: flex;
   flex-direction: column;
 }
 
-.sortup {
-  width: 100%;
-  background-color: crimson;
-}
-
-.sortdown {
-  width: 100%;
-  background-color: blue;
-}
 .rate {
   display: flex;
   align-items: center;
+}
+
+.itemlist {
+  background-color: white;
 }
 </style>
