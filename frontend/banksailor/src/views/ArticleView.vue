@@ -1,5 +1,5 @@
 <template>
-  <div class="container1">
+  <div class="container2">
     <div class="head">
       <h1 class="title">게시판</h1>
       <form @submit.prevent="searchArticle" class="search-bar">
@@ -126,9 +126,9 @@ const searchArticle = function () {
 </script>
 
 <style scoped>
-.container1 {
+.container2 {
   width: 70%;
-  margin: 0 auto;
+  margin: 5rem auto;
   padding: 5%;
   border-radius: 30px;
   background-color: white;
