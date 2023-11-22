@@ -5,7 +5,17 @@
 </template>
 
 <script setup>
+import { useCounterStore } from '@/stores/counter'
+import { onMounted } from 'vue';
 import NewHome from "@/components/HomeViewComponents/NewHome.vue";
+
+const store = useCounterStore()
+
+onMounted(() => {
+  store.getDeposits
+  store.getSavings
+})
+
 </script>
 
 <style scoped>
