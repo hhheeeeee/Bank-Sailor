@@ -48,6 +48,7 @@
         <p v-if="rateInfo.rate_6">
           6개월: {{ rateInfo.rate_6 ? `${rateInfo.rate_6}%` : "없음" }} (최고:
           {{ rateInfo.rate_6_max ? `${rateInfo.rate_6_max}%` : "없음" }})
+          <p v-if="calculatedRate6">예상이자: {{ calculatedRate6 }} 원</p>
           <button
             v-if="store.userInfo.is_superuser"
             class="btn btn-warning p-0"
@@ -60,6 +61,7 @@
           12개월:
           {{ rateInfo.rate_12 ? `${rateInfo.rate_12}%` : "없음" }} (최고:
           {{ rateInfo.rate_12_max ? `${rateInfo.rate_12_max}%` : "없음" }})
+          <p v-if="calculatedRate12">예상이자: {{ calculatedRate12 }} 원</p>
           <button
             v-if="store.userInfo.is_superuser"
             class="btn btn-warning p-0"
@@ -72,6 +74,7 @@
           24개월:
           {{ rateInfo.rate_24 ? `${rateInfo.rate_24}%` : "없음" }} (최고:
           {{ rateInfo.rate_24_max ? `${rateInfo.rate_24_max}%` : "없음" }})
+          <p v-if="calculatedRate24">예상이자: {{ calculatedRate24 }} 원</p>
           <button
             v-if="store.userInfo.is_superuser"
             class="btn btn-warning p-0"
@@ -84,6 +87,7 @@
           36개월:
           {{ rateInfo.rate_36 ? `${rateInfo.rate_36}%` : "없음" }} (최고:
           {{ rateInfo.rate_36_max ? `${rateInfo.rate_36_max}%` : "없음" }})
+          <p v-if="calculatedRate36">예상이자: {{ calculatedRate36 }} 원</p>
           <button
             v-if="store.userInfo.is_superuser"
             class="btn btn-warning p-0"
@@ -93,6 +97,14 @@
           </button>
         </p>
       </div>
+    </div>
+    <hr>
+    <div class="info">
+      <div class="info-title">이자 계산기:</div>
+      <form @submit.prevent="calculate">
+        <input type="number" v-model="inputMoney" min="1000000">
+        <input type="submit">
+      </form>
     </div>
     <hr />
     <button class="btn btn-primary signup" @click="signup">상품가입</button>
@@ -238,6 +250,23 @@ const signup = async () => {
     }
   }
 };
+
+// 이자 계산기 관련
+
+const inputMoney = ref()
+const calculatedRate6 = ref(null)
+const calculatedRate12 = ref(null)
+const calculatedRate24 = ref(null)
+const calculatedRate36 = ref(null)
+
+const calculate = () => {
+  calculatedRate6.value = rateInfo.value.rate_6 ? Math.round(inputMoney.value * rateInfo.value.rate_6 / 200) : null
+  calculatedRate12.value = rateInfo.value.rate_12 ? Math.round(inputMoney.value * rateInfo.value.rate_12 / 100) : null
+  calculatedRate24.value = rateInfo.value.rate_24 ? Math.round(inputMoney.value * rateInfo.value.rate_24 / 100 * 2) : null
+  calculatedRate36.value = rateInfo.value.rate_36 ? Math.round(inputMoney.value * rateInfo.value.rate_36 / 100 * 3) : null
+}
+
+
 </script>
 
 <style scoped>
