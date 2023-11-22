@@ -40,16 +40,19 @@ const goHome = () => {
   <header>
     <nav>
       <a class="navbar-brand" href="#" @click.prevent="goHome">
-        <img src="@/assets/title_logo.png" alt="Logo" height="50" />
+        <img src="@/assets/title_logo.png" alt="Logo" height="40" />
       </a>
-      <template v-for="(item, idx) in navbarLinks" key="item">
-        <div
-          class="navbar-items"
-          :class="{ active: $route.fullPath.includes(item.links) }"
-        >
-          <RouterLink :to="{ name: item.links }">{{ item.label }}</RouterLink>
-        </div>
-      </template>
+      <div class="navbar-items">
+        <template v-for="(item, idx) in navbarLinks" key="item">
+          <div
+            class="navbar-item"
+            :class="{ active: $route.fullPath.includes(item.links) }"
+          >
+            <RouterLink :to="{ name: item.links }" style="font-family: 'Noto Sans KR', sans-serif;">{{ item.label }}</RouterLink>
+          </div>
+        </template>
+      </div>
+      
       <div class="auth">
         <template v-if="store.isLogin">
           <form @submit.prevent="customlogout">
@@ -70,37 +73,55 @@ const goHome = () => {
         </template>
       </div>
     </nav>
+    <div class="gradation"></div>
   </header>
   <RouterView />
 </template>
 
 <style scoped>
 nav {
-  /* border-bottom: 1px solid rgb(28, 54, 89); */
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  height: 9dvh;
+  width: 1300px;
+  height: 90px;
+  margin: 0 auto;
   flex-wrap: nowrap;
   background-color: white;
 }
 
-a {
-  text-decoration: none;
-  color: rgb(28, 54, 89);
+.navbar-brand {
+  margin-left: 40px;
 }
 
 .navbar-items {
-  padding: 0 30px;
+  margin-right: 200px;
+  width: 500px;
   height: 100%;
   display: flex;
-  flex-direction: column;
   justify-content: center;
 }
 
+.navbar-item {
+  width: 25%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth {
+  width: 170px;
+  height: 100%;
+  margin-right: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .login {
-  border: 1px solid #1c5f82;
-  color: #1c5f82;
+  border: 1px solid #000f50;
+  color: rgb(0, 52, 119);
   padding: 5px 10px;
   border-radius: 30px;
   font-weight: 600;
@@ -108,30 +129,34 @@ a {
 
 .signup,
 .logout {
-  border: 1px solid #1c5f82;
-  background-color: rgb(28, 54, 89);
+  border: 1px solid #000f50;
+  background-color: rgb(0, 52, 119);
   color: white;
   padding: 5px 12px;
   border-radius: 30px;
 }
 .active {
-  /* border: 1px solid #1c5f82; */
-  background-color: rgb(214, 232, 255);
+  color: #00082e;
   font-weight: 800;
-}
-
-.auth {
-  column-gap: 10px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  border-bottom: 3px solid #00082e ;
 }
 
 .profile {
-  border: 1px solid #1c5f82;
-  color: #1c5f82;
+  border: 1px solid #000f50;
+  color: #000f50;
   padding: 5px 10px;
   border-radius: 30px;
   font-weight: 600;
+}
+
+a {
+  text-decoration: none;
+  color: #000f50;
+}
+
+.gradation {
+  width: 100%;
+  height: 10px;
+  background: linear-gradient( to bottom, lightgrey, white );
 }
 </style>

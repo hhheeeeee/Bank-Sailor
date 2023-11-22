@@ -17,6 +17,6 @@ export const navbarLinks = [
   },
   {
     links: "article",
-    label: "게시판",
+    label: "자유게시판",
   },
 ];

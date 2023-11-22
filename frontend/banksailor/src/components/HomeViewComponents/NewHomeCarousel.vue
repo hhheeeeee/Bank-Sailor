@@ -2,7 +2,7 @@
   <Carousel class="custom-carousel" v-bind="settings">
     <Slide v-for="img in imgLinks" :style="{ height }">
       <div class="carousel__item">
-        <img :src="img" alt="" width="100" height="100" />
+        <img :src="img" alt="" style="width: 100%; height: 100%; object-fit: cover;" />
       </div>
     </Slide>
 
@@ -47,6 +47,7 @@ section {
 .carousel__viewport {
   width: 100%;
   height: 100%;
+  overflow: hidden;
 }
 
 .carousel__viewport .carousel__track {
@@ -57,6 +58,7 @@ section {
 .carousel__track .carousel__slide {
   height: 100%;
   width: 100%;
+  flex-shrink: 0;
 }
 
 .carousel__next {

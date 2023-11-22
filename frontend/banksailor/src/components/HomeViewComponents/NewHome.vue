@@ -1,18 +1,24 @@
 <template>
-  <div class="container1">
-    <h1>The World's Best Financial Site</h1>
+  <div class="container-main">
+    <!-- <h1>The World's Best Financial Site</h1> -->
     <div class="boxes">
       <div class="carousel1">
         <NewHomeCarousel />
       </div>
       <div class="sidebox">
         <div class="box1">
-          <img src="/src/assets/currency-icon.png" alt="" class="icon" />
-          여기는 아마 환율계산기?
+          <img src="/src/assets/currency-icon.png" alt="" class="icon ms-4" />
+          <div class="exchange me-4">
+            <img src="/src/assets/arrow.png" alt="" width="60">
+            <h3>환율 정보</h3>
+          </div>
         </div>
         <div class="box2">
-          <img src="/src/assets/map-icon.png" alt="" class="icon" />
-          여기는 아마 지도..?
+          <img src="/src/assets/map-icon.png" alt="" class="icon ms-4" />
+          <div class="map me-4">
+            <img src="/src/assets/arrow.png" alt="" width="60">
+            <h2>지도</h2>
+          </div>
         </div>
       </div>
     </div>
@@ -24,18 +30,10 @@ import NewHomeCarousel from "./NewHomeCarousel.vue";
 </script>
 
 <style scoped>
-h1 {
+/* h1 {
   margin-bottom: 50px;
   color: rgb(28, 54, 89);
-}
-.container1 {
-  width: 100%;
-  height: 91vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
+} */
 
 .boxes {
   /* background-color: pink; */
@@ -43,9 +41,9 @@ h1 {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  column-gap: 15px;
-  width: 80%;
-  height: 60%;
+  column-gap: 20px;
+  width: 100%;
+  height: 100%;
 }
 
 .carousel1 {
@@ -53,22 +51,23 @@ h1 {
   flex: 2;
   height: 100%;
   overflow: hidden;
+  box-shadow: 3px 3px 5px 1px lightgray;
 }
 
 .sidebox {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  width: 30%;
   height: 100%;
-  row-gap: 15px;
+  row-gap: 20px;
 }
 .box1,
 .box2 {
   flex: 1;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  flex-direction: column;
+  box-shadow: 5px 5px 5px 1px lightgray;
 }
 
 .box1 {
@@ -80,7 +79,7 @@ h1 {
   background-color: rgb(242, 200, 121);
 }
 .boxes div {
-  border-radius: 10px;
+  border-radius: 20px;
   transition: 0.3s all;
 }
 
@@ -103,4 +102,33 @@ h1 {
   /* height: 50%; */
   transition: 0.3s all;
 }
+
+
+
+
+
+.container-main {
+  width: 100%;
+  height: 600px;
+  padding: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+}
+
+.exchange {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  row-gap: 10px;
+}
+
+.map {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  row-gap: 10px;
+}
+
 </style>
