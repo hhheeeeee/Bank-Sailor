@@ -6,8 +6,8 @@
     <div class="box4">
       <div class="rate">6개월</div>
       <div class="sortbutton">
-        <div class="sortup" @click="selectSortValue(6, false, $event)">up</div>
-        <div class="sortdown" @click="selectSortValue(6, true, $event)">down</div>
+        <a href="#" @click.prevent="selectSortValue(6, false, $event)"><img src="@/assets/ProductsView/sortup.png" alt="" width="20"></a>
+        <a href="#" @click.prevent="selectSortValue(6, true, $event)"><img src="@/assets/ProductsView/sortdown.png" alt="" width="20"></a>
       </div>
     </div>
     <div class="box5">
@@ -192,10 +192,14 @@ const sortedReverseProducts = computed(() => {
   }
 
   .sortbutton {
-    width: 40%;
-    background-color: aquamarine;
+    width: 30%;
     display: flex;
     flex-direction: column;
+    align-items: center;
+  }
+
+  .sortbutton a {
+    margin: 0;
   }
 
   .sortup {
