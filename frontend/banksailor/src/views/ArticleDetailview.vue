@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div class="container1">
+    <div>
     <h1 class="title">게시판</h1>
 
     <hr />
@@ -48,27 +49,29 @@
       </div>
     </div>
 
+    
     <!-- <div> -->
-    <div v-if="article && article.username === userInfo.username">
-      <button v-show="currentState" @click="onClickEvent()">수정</button>
-      <button @click="deleteArticle()">삭제</button>
+      <div v-if="article && article.username === userInfo.username">
+        <button v-show="currentState" @click="onClickEvent()">수정</button>
+        <button @click="deleteArticle()">삭제</button>
+      </div>
+      <button @click="moveToList()">목록</button>
     </div>
-    <button @click="moveToList()">목록</button>
-  </div>
-
-  <div>
-    <form @submit.prevent="createComment">
-      <label for="comments_content">댓글 달기 : </label>
-      <textarea
+    
+    <div>
+      <form @submit.prevent="createComment">
+        <label for="comments_content">댓글 달기 : </label>
+        <textarea
         type="text"
         id="comments_content"
         v-model.trim="comments_content"
-      ></textarea>
-      <input type="submit" label="댓글쓰기" />
-    </form>
-    <CommentList :article="article" />
+        ></textarea>
+        <input type="submit" label="댓글쓰기" />
+      </form>
+      <CommentList :article="article" />
+    </div>
   </div>
-</template>
+  </template>
 
 <script setup>
 import axios from "axios";
@@ -185,6 +188,14 @@ const createComment = function () {
 </script>
 
 <style>
+.container1 {
+  width: 70%;
+  margin: 0 auto;
+  padding: 5%;
+  border-radius: 30px;
+  background-color: white;
+  text-align: right;
+}
 .title {
   text-align: center;
   font-size: 5rem;

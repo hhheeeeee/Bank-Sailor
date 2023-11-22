@@ -37,7 +37,11 @@
               <tr v-for="article in filtered_article" :key="article.id">
                 <td>{{ article.id }}</td>
                 <td>{{ article.category }}</td>
-                <td>{{ article.title }}</td>
+                <RouterLink
+                  :to="{ name: 'ArticleDetailView', params: { id: article.id } }"
+                >
+                  <p>{{ article.title }}</p>
+                </RouterLink>
                 <td>{{ article.username }}</td>
                 <td>{{ article.created_at.slice(0, 10) }}</td>
               </tr>
@@ -122,6 +126,14 @@ const searchArticle = function () {
 </script>
 
 <style scoped>
+.container1 {
+  width: 70%;
+  margin: 0 auto;
+  padding: 5%;
+  border-radius: 30px;
+  background-color: white;
+  text-align: right;
+}
 .title {
   text-align: center;
   font-size: 5rem;
