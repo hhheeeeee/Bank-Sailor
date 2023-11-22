@@ -1,5 +1,5 @@
 <template>
-  <div class="container1">
+  <div class="container2">
     <div>
     <h1 class="title">게시판</h1>
 
@@ -59,17 +59,9 @@
     </div>
     
     <div>
-      <form @submit.prevent="createComment">
-        <label for="comments_content">댓글 달기 : </label>
-        <textarea
-        type="text"
-        id="comments_content"
-        v-model.trim="comments_content"
-        ></textarea>
-        <input type="submit" label="댓글쓰기" />
-      </form>
       <CommentList :article="article" />
     </div>
+
   </div>
   </template>
 
@@ -101,8 +93,8 @@ const categoryList = [
   },
 ];
 
-console.log(store.token);
-console.log(userInfo);
+console.log('토큰', store.token);
+console.log('유저정보', userInfo);
 
 onMounted(() => {
   store.getComments(),
@@ -163,34 +155,12 @@ const deleteArticle = function (request, article_pk) {
     });
 };
 
-const createComment = function () {
-  const content = ref("");
-  axios({
-    method: "post",
-    url: `${store.API_URL}/articles/articles/${route.params.id}/comments/`,
-    data: {
-      user: userInfo.id,
-      content: comments_content.value,
-    },
-    headers: {
-      Authorization: `Token ${store.token}`,
-    },
-  })
-    .then((res) => {
-      console.log(res);
-      console.log("된다고해!!!!!!!!!");
-      router.go(0);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
 </script>
 
 <style>
-.container1 {
+.container2 {
   width: 70%;
-  margin: 0 auto;
+  margin: 5rem auto;
   padding: 5%;
   border-radius: 30px;
   background-color: white;
