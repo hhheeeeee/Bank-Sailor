@@ -1,56 +1,59 @@
 <template>
   <div class="container2">
-    <h1 class="title">기본 정보 수정</h1>
-    <Form
-      @submit.prevent="UpdateInfo"
-      @changed="changed"
-      :validation-schema="schema"
-      v-slot="{ errors }"
-      class="FF"
-    >
-      <form @submit.prevent="UpdateInfo" class="customform">
-        <br />
-        <p>닉넴</p>
-        <Field name="nickname" v-model="nickname" />
-        <span class="warning">{{ errors.nickname }}</span>
+    <template v-if="isLoading"><p>로딩중</p></template>
+    <template v-else>
+      <h1 class="title">기본 정보 수정</h1>
+      <Form
+        @submit.prevent="UpdateInfo"
+        @changed="changed"
+        :validation-schema="schema"
+        v-slot="{ errors }"
+        class="FF"
+      >
+        <form @submit.prevent="UpdateInfo" class="customform">
+          <br />
+          <p>닉넴</p>
+          <Field name="nickname" v-model="nickname" />
+          <span class="warning">{{ errors.nickname }}</span>
 
-        <p>이메일</p>
-        <Field name="email" v-model="email" />
-        <span class="warning">{{ errors.email }}</span>
+          <p>이메일</p>
+          <Field name="email" v-model="email" />
+          <span class="warning">{{ errors.email }}</span>
 
-        <p>나이</p>
-        <Field name="age" type="number" v-model="age" />
-        <span class="warning">{{ errors.age }}</span>
+          <p>나이</p>
+          <Field name="age" type="number" v-model="age" />
+          <span class="warning">{{ errors.age }}</span>
 
-        <p>money</p>
-        <Field name="money" type="number" v-model="money" />
-        <span class="warning">{{ errors.money }}</span>
+          <p>money</p>
+          <Field name="money" type="number" v-model="money" />
+          <span class="warning">{{ errors.money }}</span>
 
-        <p>salary</p>
-        <Field name="salary" type="number" v-model="salary" />
-        <span class="warning">{{ errors.salary }}</span>
-        <br />
-        <button
-          type="submit"
-          value="가입하기"
-          class="submit"
-          :disabled="isChanged == true"
-        >
-          수정하기
-        </button>
-      </form>
-    </Form>
-    <div class="chartarea">
-      <p>내가 가입한것들</p>
-      <div class="chart1">
-        <p class="saving">[예금]</p>
-        <DepositChart />
+          <p>salary</p>
+          <Field name="salary" type="number" v-model="salary" />
+          <span class="warning">{{ errors.salary }}</span>
+          <br />
+          <button
+            type="submit"
+            value="가입하기"
+            class="submit"
+            :disabled="isChanged == true"
+          >
+            수정하기
+          </button>
+        </form>
+      </Form>
+      <div class="chartarea">
+        <p>내가 가입한것들</p>
+        <div class="chart1">
+          <p class="saving">[예금]</p>
+          <DepositChart />
+        </div>
+        <div class="chart1">
+          <p class="saving">[적금]</p>
+          <SavingChart />
+        </div>
       </div>
-      <div class="chart1">
-        <p class="saving">[적금]</p>
-        <SavingChart />
-      </div>
-    </div>
+    </template>
   </div>
 </template>
 
@@ -71,7 +74,7 @@ const money = ref("");
 const salary = ref("");
 const like_deposit = ref(null);
 const like_saving = ref(null);
-
+const isLoading = ref(true);
 const isChanged = ref(false);
 
 const changed = function () {
@@ -79,22 +82,24 @@ const changed = function () {
   isChanged.value = true;
 };
 
-onMounted(() => {
-  // username.value = store.userInfo.username;
-  email.value = store.userInfo.email;
-  nickname.value = store.userInfo.nickname;
-  age.value = store.userInfo.age;
-  money.value = store.userInfo.money;
-  salary.value = store.userInfo.salary;
-  like_deposit.value = store.userInfo.like_deposit;
-  like_saving.value = store.userInfo.like_saving;
+onMounted(async () => {
+  try {
+    store.getUserInfo();
+    // username.value = store.userInfo.username;
+    email.value = store.userInfo.email;
+    nickname.value = store.userInfo.nickname;
+    age.value = store.userInfo.age;
+    money.value = store.userInfo.money;
+    salary.value = store.userInfo.salary;
+    like_deposit.value = store.userInfo.like_deposit;
+    like_saving.value = store.userInfo.like_saving;
+    isLoading.value = false;
+  } catch (err) {
+    console.error(err);
+  }
 });
 
-// watchEffect(() => {
-//   store.getUserInfo();
-// });
-
-const UpdateInfo = function () {
+const UpdateInfo = async function () {
   axios({
     method: "put",
     url: `${store.API_URL}/accounts/find/update/`,
@@ -111,25 +116,18 @@ const UpdateInfo = function () {
     },
   })
     .then((res) => {
-      alert("수 정 완 료");
       store.getUserInfo();
-      return true
-        .then((res) => {
-          email.value = store.userInfo.email;
-          nickname.value = store.userInfo.nickname;
-          age.value = store.userInfo.age;
-          money.value = store.userInfo.money;
-          salary.value = store.userInfo.salary;
-          like_deposit.value = store.userInfo.like_deposit;
-          like_saving.value = store.userInfo.like_saving;
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+      email.value = store.userInfo.email;
+      nickname.value = store.userInfo.nickname;
+      age.value = store.userInfo.age;
+      money.value = store.userInfo.money;
+      salary.value = store.userInfo.salary;
+      like_deposit.value = store.userInfo.like_deposit;
+      like_saving.value = store.userInfo.like_saving;
+      alert("수 정 완 료");
     })
     .catch((err) => {
-      // console.log("??????????????????????");
-      // console.log(err.json);
+      console.log(err);
     });
 };
 
