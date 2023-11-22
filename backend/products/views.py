@@ -353,10 +353,11 @@ def deposit_detail(request, fin_prdt_cd):
         # 유저정보 불러오기
         deposit = DepositProductList.objects.get(fin_prdt_cd=fin_prdt_cd)
         if request.user in deposit.like_users.all():
-            return Response({"message": "false"})
+            return Response(status=status.HTTP_409_CONFLICT)
+            
         else:
             deposit.like_users.add(request.user)
-            return Response({"message": "true"})
+            return Response(status=status.HTTP_200_OK)
 
 
     # 해당 상품 금리 수정하기
@@ -394,10 +395,10 @@ def saving_detail(request, fin_prdt_cd):
         # 유저정보 불러오기
         saving = SavingProductList.objects.get(fin_prdt_cd=fin_prdt_cd)
         if request.user in saving.like_users.all():
-            return Response({"message": "false"})
+            return Response(status=status.HTTP_409_CONFLICT)
         else:
             saving.like_users.add(request.user)
-            return Response({"message": "true"})
+            return Response(status=status.HTTP_200_OK)
 
     # 해당 상품 금리 수정하기
     elif request.method == 'PUT':
