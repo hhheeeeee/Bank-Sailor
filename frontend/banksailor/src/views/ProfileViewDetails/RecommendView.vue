@@ -1,25 +1,61 @@
 <template>
   <div class="container1">
-    <h1>추천~</h1>
-
-    {{ test }}
+    추천~!
   </div>
 </template>
 
 <script setup>
+import { ref, onMounted, computed } from "vue";
 import { useCounterStore } from "@/stores/counter";
-import { onMounted, watchEffect, ref, computed } from "vue";
-import { Form, Field, defineRule } from "vee-validate";
+import { useRouter } from "vue-router";
 import axios from "axios";
+
 const store = useCounterStore();
-const test = ref(null);
+const router = useRouter();
+const userInfo = store.userInfo;
+const portfolio = ref([]);
+
 onMounted(() => {
-  // username.value = store.userInfo.username;
-  store.getUserInfo();
+  getPortfolio();
 });
 
-console.log(store.userInfo);
-test.value = store.userInfo;
+const getPortfolio = function () {
+  axios({
+    method: "get",
+    url: `${store.API_URL}/accounts/find/input_portfolioData/`,
+  })
+    .then((res) => {
+      portfolio.value = res.data;
+      console.log(portfolio);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+const recommend = function (portfolioId) {
+  axios({
+    method: "post",
+    url: `${store.API_URL}/accounts/find/get_portfolioData/${portfolioId}`,
+    data: {
+      user: userInfo.id,
+      saving_style: saving_style.value,
+      favorite_bank: favorite_bank.value,
+    },
+    headers: {
+      Authorization: `Token ${store.token}`,
+    },
+  })
+    .then((res) => {
+      console.log(res.data);
+      Toast.fire({
+        icon: "success",
+        title: "수정 완료!",
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
 </script>
 
 <style scoped>

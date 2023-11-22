@@ -1,11 +1,15 @@
 import requests
+import numpy as np
+import pandas as pd
+from sklearn.decomposition import TruncatedSVD
+
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.authtoken.models import Token
 from rest_framework import status
 from django.shortcuts import get_list_or_404, get_object_or_404
-
+from accounts.models import User, CustomPortfolio
 from .models import DepositProduct, DepositOption, SavingProduct, SavingOption, DepositProductList, SavingProductList
 from .serializers import DepositProductSerializer, DepositOptionSerializer, SavingProductSerializer, SavingOptionSerializer, DepositProductListSerializer, SavingProductListSerializer
 
@@ -465,3 +469,87 @@ def send_email_on_change(request):
 
 
     return Response(status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+def recomend_products(request):
+    # 현재 로그인된 유저 정보 가져오기
+    mydata = request.data
+
+    # 데이터 전처리 이렇게 하는 게 맞음?????????????? ㅠㅠ ㅅㅂ
+    user_model = User.objects.all()
+    deposit_model = DepositProductList.objects.all()
+    specific_deposit_product = deposit_model[0]  # 예시로 인덱스 0번째 객체를 가져옴
+    like_users_model = specific_deposit_product.like_users.all()
+    user_pofol_model = CustomPortfolio.objects.all()
+
+    user_data = list(user_model.values())
+    deposit_data = list(deposit_model.values())
+    like_users_data = list(like_users_model.values())
+    user_pofol_data = list(user_pofol_model.values())
+
+    user_df = pd.DataFrame(user_data)
+    deposit_df = pd.DataFrame(deposit_data)
+    like_user_df = pd.DataFrame(like_users_data)
+    user_pofol_df = pd.DataFrame(user_pofol_data)
+
+    merged_df = pd.merge(user_df, like_user_df, left_on='id', right_on='user_id')
+    user_products_df = pd.merge(merged_df, user_pofol_df, on = 'user_id')
+
+    # 상품 미가입된 유저 정보 제외
+    new_df = user_products_df.drop(index=user_products_df[user_products_df['depositproductlist_id']==''].index)
+
+    # 조건에 따라 점수 매기기
+    def calculate_rate(row):
+        score = 0
+        
+        # 조건 1: 나이 일치 여부
+        if str(mydata['age'])[0] == str(row['age'])[0]:
+            score += 1
+        else:
+            score -= 1
+        
+        # 조건 2: saving_style 일치 여부
+        if mydata['saving_style'] == row['saving_style']:
+            score += 2
+        
+        # 조건 3: salary 자릿수 일치 여부
+        if len(str(mydata['salary'])) == len(str(row['salary'])):
+            score += 1
+        
+        # 조건 4: money 자릿수 일치 여부
+        if len(str(mydata['money'])) == len(str(row['money'])):
+            score += 1
+        
+        return score
+    
+    # 점수 계산하여 새로운 열 추가
+    new_df['score'] = new_df.apply(calculate_rate, axis=1)
+    new_df.reset_index(drop=True, inplace=True)
+    new_df.rename_axis('id', inplace=True)
+
+    score_table = new_df.pivot_table('score', index='id', columns= 'depositproductlist_id').fillna(0)
+
+    transpose_table = score_table.values.T
+    SVD = TruncatedSVD(n_components=12)
+    matrix = SVD.fit_transform(transpose_table)
+    matrix.shape
+
+    # SVD.fit_transform을 통해 변환하게 되면 기존의 상품 데이터가 12개의 어떤 요소의 값을 가지게 됩니다.
+    # 결측치를 제거하고 데이터끼리 피어슨 상관계수를 통해 구해줍니다
+    corr = np.corrcoef(matrix)
+    corr.shape
+
+    # 상관계수를 이용하여 '특정 아이템'과 관련해 상관계수가 높은 상품을 뽑아주면 됩니다.
+    prd_name = score_table.columns
+
+    prd_name_list = list(prd_name)
+    coffey_hands = prd_name_list.index('임의의 값')
+
+    corr_coffey_hands = corr[coffey_hands]
+
+    # list(prd_name[(corr_coffey_hands >= 0.1)])[:11]
+    result = list(prd_name[(corr_coffey_hands >= 0.1)])
+
+    result_df = deposit_df.iloc[:, result]
+    print(result_df)
