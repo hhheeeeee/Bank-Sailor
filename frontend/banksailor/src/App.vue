@@ -47,7 +47,7 @@ const goHome = () => {
           class="navbar-items"
           :class="{ active: $route.fullPath.includes(item.links) }"
         >
-          <RouterLink :to="item.links">{{ item.label }}</RouterLink>
+          <RouterLink :to="{name : item.links}">{{ item.label }}</RouterLink>
         </div>
       </template>
       <div class="auth">
