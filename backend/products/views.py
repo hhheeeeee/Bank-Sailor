@@ -10,11 +10,8 @@ from .models import DepositProduct, DepositOption, SavingProduct, SavingOption, 
 from .serializers import DepositProductSerializer, DepositOptionSerializer, SavingProductSerializer, SavingOptionSerializer, DepositProductListSerializer, SavingProductListSerializer
 
 from accounts.models import User
-
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from django.core.mail import send_mail
-import time
+
 
 
 
@@ -407,7 +404,7 @@ def saving_detail(request, fin_prdt_cd):
         # 전달받은 신규 금리
         new_rate = request.data.get('rate')     # 신규 금리
         rateType = request.data.get('rateType') # 금리 타입
-        print(new_rate, rateType)
+
 
         option = SavingOption.objects.get(fin_prdt_cd=fin_prdt_cd, save_trm=rateType)
         
@@ -426,30 +423,44 @@ def saving_detail(request, fin_prdt_cd):
 
 
 
-
-# @receiver(post_save, sender=DepositProductList)
-# def send_email_on_change(sender, instance, **kwargs):
-#     if kwargs.get('created', False):
-#         return
-
-#     # print('실행!!!!!!')
-#     # 이메일 내용
-#     send_mail(
-#         'Subject',
-#         'Message.',
-#         'xorms5712@naver.com',
-#         ['xorms5712@gmail.com'],
-#     )
-#     time.sleep(1)
-
-
-
+# 금리 변동 시 이메일 발송
 @api_view(['GET'])
 def send_email_on_change(request):
+    # 상품코드, 기존금리, 변경금리 받아온 것
+    prdt_code = request.GET.get('prdtCode')
+    old_rate = request.GET.get('oldRate')
+    new_rate = request.GET.get('newRate')
+    period = request.GET.get('period')
+
+
+    try:
+        product = DepositProductList.objects.get(fin_prdt_cd=prdt_code)
+    except:
+        product = SavingProductList.objects.get(fin_prdt_cd=prdt_code)
+    
+
+    # 해당 상품명
+    prdt_name = product.fin_prdt_nm
+
+
+    # 해당 상품 가입한 유저들 이메일 수집하기
+    to = []     # 이메일 목록
+
+    for user in product.like_users.all():
+        to.append(user.email)
+
+
+    # 이메일 내용
+    title = '[BankSailor] 가입하신 상품의 금리정보가 변동되어 안내드립니다'
+    content = f'안녕하세요 고객님, 가입하신 {prdt_name} 상품의 금리정보가 변동되어 안내드립니다.\n\n금리옵션: {period}개월\n변동 전 금리: {old_rate}%\n변동 후 금리: {new_rate}%'
+    
+    # 이메일 보내기
     send_mail(
-        'Subject',
-        'Message.',
+        title,
+        content,
         'xorms5712@naver.com',
-        ['xorms1119@naver.com',],
+        to,
     )
-    return Response(request.data)
+
+
+    return Response(status=status.HTTP_200_OK)

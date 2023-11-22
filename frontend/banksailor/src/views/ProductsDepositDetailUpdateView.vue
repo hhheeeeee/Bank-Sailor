@@ -25,6 +25,25 @@ const store = useCounterStore()
 
 const newRate = ref(null)
 
+const sendMail = () => {
+  axios({
+    method: 'get',
+    url: `${store.API_URL}/products/email/`,
+    params: {
+      prdtCode: route.params.id,
+      oldRate: route.query.rateValue,
+      newRate: newRate.value,
+      period: route.params.rate
+    }
+  })
+    .then((response) => {
+      console.log(response)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+}
+
 const updateRate = () => {
   axios({
     method: "put",
@@ -40,12 +59,14 @@ const updateRate = () => {
     .then((response) => {
       alert('금리가 수정되었습니다.');
       store.getDeposits()
+      sendMail()
       router.push({ name: 'depositdetail', params: { id: route.params.id }})
     })
     .catch((error) => {
       console.log(error);
     });
 };
+
 
 
 
