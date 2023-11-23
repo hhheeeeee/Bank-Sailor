@@ -236,8 +236,8 @@ const signUp = function () {
 
 .title {
   color: hsl(216, 100%, 26%);
-  font-weight: 700;
-  font-size: 3.5rem;
+  font-weight: 600;
+  font-size: 3rem;
 }
 
 .username {
@@ -317,5 +317,11 @@ input[type="submit"] {
 .idconfirm {
   margin-top: 0;
   padding-top: 0;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 </style>
