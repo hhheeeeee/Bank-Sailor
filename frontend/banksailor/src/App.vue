@@ -37,6 +37,7 @@ const router = useRouter();
 const goHome = () => {
   router.push({ name: "home" });
 };
+
 </script>
 
 <template>
@@ -49,8 +50,7 @@ const goHome = () => {
         <template v-for="(item, idx) in navbarLinks" key="item">
           <div
             class="navbar-item"
-            :class="{ active: $route.fullPath.includes(item.links) }"
-          >
+            :class="{ active: $route.fullPath.includes(item.links) || (item.links === 'deposit' && $route.fullPath.includes('saving'))}">
             <RouterLink
               :to="{ name: item.links }"
               style="font-family: 'Noto Sans KR', sans-serif"
@@ -164,6 +164,7 @@ a {
 .gradation {
   width: 100%;
   height: 10px;
-  background: linear-gradient(to bottom, lightgrey, white);
+  background: linear-gradient(to bottom, lightgrey, transparent);
 }
+
 </style>

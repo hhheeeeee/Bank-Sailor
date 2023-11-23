@@ -1,7 +1,9 @@
 <template>
-  <div class="content">
-    <h4>정기예금</h4>
-    <p>은행</p>
+  <div class="searchbar-content">
+    <div class="type">
+      <h4>정기예금</h4>
+    </div>
+    <p>은행 목록</p>
     <select v-model="selectedBank">
       <option disabled value="">원하시는 은행을 선택하세요</option>
       <option>전체</option>
@@ -33,36 +35,48 @@ const buttonClick = () => {
 </script>
 
 <style scoped>
-.content {
-  width: 100%;
-  height: 10%;
-  border-left: 5px solid hsl(216, 100%, 26%);
-  padding: 10px 10px;
-  background-color: rgb(189, 217, 252);
-  /* margin: 10px 10px; */
+.searchbar-content {
+  margin: 50px;
+  width: 80%;
+  height: 98%;
+  border-right: 1px solid rgb(0, 53, 133);
+  padding-right: 10%;
+}
+
+.type {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 900;
+  color: rgb(0, 53, 133);
+  border-left: 3px solid rgb(0, 53, 133);
+  padding-left: 10px;
+}
+
+p {
+  margin: 0;
+  margin-top: 40px;
+  margin-bottom: 10px;
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
 .searchbutton {
-  margin-left: 30px;
   border: none;
   border-radius: 5px;
-  background-color: rgb(7, 152, 242);
+  background-color: rgb(0, 53, 133);
   color: white;
   cursor: pointer;
+  font-family: 'Noto Sans KR', sans-serif;
+  transition: background-color 0.1s ease, font-weight 0.1s ease;
 }
 
 .searchbutton:hover {
-  background-color: rgb(17, 132, 222);
-  font-weight: 700;
+  background-color: rgb(0, 70, 175);
+  font-weight: 600;
   color: white;
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
 select {
   width: 100%;
 }
 
-p {
-  margin: 0;
-  margin-top: 20px;
-}
 </style>

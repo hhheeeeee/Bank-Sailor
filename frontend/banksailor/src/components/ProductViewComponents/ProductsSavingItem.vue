@@ -42,43 +42,36 @@ const goDetail = () => {
   .box1 {
     width: 10%;
     text-align: center;
-    font-size: small;
   }
 
   .box2 {
     width: 18%;
-    text-align: center;
-    font-size: small; 
+    text-align: center; 
   }
 
   .box3 {
     width: 32%;
-    text-align: center;
-    font-size: small; 
+    text-align: center; 
   }
 
   .box4 {
     width: 10%;
-    text-align: center;
-    font-size: small; 
+    text-align: center; 
   }
 
   .box5 {
     width: 10%;
-    text-align: center;
-    font-size: small; 
+    text-align: center; 
   }
 
   .box6 {
     width: 10%;
-    text-align: center;
-    font-size: small; 
+    text-align: center; 
   }
 
   .box7 {
     width: 10%;
-    text-align: center;
-    font-size: small; 
+    text-align: center; 
   }
 
   a {

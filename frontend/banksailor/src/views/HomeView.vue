@@ -1,4 +1,5 @@
 <template>
+  <div class="gradation"></div>
   <div class="containerbody">
     <NewHome />
   </div>

@@ -1,58 +1,59 @@
 <template>
-  <div class="index-bar">
-    <div class="box1">공시 제출월</div>
-    <div class="box2">금융회사명</div>
-    <div class="box3">상품명</div>
-    <div class="box4">
-      <div class="rate">6개월</div>
-      <div class="sortbutton">
-        <a href="#" @click.prevent="selectSortValue(6, false, $event)"><img src="@/assets/ProductsView/sortup.png" alt="" width="15"></a>
-        <a href="#" @click.prevent="selectSortValue(6, true, $event)"><img src="@/assets/ProductsView/sortdown.png" alt="" width="15"></a>
+  <div class="productlist-content">
+
+    <div class="index-bar">
+      <div class="box1">공시 제출월</div>
+      <div class="box2">금융회사명</div>
+      <div class="box3">상품명</div>
+      <div class="box4">
+        <div class="rate">6개월</div>
+        <div class="sortbutton">
+          <a href="#" @click.prevent="selectSortValue(6, false, $event)"><img src="@/assets/ProductsView/sortup.png" alt="" width="15"></a>
+          <a href="#" @click.prevent="selectSortValue(6, true, $event)"><img src="@/assets/ProductsView/sortdown.png" alt="" width="15"></a>
+        </div>
+      </div>
+      <div class="box5">
+        <div class="rate">12개월</div>
+        <div class="sortbutton">
+          <a href="#" @click.prevent="selectSortValue(12, false, $event)"><img src="@/assets/ProductsView/sortup.png" alt="" width="15"></a>
+          <a href="#" @click.prevent="selectSortValue(12, true, $event)"><img src="@/assets/ProductsView/sortdown.png" alt="" width="15"></a>
+        </div>  
+      </div>
+      <div class="box6">
+        <div class="rate">24개월</div>
+        <div class="sortbutton">
+          <a href="#" @click.prevent="selectSortValue(24, false, $event)"><img src="@/assets/ProductsView/sortup.png" alt="" width="15"></a>
+          <a href="#" @click.prevent="selectSortValue(24, true, $event)"><img src="@/assets/ProductsView/sortdown.png" alt="" width="15"></a>
+        </div>  
+      </div>
+      <div class="box7">
+        <div class="rate">36개월</div>
+        <div class="sortbutton">
+          <a href="#" @click.prevent="selectSortValue(36, false, $event)"><img src="@/assets/ProductsView/sortup.png" alt="" width="15"></a>
+          <a href="#" @click.prevent="selectSortValue(36, true, $event)"><img src="@/assets/ProductsView/sortdown.png" alt="" width="15"></a>
+        </div>  
       </div>
     </div>
-    <div class="box5">
-      <div class="rate">12개월</div>
-      <div class="sortbutton">
-        <a href="#" @click.prevent="selectSortValue(12, false, $event)"><img src="@/assets/ProductsView/sortup.png" alt="" width="15"></a>
-        <a href="#" @click.prevent="selectSortValue(12, true, $event)"><img src="@/assets/ProductsView/sortdown.png" alt="" width="15"></a>
-      </div>  
-    </div>
-    <div class="box6">
-      <div class="rate">24개월</div>
-      <div class="sortbutton">
-        <a href="#" @click.prevent="selectSortValue(24, false, $event)"><img src="@/assets/ProductsView/sortup.png" alt="" width="15"></a>
-        <a href="#" @click.prevent="selectSortValue(24, true, $event)"><img src="@/assets/ProductsView/sortdown.png" alt="" width="15"></a>
-      </div>  
-    </div>
-    <div class="box7">
-      <div class="rate">36개월</div>
-      <div class="sortbutton">
-        <a href="#" @click.prevent="selectSortValue(36, false, $event)"><img src="@/assets/ProductsView/sortup.png" alt="" width="15"></a>
-        <a href="#" @click.prevent="selectSortValue(36, true, $event)"><img src="@/assets/ProductsView/sortdown.png" alt="" width="15"></a>
-      </div>  
-    </div>
-  </div>
-  <div class="itemlist">
-    <div v-if="isReverse">
-      <ProductsSavingItem
-        v-for="product in sortedReverseProducts"
-        :key="product.id"
-        :product="product"
-      />
-    </div>
-    <div v-else>
-      <ProductsSavingItem
-        v-for="product in sortedProducts"
-        :key="product.id"
-        :product="product"
-      />
+    <div class="itemlist">
+      <div v-if="isReverse">
+        <ProductsSavingItem
+          v-for="product in sortedReverseProducts"
+          :key="product.id"
+          :product="product"
+        />
+      </div>
+      <div v-else>
+        <ProductsSavingItem
+          v-for="product in sortedProducts"
+          :key="product.id"
+          :product="product"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import upicon from "@/components/ProductViewComponents/upicon.vue";
-import downicon from "@/components/ProductViewComponents/downicon.vue";
 import { ref, onMounted, computed } from "vue";
 import { useCounterStore } from "@/stores/counter";
 import ProductsSavingItem from "@/components/ProductViewComponents/ProductsSavingItem.vue";
@@ -163,32 +164,39 @@ const sortedReverseProducts = computed(() => {
 </script>
 
 <style scoped>
+.productlist-content {
+  margin-top: 50px;
+  margin-right: 50px;
+}
+
 .index-bar {
   width: 100%;
   height: 50px;
-  background-color: rgb(225, 225, 225);
+  background-color: rgb(233, 233, 233);
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  /* border-top: 1px solid rgb(0, 53, 133); */
+  border-bottom: 2px solid rgb(0, 53, 133);
 }
 
 .box1 {
   width: 10%;
   text-align: center;
-  font-size: small;
 }
 
 .box2 {
   width: 18%;
   text-align: center;
-  font-size: small;
 }
 
 .box3 {
   width: 32%;
   text-align: center;
-  font-size: small;
 }
 
 .box4,
@@ -197,7 +205,6 @@ const sortedReverseProducts = computed(() => {
 .box7 {
   width: 10%;
   text-align: center;
-  font-size: small;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -222,5 +229,7 @@ const sortedReverseProducts = computed(() => {
 
 .itemlist {
   background-color: white;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 0.9rem;
 }
 </style>

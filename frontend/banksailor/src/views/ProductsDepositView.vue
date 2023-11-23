@@ -46,15 +46,12 @@ const handleSelectedBank = (bankname) => {
 <style scoped>
 .maincontent {
   display: flex;
-  margin: 0;
-  width: 80%;
+  width: 100%;
   justify-content: center;
 }
 
 .sidebar {
   width: 25%;
-  display: flex;
-  justify-content: end;
 }
 
 .content {
