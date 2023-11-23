@@ -13,7 +13,7 @@ import Currency from "@/components/ExchangeViewComponents/Currency.vue";
 .containerbody {
   width: 100%;
   height: 91vh;
-  background-color: rgb(214, 232, 255);
+  background-color: whitesmoke;
   /* background-image: linear-gradient(
       rgba(255, 255, 255, 0.4),
       rgba(255, 255, 255, 0.4)
@@ -24,15 +24,16 @@ import Currency from "@/components/ExchangeViewComponents/Currency.vue";
   background-repeat: no-repeat;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  margin-top: 25px;
+  /* justify-content: center; */
   align-items: center;
 }
 
 .calculatortitle {
-  background-color: rgb(214, 232, 255);
-  color: rgb(28, 54, 89);
+  background-color: whitesmoke;
+  color: hsl(216, 100%, 26%);
   font-weight: 700;
-  font-size: 40px;
+  font-size: 3.5rem;
   margin-bottom: 50px;
 }
 </style>

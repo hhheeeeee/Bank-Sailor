@@ -41,13 +41,14 @@ const logIn = function () {
 .containerbody {
   width: 100%;
   height: 100vh;
-  background-image: linear-gradient(
+  background-color: rgb(232, 240, 254);
+  /* background-image: linear-gradient(
       rgba(255, 255, 255, 0.4),
       rgba(255, 255, 255, 0.4)
     ),
     url("@/assets/backgroundimg.png");
   background-size: cover;
-  background-repeat: no-repeat;
+  background-repeat: no-repeat; */
   display: flex;
   flex-direction: column;
   justify-content: center;
