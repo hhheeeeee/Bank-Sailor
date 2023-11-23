@@ -80,7 +80,8 @@ const goHome = () => {
         </template>
       </div>
     </nav>
-    <div class="gradation"></div>
+    <div :class="{ 'gradation': !$route.fullPath.includes('home') }"></div>
+    <div :class="{ 'gradation-home': $route.fullPath.includes('home') }"></div>
   </header>
   <RouterView />
 </template>
@@ -165,6 +166,12 @@ a {
   width: 100%;
   height: 10px;
   background: linear-gradient(to bottom, lightgrey, transparent);
+}
+
+.gradation-home {
+  width: 100%;
+  height: 10px;
+  background: linear-gradient(to bottom, lightgrey, white);
 }
 
 </style>

@@ -23,6 +23,27 @@
         </div>
       </div>
     </div>
+    <div class="middle-bar">
+      <div class="middle-bar-item">
+        <img src="https://www.fss.or.kr/static/fss/img/sub/img_ci6.png" alt="" width="30" class="middle-bar-icon">
+        <div class="middle-bar-place">
+          <div class="place-title">금융감독원</div>
+          <div class="place-description">금융상품과 관련한<br>공시를 확인하실 수 있습니다.</div>
+        </div>
+      </div>
+      <div class="middle-bar-item">
+        div
+      </div>
+      <div class="middle-bar-item">
+        div
+      </div>
+      <div class="middle-bar-item">
+        div
+      </div>
+      <div class="middle-bar-item">
+        div
+      </div>
+    </div>
   </div>
 </template>
 
@@ -56,7 +77,8 @@ const goMap = () => {
   align-items: center;
   column-gap: 20px;
   width: 100%;
-  height: 100%;
+  height: 500px;
+  margin-bottom: 60px;
 }
 
 .carousel1 {
@@ -127,9 +149,10 @@ const goMap = () => {
 
 .container-main {
   width: 100%;
-  height: 600px;
+  /* height: 600px; */
   padding: 50px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: white;
@@ -148,4 +171,46 @@ const goMap = () => {
   align-items: end;
   row-gap: 10px;
 }
+
+
+
+.middle-bar {
+  width: 80%;
+  height: 100px;
+  box-shadow: 5px 5px 15px 5px lightgray;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.middle-bar-item {
+  width: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: aqua;
+  column-gap: 10px;
+}
+
+.middle-bar-place {
+  display: flex;
+  flex-direction: column;
+  row-gap: 3px;
+}
+
+
+.place-title {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 500;
+}
+
+
+.place-description{
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 0.8rem;
+}
+
+
+
 </style>
