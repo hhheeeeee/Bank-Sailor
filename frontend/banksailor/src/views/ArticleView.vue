@@ -1,25 +1,25 @@
 <template>
+  <div class="header">
+    <h1 class="title">게시판</h1>
+  </div>
+
   <div class="container2">
-    <div class="head">
-      <h1 class="title">게시판</h1>
-      <form @submit.prevent="searchArticle" class="search-bar">
-        <select v-model="key_for_search">
-          <option disabled value="">선택</option>
-          <option value="category">분류</option>
-          <option value="title" :selected="true">제목</option>
-          <option value="content">내용</option>
-          <option value="user">작성자</option>
-        </select>
-        &nbsp;
-        <!-- 줄바꿈없이 간격띄우는 인자 -->
-        <input type="text" v-model="value_for_search" />
-        &nbsp;
-        <input type="submit" value="검색" />
-      </form>
-    </div>
 
-    <hr />
-
+    <form @submit.prevent="searchArticle" class="search-bar">
+      <select v-model="key_for_search">
+        <option disabled value="">선택</option>
+        <option value="category">분류</option>
+        <option value="title" :selected="true">제목</option>
+        <option value="content">내용</option>
+        <option value="user">작성자</option>
+      </select>
+      &nbsp;
+      <!-- 줄바꿈없이 간격띄우는 인자 -->
+      <input type="text" v-model="value_for_search" />
+      &nbsp;
+      <input type="submit" value="검색" />
+    </form>
+    <hr/>
     <div class="board">
       <div v-if="searchfinish === true">
         <h3>총 {{ filtered_article.length }}건의 검색결과가 있습니다</h3>
@@ -37,34 +37,35 @@
               <tr v-for="article in filtered_article" :key="article.id">
                 <td>{{ article.id }}</td>
                 <td>{{ article.category }}</td>
-                <RouterLink
-                  :to="{
-                    name: 'ArticleDetailView',
-                    params: { id: article.id },
-                  }"
-                >
-                  <p>{{ article.title }}</p>
-                </RouterLink>
-                <td>{{ article.username }}</td>
-                <td>{{ article.created_at.slice(0, 10) }}</td>
-              </tr>
-            </tbody>
-          </table>
-          <button @click="searchfinish = !searchfinish">목록가기</button>
-        </div>
-      </div>
+              <RouterLink
+              :to="{
+                name: 'ArticleDetailView',
+                params: { id: article.id },
+              }">
+                <p>{{ article.title }}</p>
+              </RouterLink>
+              <td>{{ article.username }}</td>
+              <td>{{ article.created_at.slice(0, 10) }}</td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <button @click="searchfinish = !searchfinish">목록가기</button>
 
-      <div v-else>
-        <ArticleList />
-        <div v-show="store.isLogin === true">
-          <RouterLink :to="{ name: 'ArticleCreateView' }">
-            <button>새글쓰기</button>
-          </RouterLink>
-        </div>
-        <div></div>
       </div>
     </div>
+    
+    <div v-else>
+      <ArticleList />
+      <div v-show="store.isLogin === true">
+        <RouterLink :to="{ name: 'ArticleCreateView' }">
+          <button>새글쓰기</button>
+        </RouterLink>
+      </div>
+      <div></div>
+    </div>
   </div>
+</div>
 </template>
 
 <script setup>
@@ -126,9 +127,15 @@ const searchArticle = function () {
     searchfinish.value = true;
   }
 };
+
 </script>
 
 <style scoped>
+.title {
+  margin-top: 40px;
+  font-size: 3.5rem;
+  color: hsl(216, 100%, 26%);
+}
 .container2 {
   width: 70%;
   margin: 5rem auto;
@@ -136,16 +143,6 @@ const searchArticle = function () {
   border-radius: 30px;
   background-color: white;
   text-align: right;
-}
-.title {
-  text-align: center;
-  font-size: 5rem;
-  color: #1c5f82;
-  /* -webkit-text-stroke-width: 2px; */
-  /* -webkit-text-stroke-color: white; */
-  font-weight: 900;
-  margin: 35px;
-  /* text-shadow: -2px 0px white, 0px 2px white, 2px 0px white, 0px -2px white; */
 }
 
 button {
