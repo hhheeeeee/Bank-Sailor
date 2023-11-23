@@ -1,66 +1,70 @@
 <template>
-  <div class="container2">
-    <div>
-      <h1 class="title">게시판</h1>
+  <div class="titlepart-detail">
+    <h1 class="title-detail">게시판</h1>
+  </div>
 
-      <hr />
+  <div class="container-detail">
+    <div v-if="article"> 
 
-      <div>
-        <div v-if="article">
-          <div class="header" v-if="currentState">
-            <p>{{ article.category }}</p>
-            /
-            <p>{{ article.title }}</p>
-            <p>작성자 : {{ article.username }}</p>
-            <p>작성일 : {{ article.created_at.substring(0, 10) }}</p>
-            <div class="main">
-              <p>{{ article.content }}</p>
-            </div>
+      <div v-if="currentState"> <!-- 게시글 일반 화면 -->
+        <div class="article-title">
+          <p>{{ article.title }}</p>
+          <div style="display: flex; ">
+            <p style="flex-direction: left;">{{ article.category }}</p>
+            <p style="flex-direction: margin-right;">{{ article.username }}, {{ article.created_at.substring(0, 10) }}</p>
           </div>
-
-          <div class="header" v-else>
-            <form @submit.prevent="editArticle">
-              <div>
-                카테고리:
-                <select v-model="article.category">
-                  <option
-                    v-for="category in categoryList"
-                    :key="category.id"
-                    :value="article.category"
-                  >
-                    {{ category.value }}
-                  </option>
-                </select>
-              </div>
-
-              <div>
-                <label for="title">제목:</label>
-                <input type="text" v-model="article.title" />
-              </div>
-
-              <div>
-                <label for="content">내용:</label>
-                <textarea type="text" v-model="article.content"></textarea>
-              </div>
-              <button v-show="!currentState">완료</button>
-              <button @click="$router.go(0)">취소</button>
-            </form>
-          </div>
+        </div>
+        <div class="article-content">
+          <p>{{ article.content }}</p>
         </div>
       </div>
 
-      <!-- <div> -->
-      <div v-if="article && article.username === userInfo.username">
-        <button v-show="currentState" @click="onClickEvent()">수정</button>
+      <div v-else> <!-- 수정화면 -->
+        <form @submit.prevent="editArticle">
+          
+          <div>
+            카테고리:
+            <select v-model="article.category">
+              <option
+                v-for="category in categoryList"
+                :key="category.id"
+                :value="article.category"
+              >
+                {{ category.value }}
+              </option>
+            </select>
+          </div>
+
+          <div>
+            <label for="title">제목:</label>
+            <input type="text" v-model="article.title" />
+          </div>
+
+          <div>
+            <label for="content">내용:</label>
+            <textarea type="text" v-model="article.content"></textarea>
+          </div>
+
+          <button v-show="!currentState">완료</button>
+          <button @click="$router.go(0)">취소</button>
+        </form>
+      </div>
+    </div> <!-- v-if article-->
+    
+    <div class="buttons">
+      <div v-if="article && article.username === userInfo.username" style="margin: 2%;">
+        <button v-show="currentState" @click="onClickEvent()">수정</button>&nbsp;
         <button @click="deleteArticle()">삭제</button>
       </div>
-      <button @click="moveToList()">목록</button>
+      <button @click="moveToList()" style="margin: 2%;">목록</button>
     </div>
-
+    
     <div>
       <CommentList :article="article" />
     </div>
-  </div>
+  
+  </div> <!-- container-detail -->
+
 </template>
 
 <script setup>
@@ -90,9 +94,6 @@ const categoryList = [
     value: "리뷰",
   },
 ];
-
-console.log("토큰", store.token);
-console.log("유저정보", userInfo);
 
 onMounted(() => {
   store.getComments(),
@@ -130,7 +131,6 @@ const editArticle = function () {
     },
   })
     .then((res) => {
-      console.log(res.data);
       currentState.value = true;
     })
     .catch((error) => {
@@ -154,31 +154,45 @@ const deleteArticle = function (request, article_pk) {
 };
 </script>
 
-<style>
-.container2 {
-  width: 70%;
-  margin: 5rem auto;
+<style scoped>
+.container-detail {
+  margin: 0 auto;
   padding: 5%;
-  border-radius: 30px;
-  background-color: white;
-  text-align: right;
+  width: 80%;
+  background-color: white;;
+  box-shadow: 5px 5px 10px 5px lightgray;
+  border-radius: 20px;
+  margin-bottom: 50px;
+  padding-bottom: 50px;
 }
-.title {
-  text-align: center;
-  font-size: 5rem;
-  color: #1c5f82;
-  /* -webkit-text-stroke-width: 2px; */
-  /* -webkit-text-stroke-color: white; */
-  font-weight: 900;
-  margin: 35px;
-  text-shadow: -2px 0px white, 0px 2px white, 2px 0px white, 0px -2px white;
+.titlepart-detail {
+  width: 100%;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+  border-bottom: 2px solid lightgray;
+  /* border-bottom: 2px solid hsl(216, 100%, 26%); */
 }
-
-.header {
-  margin: 20px;
-  font-size: 1.2rem;
-  border-bottom: 1px solid #ccc;
-  padding-bottom: 10px;
+.title-detail {
+  margin-top: 40px;
+  font-size: 3rem;
+  font-weight: 400;
+  font-family: 'Noto Sans KR', sans-serif;
+  color: rgb(0, 53, 133);
+}
+.article-title {
+  background-color: rebeccapurple;
+  
+}
+.article-content {
+  padding-top: 10%;
+  padding-bottom: 10%;
+}
+.buttons {
+  display: flex;
+  justify-content: right;
 }
 
 .header p {

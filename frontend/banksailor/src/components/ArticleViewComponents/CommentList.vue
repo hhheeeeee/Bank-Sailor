@@ -1,20 +1,19 @@
 <template>
   <div class="comment-box">
 
-    <!-- <p>총 {{ article.value.comment_count }}건의 댓글이 있습니다</p> -->
-    <div>
-      <form @submit.prevent="createComment">
-        <label for="comments_content">댓글 달기 : </label>
+    <div class="input-comment"> <!-- 댓글입력창 -->
+      <form @submit.prevent="createComment" class="input-bar">
         <textarea
         type="text"
         id="comments_content"
         v-model.trim="comments_content"
+        placeholder="댓글을 입력해주세요"
         ></textarea>
-        <input type="submit" label="댓글쓰기" />
+        <input type="submit" label="댓글쓰기" value="작성!"/>
       </form>
     </div>
 
-    <div v-for="comment in comments" :key="comment.id">
+    <div v-for="comment in comments" :key="comment.id"> <!-- 댓글목록창 -->
       <li v-if="article && comment.article.title === article.title">
         {{ comment.content }}
         {{ comment.updated_at.slice(0, 10) }}
@@ -62,7 +61,6 @@ onMounted(() => {
 })
 
 const createComment = function () {
-  const content = ref("");
   axios({
     method: "post",
     url: `${store.API_URL}/articles/articles/${route.params.id}/comments/`,
@@ -101,5 +99,41 @@ const deleteComment = function (commentId) {
       console.log(err)
     })
 }
-
 </script>
+
+<style scoped>
+.input-comment {
+  width: 100%;
+}
+.input-bar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.input-bar textarea,
+.input-bar button {
+  padding: 8px;
+  margin: 0 5px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+.input-bar input[type="submit"] {
+  height: auto;
+  padding: 8px;
+  /* margin: 0 5px; */
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  background-color: rgb(0, 53, 133);
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+.input-bar button:hover {
+  background-color: rgb(131, 133, 0);
+}
+
+</style>
