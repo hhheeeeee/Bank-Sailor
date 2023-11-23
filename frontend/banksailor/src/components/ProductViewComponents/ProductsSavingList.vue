@@ -211,10 +211,15 @@ const sortedReverseProducts = computed(() => {
 }
 
 .sortbutton {
-  width: 40%;
-  background-color: aquamarine;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 5px;
+  }
+
+a {
   display: flex;
-  flex-direction: column;
 }
 
 .rate {
