@@ -1,18 +1,18 @@
 <template>
   <table class="table">
     <thead class="thead">
-      <th>번호</th>
-      <th>분류</th>
-      <th>제목</th>
-      <th>작성자</th>
-      <th>작성일</th>
+      <th class="th1">번호</th>
+      <th class="th2">분류</th>
+      <th class="th3">제목</th>
+      <th class="th4">작성자</th>
+      <th class="th5">작성일</th>
     </thead>
-    <tbody class="tbody">
-      <td>-</td>
-      <td>공지</td>
-      <td>무분별한 도배, 욕설, 비방은 무통보 삭제될 수 있습니다</td>
-      <td>항해사</td>
-      <td>2000-00-00</td>
+    <tbody id="notice">
+      <td class="td1">-</td>
+      <td class="td2">공지</td>
+      <td class="td3">무분별한 도배, 욕설, 비방은 무통보 삭제될 수 있습니다</td>
+      <td class="td4">항해사</td>
+      <td class="td5">2000-00-00</td>
     </tbody>
     <ArticleListItem
       v-for="article in store.articles"
@@ -31,6 +31,52 @@ const store = useCounterStore();
 
 <style scoped>
 .table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
+.thead {
+  background-color: rgb(233, 201, 142);
+  padding: 20px;
+  text-align: center;
+}
+.thead th1 {
+  width: 10%;
+  margin: 5%;
+  border-collapse: collapse;
+  text-align: center;
+}
+#notice {
+  color: rgb(0, 53, 133);
+  text-align: center;
+  font-weight: 1000;
+}
+td {
+
+}
+.td1 {
+  width: 10%;
+  border-collapse: collapse;
+  text-align: center;
+}
+.td2 {
+  width: 15%;
+  border-collapse: collapse;
+  text-align: center;
+}
+.td3 {
+  width: 45%;
+  border-collapse: collapse;
+  text-align: center;
+}
+.td4 {
+  width: 15%;
+  border-collapse: collapse;
+  text-align: center;
+}
+.td5 {
+  width: 15%;
+  border-collapse: collapse;
   text-align: center;
 }
 </style>
