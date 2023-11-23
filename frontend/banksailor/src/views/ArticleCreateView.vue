@@ -3,7 +3,7 @@
     <h1 class="title">새글쓰기</h1>
   </div>
 
-  <div class="container1">
+  <div class="container2">
     <form @submit.prevent="createArticle" class="customform">
 
       <div class="form-group">
@@ -118,11 +118,13 @@ const moveToList = () => {
   font-size: 3.5rem;
   color: hsl(216, 100%, 26%);
 }
-.container1 {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  background-color: #ffffff;
+.container2 {
+  width: 80%;
+  background-color: white;;
+  box-shadow: 5px 5px 10px 5px lightgray;
+  border-radius: 20px;
+  margin-bottom: 50px;
+  padding-bottom: 50px;
 }
 
 

@@ -1,9 +1,10 @@
 <template>
-  <h1 class="title">게시판</h1>
-
   <div class="container2">
     <div>
+      <h1 class="title">게시판</h1>
+
       <hr />
+
       <div>
         <div v-if="article">
           <div class="header" v-if="currentState">

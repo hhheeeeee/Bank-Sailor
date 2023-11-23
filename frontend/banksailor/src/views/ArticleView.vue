@@ -137,12 +137,12 @@ const searchArticle = function () {
   color: hsl(216, 100%, 26%);
 }
 .container2 {
-  width: 70%;
-  margin: 5rem auto;
-  padding: 5%;
-  border-radius: 30px;
-  background-color: white;
-  text-align: right;
+  width: 80%;
+  background-color: white;;
+  box-shadow: 5px 5px 10px 5px lightgray;
+  border-radius: 20px;
+  margin-bottom: 50px;
+  padding-bottom: 50px;
 }
 
 button {
