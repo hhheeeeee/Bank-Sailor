@@ -18,7 +18,6 @@
       &nbsp;
       <input type="submit" value="  검색  " />
     </form>
-    <hr/>
 
     <div class="board">
       <div v-if="searchfinish === true">
@@ -35,7 +34,7 @@
               <th>작성일</th>
             </thead>
 
-            <tbody class="tbody">
+            <tbody class="tbody1">
               <tr v-for="article in filtered_article" :key="article.id">
                 <td>{{ article.id }}</td>
                 <td>{{ article.category }}</td>
@@ -57,7 +56,7 @@
       </div>
     </div>
     
-    <div v-else class="tbody">
+    <div v-else class="board">
       <ArticleList />
 
       <div v-show="store.isLogin === true" style="display: flex; justify-content: flex-end; margin-top: 5%;">
@@ -200,24 +199,5 @@ button {
 }
 .search-bar button:hover {
   background-color: rgb(0, 53, 133);
-}
-.board {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.table {
-  width: 100%;
-  border-collapse: collapse;
-}
-.thead {
-  border: 1px solid #ccc;
-  text-align: left;
-  background-color: gray;
-  font-weight: bold;
-}
-
-.table tbody tr:nth-child(even) {
-  background-color: #f9f9f9;
 }
 </style>
