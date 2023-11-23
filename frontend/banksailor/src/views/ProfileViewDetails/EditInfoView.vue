@@ -8,7 +8,7 @@
     <div v-else class="real">
       <h1 class="title">기본 정보 수정</h1>
       <Form
-        @changed="changed"
+        @submit.prevent="UpdateInfo"
         :validation-schema="schema"
         v-slot="{ errors }"
         class="FF"
@@ -17,26 +17,39 @@
           <br />
           <div class="inputarea">
             <p class="label">닉네임</p>
-            <Field name="nickname" v-model="nickname" />
+            <Field
+              name="nickname"
+              v-model="nickname"
+              :model-value="store.userInfo.nickname"
+            />
 
             <p class="label">이메일</p>
-            <Field name="email" v-model="email" />
+            <Field
+              name="email"
+              v-model="email"
+              :model-value="store.userInfo.email"
+            />
             <span class="warning">{{ errors.email }}</span>
 
             <p class="label">현재 자산</p>
-            <Field name="money" type="number" v-model="money" />
+            <Field
+              name="money"
+              type="number"
+              v-model="money"
+              :model-value="store.userInfo.money"
+            />
             <span class="warning">{{ errors.money }}</span>
 
             <p class="label">연봉</p>
-            <Field name="salary" type="number" v-model="salary" />
+            <Field
+              name="salary"
+              type="number"
+              v-model="salary"
+              :model-value="store.userInfo.salary"
+            />
             <span class="warning">{{ errors.salary }}</span>
             <br />
-            <button
-              type="submit"
-              value="가입하기"
-              class="submit"
-              :disabled="isChanged == true"
-            >
+            <button type="submit" value="가입하기" class="submit">
               수정하기
             </button>
           </div>
@@ -70,28 +83,32 @@ const store = useCounterStore();
 const isLoading = ref(true);
 // const username = ref("");
 
-const email = ref("");
+const email = ref(null);
 const nickname = ref("");
 const money = ref("");
 const salary = ref("");
+
 const like_deposit = ref(null);
 const like_saving = ref(null);
-const isChanged = ref(false);
 
-const changed = function () {
-  console.log(isChanged.value);
-  isChanged.value = true;
-};
+// const changed = computed(() => {
+//   return (
+//     nickname.value !== store.userInfo.nickname ||
+//     money.value !== store.userInfo.money ||
+//     salary.value !== store.userInfo.salary ||
+//     email.value !== store.userInfo.email
+//   );
+// });
 
 onMounted(async () => {
   try {
     store.getUserInfo();
     // username.value = store.userInfo.username;
-    email.value = store.userInfo.email;
-    nickname.value = store.userInfo.nickname;
+    // email.value = store.userInfo.email;
+    // nickname.value = store.userInfo.nickname;
     // age.value = store.userInfo.age;
-    money.value = store.userInfo.money;
-    salary.value = store.userInfo.salary;
+    // money.value = store.userInfo.money;
+    // salary.value = store.userInfo.salary;
     like_deposit.value = store.userInfo.like_deposit;
     like_saving.value = store.userInfo.like_saving;
     isLoading.value = false;
@@ -101,41 +118,30 @@ onMounted(async () => {
 });
 
 const UpdateInfo = async function () {
-  axios({
-    method: "put",
-    url: `${store.API_URL}/accounts/find/update/`,
-    headers: {
-      Authorization: `Token ${store.token}`,
-    },
-    data: {
-      // username: username.value,
-      email: email.value,
-      nickname: nickname.value,
-      salary: salary.value,
-      money: money.value,
-    },
-  }).then((res) => {
-    store.getUserInfo();
-    // email.value = store.userInfo.email;
-    // nickname.value = store.userInfo.nickname;
-    // age.value = store.userInfo.age;
-    // money.value = store.userInfo.money;
-    // salary.value = store.userInfo.salary;
-    // like_deposit.value = store.userInfo.like_deposit;
-    // like_saving.value = store.userInfo.like_saving;
-    Swal.fire({
-      title: "수정이 완료되었습니다",
-      text: "",
-      icon: "success",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      customClass: {
-        container: "swal-container",
-      },
-    }).catch((err) => {
-      console.log(err);
-    });
-  });
+  if (isFormValid) {
+    try {
+      await axios.put(
+        `${store.API_URL}/accounts/find/update/`,
+        {
+          email: email.value || store.userInfo.email,
+          nickname: nickname.value || store.userInfo.nickname,
+          salary: salary.value || store.userInfo.salary,
+          money: money.value || store.userInfo.money,
+        },
+        {
+          headers: {
+            Authorization: `Token ${store.token}`,
+          },
+        }
+      );
+      await store.getUserInfo();
+      Swal.fire("성공", "정보가 업데이트되었습니다.", "success");
+    } catch (error) {
+      console.error(error);
+    }
+  } else {
+    Swal.fire("오류", "유효하지 않은 정보입니다.", "error");
+  }
 };
 
 defineRule("validEmail", (value) => {
@@ -162,6 +168,13 @@ defineRule("validPositiveNumber", (value) => {
   return "0 이상의 숫자여야 합니다.";
 });
 
+defineRule("required", (value) => {
+  if (!value) {
+    return "필수 입력 항목입니다.";
+  }
+  return true;
+});
+
 const schema = {
   // username: "required",
   email: "required|validEmail",
@@ -171,19 +184,24 @@ const schema = {
   salary: "required|validPositiveNumber",
 };
 
-// const isFormValid = computed(() => {
-// return;
-// username.value &&
-//   email.value &&
-//     nickname.value &&
-//     age.value &&
-//     money.value &&
-//     salary.value &&
-//     isChecked.value === 1;
-// });
+const isFormValid = computed(() => {
+  return (
+    nickname.value &&
+    money.value &&
+    salary.value &&
+    email.value &&
+    !errors.email &&
+    !errors.money &&
+    !errors.salary
+  );
+});
 </script>
 
 <style scoped>
+.warning {
+  color: red;
+  margin-bottom: 20px;
+}
 .container2 {
   width: 75%;
   height: auto;

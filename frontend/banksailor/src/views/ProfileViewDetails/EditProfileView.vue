@@ -63,7 +63,7 @@
       </div>
       
       <form @submit.prevent="handleSubmit">
-        <div v-for="style in savingStyles" :key="style">
+        <div v-for="style in savingStyles" :key="style" class="radio-div">
           <input
           type="radio"
           :id="style"
@@ -248,7 +248,9 @@ const editPortfolio = function (portfolioId) {
   border-bottom: 1px solid grey;
   padding-bottom: 30px;
 }
-
+.form {
+  width: 100%;
+}
 .first-select-form {
   width: 90%;
   margin: 0 auto;
@@ -256,6 +258,9 @@ const editPortfolio = function (portfolioId) {
   border: 1px solid #ccc;
   border-radius: 10px;
   background-color: #f8f8f8;
+}
+.radio-div {
+  display: flex;
 }
 .form label {
   display: block;
@@ -319,11 +324,10 @@ const editPortfolio = function (portfolioId) {
   justify-content: center;
   max-width: 700px;
   margin: 0 auto;
-  padding: 40px 20px;
 }
 
 .container .heros .hero {
-  width: 80px;
+  width: 30%;
   height: 84px;
   margin: 4px;
   border: 3px solid #FFF;
