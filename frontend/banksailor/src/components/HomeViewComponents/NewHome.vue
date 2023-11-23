@@ -11,7 +11,6 @@
           <div class="exchange me-4">
             <img src="/src/assets/arrow.png" alt="" width="60" />
             <h3>환율 정보</h3>
-
           </div>
         </div>
         <div class="box2" @click="goMap">
@@ -30,16 +29,15 @@
 import NewHomeCarousel from "./NewHomeCarousel.vue";
 import { useRouter } from "vue-router";
 
-const router = useRouter()
+const router = useRouter();
 
 const goExchange = () => {
-  router.push({name: 'exchange'})
-}
+  router.push({ name: "exchange" });
+};
 
 const goMap = () => {
-  router.push({name: 'map'})
-}
-
+  router.push({ name: "map" });
+};
 </script>
 
 <style scoped>
@@ -70,7 +68,7 @@ const goMap = () => {
 .sidebox {
   display: flex;
   flex-direction: column;
-  width: 30%;
+  width: 20%;
   height: 100%;
   row-gap: 20px;
 }
@@ -81,23 +79,25 @@ const goMap = () => {
   justify-content: space-between;
   align-items: center;
   box-shadow: 5px 5px 5px 1px lightgray;
+  color: ;
 }
 
 .box1 {
-  background-color: rgb(0, 102, 255);
+  background-color: rgb(1, 66, 163);
+  color: rgb(139, 139, 139);
 }
 
 .box2 {
   flex: 1;
-  background-color: rgb(233, 201, 142);
+  background-color: rgb(159, 159, 155);
 }
 
 .exchange h3 {
-  font-family: 'Noto Sans KR', sans-serif;
+  font-family: "Noto Sans KR", sans-serif;
 }
 
 .map h3 {
-  font-family: 'Noto Sans KR', sans-serif;
+  font-family: "Noto Sans KR", sans-serif;
 }
 
 .boxes div {
@@ -115,7 +115,7 @@ const goMap = () => {
 .box2:hover {
   color: white;
   transform: scale(1.02);
-  background-color: rgb(222, 180, 101);
+  background-color: rgb(136, 136, 134);
   cursor: pointer;
 }
 
