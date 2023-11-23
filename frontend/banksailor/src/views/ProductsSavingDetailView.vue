@@ -1,114 +1,136 @@
 <template>
-  <div>
-    <a href="#" @click="goDeposit">정기예금</a> |
-    <a href="#" @click="goSaving">적금</a>
-    <h1>적금상품 상세정보</h1>
-    <hr />
-  </div>
-  <div v-if="product" class="info-list">
-    <div class="info">
-      <div class="info-title">공시 제출월:</div>
-      <div class="info-content">{{ product.dcls_month }}</div>
+  <main>
+    <div class="linkbar">
+      <a href="#" @click="goDeposit">정기예금</a> |
+      <a href="#" @click="goSaving">적금</a>
     </div>
-    <div class="info">
-      <div class="info-title">상품명:</div>
-      <div class="info-content">{{ product.kor_co_nm }}</div>
+    <div class="titlepart">
+      <h1 class="title">적금상품 상세정보</h1>
     </div>
-    <div class="info">
-      <div class="info-title">금융회사명:</div>
-      <div class="info-content">{{ product.fin_prdt_nm }}</div>
-    </div>
-    <div class="info">
-      <div class="info-title">가입제한:</div>
-      <div class="info-content">{{ product.join_deny }}</div>
-    </div>
-    <div class="info">
-      <div class="info-title">가입대상:</div>
-      <div class="info-content">{{ product.join_member }}</div>
-    </div>
-    <div class="info">
-      <div class="info-title">가입방법:</div>
-      <div class="info-content">{{ product.join_way }}</div>
-    </div>
-    <div class="info">
-      <div class="info-title">최고한도:</div>
-      <div class="info-content">{{ product.max_limit }}</div>
-    </div>
-    <div class="info">
-      <div class="info-title">우대 조건:</div>
-      <div class="info-content">{{ product.spcl_cnd }}</div>
-    </div>
-    <div class="info">
-      <div class="info-title">기타 유의사항:</div>
-      <div class="info-content">{{ product.etc_note }}</div>
-    </div>
-    <div class="info">
-      <div class="info-title">금리</div>
-      <div class="info-content">
-        <p v-if="rateInfo.rate_6">
-          6개월: {{ rateInfo.rate_6 ? `${rateInfo.rate_6}%` : "없음" }} (최고:
-          {{ rateInfo.rate_6_max ? `${rateInfo.rate_6_max}%` : "없음" }})
-          <p v-if="calculatedRate6">예상이자: {{ calculatedRate6 }} 원</p>
-          <button
-            v-if="store.userInfo.is_superuser"
-            class="btn btn-warning p-0"
-            @click="goUpdate6"
-          >
-            수정
-          </button>
-        </p>
-        <p v-if="rateInfo.rate_12">
-          12개월:
-          {{ rateInfo.rate_12 ? `${rateInfo.rate_12}%` : "없음" }} (최고:
-          {{ rateInfo.rate_12_max ? `${rateInfo.rate_12_max}%` : "없음" }})
-          <p v-if="calculatedRate12">예상이자: {{ calculatedRate12 }} 원</p>
-          <button
-            v-if="store.userInfo.is_superuser"
-            class="btn btn-warning p-0"
-            @click="goUpdate12"
-          >
-            수정
-          </button>
-        </p>
-        <p v-if="rateInfo.rate_24">
-          24개월:
-          {{ rateInfo.rate_24 ? `${rateInfo.rate_24}%` : "없음" }} (최고:
-          {{ rateInfo.rate_24_max ? `${rateInfo.rate_24_max}%` : "없음" }})
-          <p v-if="calculatedRate24">예상이자: {{ calculatedRate24 }} 원</p>
-          <button
-            v-if="store.userInfo.is_superuser"
-            class="btn btn-warning p-0"
-            @click="goUpdate24"
-          >
-            수정
-          </button>
-        </p>
-        <p v-if="rateInfo.rate_36">
-          36개월:
-          {{ rateInfo.rate_36 ? `${rateInfo.rate_36}%` : "없음" }} (최고:
-          {{ rateInfo.rate_36_max ? `${rateInfo.rate_36_max}%` : "없음" }})
-          <p v-if="calculatedRate36">예상이자: {{ calculatedRate36 }} 원</p>
-          <button
-            v-if="store.userInfo.is_superuser"
-            class="btn btn-warning p-0"
-            @click="goUpdate36"
-          >
-            수정
-          </button>
-        </p>
+    <div class="detail-content">
+      <div v-if="product" class="product-name">
+        {{ product.fin_prdt_nm }}
+      </div>
+      <div v-if="product" class="info-list">
+        <div class="info">
+          <div class="info-title">공시 제출월</div>
+          <div class="info-content">{{ product.dcls_month }}</div>
+        </div>
+        <div class="info">
+          <div class="info-title">금융회사명</div>
+          <div class="info-content">{{ product.kor_co_nm }}</div>
+        </div>
+        <div class="info">
+          <div class="info-title">가입제한</div>
+          <div class="info-content">{{ product.join_deny }}</div>
+        </div>
+        <div class="info">
+          <div class="info-title">가입대상</div>
+          <div class="info-content">{{ product.join_member }}</div>
+        </div>
+        <div class="info">
+          <div class="info-title">가입방법</div>
+          <div class="info-content">{{ product.join_way }}</div>
+        </div>
+        <div class="info">
+          <div class="info-title">최고한도</div>
+          <div class="info-content">{{ product.max_limit ? product.max_limit : '-' }}</div>
+        </div>
+        <div class="info">
+          <div class="info-title">우대 조건</div>
+          <div class="info-content">{{ product.spcl_cnd }}</div>
+        </div>
+        <div class="info">
+          <div class="info-title">기타 유의사항</div>
+          <div class="info-content">{{ product.etc_note }}</div>
+        </div>
+        <div class="info">
+          <div class="info-title">금리</div>
+          <div class="info-content">
+            <p v-if="rateInfo.rate_6">
+              6개월: {{ rateInfo.rate_6 ? `${rateInfo.rate_6}%` : "없음" }} (최고:
+              {{ rateInfo.rate_6_max ? `${rateInfo.rate_6_max}%` : "없음" }})
+              <button
+                v-if="store.userInfo.is_superuser"
+                class="btn btn-warning p-0"
+                @click="goUpdate6"
+              >
+                수정
+              </button>
+            </p>
+            <p v-if="rateInfo.rate_12">
+              12개월:
+              {{ rateInfo.rate_12 ? `${rateInfo.rate_12}%` : "없음" }} (최고:
+              {{ rateInfo.rate_12_max ? `${rateInfo.rate_12_max}%` : "없음" }})
+              <button
+                v-if="store.userInfo.is_superuser"
+                class="btn btn-warning p-0"
+                @click="goUpdate12"
+              >
+                수정
+              </button>
+            </p>
+            <p v-if="rateInfo.rate_24">
+              24개월:
+              {{ rateInfo.rate_24 ? `${rateInfo.rate_24}%` : "없음" }} (최고:
+              {{ rateInfo.rate_24_max ? `${rateInfo.rate_24_max}%` : "없음" }})
+              <button
+                v-if="store.userInfo.is_superuser"
+                class="btn btn-warning p-0"
+                @click="goUpdate24"
+              >
+                수정
+              </button>
+            </p>
+            <p v-if="rateInfo.rate_36">
+              36개월:
+              {{ rateInfo.rate_36 ? `${rateInfo.rate_36}%` : "없음" }} (최고:
+              {{ rateInfo.rate_36_max ? `${rateInfo.rate_36_max}%` : "없음" }})
+              <button
+                v-if="store.userInfo.is_superuser"
+                class="btn btn-warning p-0"
+                @click="goUpdate36"
+              >
+                수정
+              </button>
+            </p>
+          </div>
+        </div>
+        <br>
+        <button class="btn signup" @click="signup">상품 가입</button>
       </div>
     </div>
-    <hr>
-    <div class="info">
-      <div class="info-title">이자 계산기:</div>
-      <form @submit.prevent="calculate">
-        <input type="number" v-model="inputMoney" min="1000000">
-        <input type="submit">
-      </form>
+
+    <div class="detail-content">
+      <div class="info-list">
+        <div class="calculator-title">
+          간이 이자 계산기
+        </div>
+        <div class="info">
+          <div class="info-title">예치 금액</div>
+          <div class="info-content">
+            <form @submit.prevent="calculate">
+              <input type="number" v-model="inputMoney" min="1000000">
+              <input type="submit" value="확인" class="submit-button">
+            </form>
+          </div>
+        </div>
+        <div class="info">
+          <div class="info-title">예상 이자금액</div>
+            <div v-if="inputMoney" class="info-content">
+              <p v-if="calculatedRate6">6개월: {{ calculatedRate6 }} 원</p>
+              <p v-if="calculatedRate12">12개월: {{ calculatedRate12 }} 원</p>
+              <p v-if="calculatedRate24">24개월: {{ calculatedRate24 }} 원</p>
+              <p v-if="calculatedRate36">36개월: {{ calculatedRate36 }} 원</p>
+            </div>
+            <div v-else class="info-content">
+              예치 금액을 적어주세요
+            </div>
+          
+        </div>
+      </div>
     </div>
-    <hr />
-    <button class="btn btn-primary signup" @click="signup">상품가입</button>
-  </div>
+  </main>
 </template>
 
 <script setup>
@@ -260,35 +282,120 @@ const calculate = () => {
 </script>
 
 <style scoped>
-.main {
-  width: 80%;
-  margin: 0 auto;
+main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* margin-bottom: 10px; */
 }
 
-.datail-info {
-  width: 80%;
-  margin: 0 auto;
+.titlepart {
+  width: 100%;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+  border-bottom: 2px solid lightgray;
 }
+
+.title {
+  margin-top: 40px;
+  font-size: 3rem;
+  font-weight: 500;
+  font-family: 'Noto Sans KR', sans-serif;
+  color: rgb(0, 53, 133);
+}
+
+.detail-content {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: white;;
+  box-shadow: 5px 5px 10px 5px lightgray;
+  border-radius: 20px;
+  margin-bottom: 20px;
+}
+
+.product-name {
+  width: 90%;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-top: 50px;
+  margin-left: 50px;
+  color: rgb(0, 53, 133);
+  border-left: 5px solid rgb(219, 180, 107);
+  padding-left: 30px;
+}
+
 
 .info-list {
-  width: 80%;
-  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  margin: 50px;
+  margin-bottom: 25px;
 }
 
 .info {
+  padding-top: 15px;
+  padding-bottom: 15px;
   display: flex;
-  margin: 30px 0;
+  flex-direction: row;
+  border-bottom: 1px solid lightgray;
 }
 
 .info-title {
   width: 20%;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 500;
 }
 .info-content {
   width: 80%;
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
 .signup {
+  font-family: 'Noto Sans KR', sans-serif;
   width: 150px;
   height: 50px;
+  background-color: rgb(0, 53, 133);
+  color: white;
+  transition: background-color 0.1s ease;
 }
+
+
+
+.calculator-title {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: rgb(0, 53, 133);
+  border-left: 4px solid rgb(219, 180, 107);
+  padding-left: 15px;
+  margin-bottom: 10px;
+}
+
+.submit-button {
+  font-family: 'Noto Sans KR', sans-serif;
+  background-color: rgb(0, 53, 133);
+  color: white;
+  transition: background-color 0.1s ease;
+  margin-left: 1rem;
+}
+
+.submit-button:hover {
+  background-color: rgb(0, 70, 175);
+}
+
+.linkbar a {
+  font-family: 'Noto Sans KR', sans-serif;
+  color: black;
+  text-decoration: none;
+
+}
+
 </style>
