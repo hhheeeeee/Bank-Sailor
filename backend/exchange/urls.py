@@ -3,6 +3,7 @@ from . import views
 
 app_name = 'exchange'
 urlpatterns = [
-    path('<str:fromCountry>/<str:toCountry>/<int:price>/<str:st_date>/', views.exchange),
+    path('currency/<str:fromCountry>/<int:price>/<str:st_date>/', views.exchange),
+    path('exchange/diff/<str:st_date>/', views.get_exchange_diff),
 ]
 
