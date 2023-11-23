@@ -161,8 +161,9 @@ li {
 
 .chartarea {
   margin-top: 40px;
-  width: 90%;
+  width: 100%;
   text-align: center;
+  padding: 0px 40px;
 }
 
 .subtitle {

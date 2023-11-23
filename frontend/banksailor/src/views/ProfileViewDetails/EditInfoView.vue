@@ -234,8 +234,9 @@ const schema = {
 
 .chartarea {
   margin-top: 70px;
-  width: 90%;
+  width: 100%;
   text-align: center;
+  padding: 0px 40px;
 }
 
 .saving {
