@@ -20,7 +20,7 @@
       </div>
 
       <div class="form-group">
-        <label class="form-label" for="title">제목:</label>
+        <label class="form-label" for="title">제목</label>
         <input
           type="text"
           v-model.trim="title"
@@ -31,7 +31,7 @@
       </div>
 
       <div class="form-group">
-        <label class="form-label" for="content">내용:</label>
+        <label class="form-label" for="content">내용</label>
         <textarea
           v-model.trim="content"
           id="content"
@@ -40,7 +40,7 @@
         ></textarea>
       </div>
 
-      <input type="submit" value="저장" class="form-submit" />
+      <input type="submit" value="저장" class="form-submit"/>
 
     </form>
 
@@ -145,10 +145,11 @@ const moveToList = () => {
   margin: 20px auto;
   padding: 20px;
   border-radius: 10px;
+  font-family: 'Noto Sans KR', sans-serif; 
 }
-
 .form-group {
-  margin-bottom: 10px;
+  margin-bottom: 3%;
+  font-family: 'Noto Sans KR', sans-serif; 
 }
 
 .form-label {
@@ -156,6 +157,7 @@ const moveToList = () => {
   display: block;
   margin-bottom: 5px;
   color: #1c5f82;
+  font-family: 'Noto Sans KR', sans-serif; 
 }
 
 .form-control {
@@ -172,7 +174,7 @@ const moveToList = () => {
 .form-submit {
   padding: 10px 20px;
   color: #ffffff;
-  background-color: #1c5f82;
+  background-color: rgb(0, 53, 133);
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -188,10 +190,11 @@ const moveToList = () => {
   margin: 20px auto;
   padding: 10px;
   color: #ffffff;
-  background-color: #1c5f82;
+  background-color: rgb(0, 53, 133);
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-family: 'Noto Sans KR', sans-serif; 
 }
 
 .btn:hover {

@@ -36,23 +36,19 @@ const store = useCounterStore();
   text-align: center;
 }
 .thead {
+  height: 50px;
   background-color: rgb(233, 201, 142);
-  padding: 20px;
+  vertical-align: middle;
   text-align: center;
-}
-.thead th1 {
-  width: 10%;
-  margin: 5%;
-  border-collapse: collapse;
-  text-align: center;
+  font-weight: 400; 
+  font-family: 'Noto Sans KR', sans-serif; 
+  font-size: larger;
 }
 #notice {
   color: rgb(0, 53, 133);
   text-align: center;
+  vertical-align: middle;
   font-weight: 1000;
-}
-td {
-
 }
 .td1 {
   width: 10%;
