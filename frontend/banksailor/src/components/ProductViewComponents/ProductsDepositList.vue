@@ -32,23 +32,27 @@
       </div>  
     </div>
   </div>
-  <div v-if="isReverse">
-    <ProductsDepositItem
-      v-for="product in sortedReverseProducts"
-      :key="product.id"
-      :product="product"
-    />
-  </div>
-  <div v-else>
-    <ProductsDepositItem
-      v-for="product in sortedProducts"
-      :key="product.id"
-      :product="product"
-    />
+  <div class="itemlist">
+    <div v-if="isReverse">
+      <ProductsDepositItem
+        v-for="product in sortedReverseProducts"
+        :key="product.id"
+        :product="product"
+      />
+    </div>
+    <div v-else>
+      <ProductsDepositItem
+        v-for="product in sortedProducts"
+        :key="product.id"
+        :product="product"
+      />
+    </div>
   </div>
 </template>
 
 <script setup>
+import upicon from "@/components/ProductViewComponents/upicon.vue";
+import downicon from "@/components/ProductViewComponents/downicon.vue";
 import { ref, onMounted, computed } from "vue";
 import { useCounterStore } from "@/stores/counter";
 import ProductsDepositItem from "@/components/ProductViewComponents/ProductsDepositItem.vue";
@@ -162,7 +166,7 @@ const sortedReverseProducts = computed(() => {
 .index-bar {
   width: 100%;
   height: 50px;
-  background-color: whitesmoke;
+  background-color: rgb(225, 225, 225);
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
@@ -211,17 +215,12 @@ const sortedReverseProducts = computed(() => {
     display: flex;
   }
 
-.sortup {
-  width: 100%;
-  background-color: crimson;
-}
-
-.sortdown {
-  width: 100%;
-  background-color: blue;
-}
 .rate {
   display: flex;
   align-items: center;
+}
+
+.itemlist {
+  background-color: white;
 }
 </style>

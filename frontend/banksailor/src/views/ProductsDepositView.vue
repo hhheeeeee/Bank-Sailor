@@ -1,57 +1,63 @@
 <template>
-  <div class="main">
-    <aside>
-      <ProductsDepositSearch :bank-list="bankList" @sendSelectedBank="handleSelectedBank" />
-    </aside>
-    <article>
+  <div class="maincontent">
+    <div class="sidebar">
+      <ProductsDepositSearch
+        :bank-list="bankList"
+        @sendSelectedBank="handleSelectedBank"
+      />
+    </div>
+    <div class="content">
       <ProductsDepositList :selected-bank="selectedBank" />
-    </article>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { ref, watchEffect } from 'vue'
-import { useCounterStore } from '@/stores/counter'
-import ProductsDepositList from '../components/ProductViewComponents/ProductsDepositList.vue';
-import ProductsDepositSearch from '../components/ProductViewComponents/ProductsDepositSearch.vue';
+import { ref, watchEffect } from "vue";
+import { useCounterStore } from "@/stores/counter";
+import ProductsDepositList from "../components/ProductViewComponents/ProductsDepositList.vue";
+import ProductsDepositSearch from "../components/ProductViewComponents/ProductsDepositSearch.vue";
 
-const bankList = ref([])
-const selectedBank = ref('')
-const store = useCounterStore()
+const bankList = ref([]);
+const selectedBank = ref("");
+const store = useCounterStore();
 
 // 은행명 리스트 생성하기
 const getBankList = () => {
   for (let prdt of store.deposits) {
-    const bankName = prdt.kor_co_nm
+    const bankName = prdt.kor_co_nm;
 
     // 은행명 중복 검사
     if (!bankList.value.includes(bankName)) {
       bankList.value.push(bankName);
     }
   }
-}
+};
 
 watchEffect(() => {
-  getBankList()
-})
+  getBankList();
+});
 
 const handleSelectedBank = (bankname) => {
-  selectedBank.value = bankname
-}
-
+  selectedBank.value = bankname;
+};
 </script>
 
 <style scoped>
- .main {
+.maincontent {
   display: flex;
   margin: 0;
- }
+  width: 80%;
+  justify-content: center;
+}
 
-  aside {
-    width: 250px;
-  }
+.sidebar {
+  width: 25%;
+  display: flex;
+  justify-content: end;
+}
 
-  article {
-    width: 950px;
-  }
+.content {
+  width: 75%;
+}
 </style>

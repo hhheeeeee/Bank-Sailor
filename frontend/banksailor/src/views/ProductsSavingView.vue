@@ -1,14 +1,14 @@
 <template>
-  <div class="main">
-    <aside class="sidebar">
+  <div class="maincontent">
+    <div class="sidebar">
       <ProductsSavingSearch
         :bank-list="bankList"
         @sendSelectedBank="handleSelectedBank"
       />
-    </aside>
-    <article>
+    </div>
+    <div class="content">
       <ProductsSavingList :selected-bank="selectedBank" />
-    </article>
+    </div>
   </div>
 </template>
 
@@ -44,16 +44,20 @@ const handleSelectedBank = (bankname) => {
 </script>
 
 <style scoped>
-.main {
+.maincontent {
   display: flex;
   margin: 0;
+  width: 80%;
+  justify-content: center;
 }
 
-aside {
-  width: 250px;
+.sidebar {
+  width: 25%;
+  display: flex;
+  justify-content: end;
 }
 
-article {
-  width: 950px;
+.content {
+  width: 75%;
 }
 </style>
