@@ -1,54 +1,66 @@
 <template>
-  <Form
-    @submit.prevent="signUp"
-    :validation-schema="schema"
-    v-slot="{ errors }"
-  >
-    <h1>가입 폼</h1>
-    <form @submit.prevent="signUp">
-      <p>유저네임</p>
-      <Field name="username" v-model="username" />
-      <span class="warning">{{ errors.username }}</span>
-      <button @click="checkId">중복확인버튼</button>
-      <p v-show="isChecked == 2" style="color: red">중복된 아이디 입니다.</p>
-      <p v-show="isChecked == 1" style="color: green">
-        사용 가능한 아이디 입니다.
-      </p>
+  <div class="container2">
+    <Form
+      class="formarea"
+      @submit.prevent="signUp"
+      :validation-schema="schema"
+      v-slot="{ errors }"
+    >
+      <h1 class="title">회원가입</h1>
+      <form @submit.prevent="signUp" class="formarea1">
+        <div class="inputarea">
+          <p class="label">유저네임</p>
+          <div class="username">
+            <div class="usernameinput">
+              <Field name="username" v-model="username" />
+              <span class="warning">{{ errors.username }}</span>
+            </div>
+            <button @click="checkId">중복확인버튼</button>
+          </div>
 
-      <p>이메일</p>
-      <Field name="email" v-model="email" />
-      <span class="warning">{{ errors.email }}</span>
-      <p>비번</p>
-      <Field name="password1" type="password" v-model="password1" />
-      <span class="warning">{{ errors.password1 }}</span>
-      <p>비번확인</p>
-      <Field name="password2" type="password" v-model="password2" />
-      <span class="warning">{{ errors.password2 }}</span>
-      <p>닉넴</p>
+          <p class="idconfirm" v-show="isChecked == 2" style="color: red">
+            중복된 아이디 입니다.
+          </p>
+          <p class="idconfirm" v-show="isChecked == 1" style="color: green">
+            사용 가능한 아이디 입니다.
+          </p>
 
-      <Field name="nickname" v-model="nickname" />
-      <span class="warning">{{ errors.nickname }}</span>
-      <p>나이</p>
+          <p class="label">이메일</p>
+          <Field name="email" v-model="email" />
+          <span class="warning">{{ errors.email }}</span>
+          <p class="label">비번</p>
+          <Field name="password1" type="password" v-model="password1" />
+          <span class="warning">{{ errors.password1 }}</span>
+          <p class="label">비번확인</p>
+          <Field name="password2" type="password" v-model="password2" />
+          <span class="warning">{{ errors.password2 }}</span>
+          <p class="label">닉넴</p>
 
-      <Field name="age" type="number" v-model="age" />
-      <span class="warning">{{ errors.age }}</span>
-      <p>money</p>
-      <Field name="money" type="number" v-model="money" />
-      <span class="warning">{{ errors.money }}</span>
-      <p>salary</p>
+          <Field name="nickname" v-model="nickname" />
+          <span class="warning">{{ errors.nickname }}</span>
+          <p class="label">나이</p>
 
-      <Field name="salary" type="number" v-model="salary" />
-      <span class="warning">{{ errors.salary }}</span>
-      <button
-        :disabled="!isFormValid"
-        type="submit"
-        value="가입하기"
-        class="submit"
-      >
-        제ㅐ출
-      </button>
-    </form>
-  </Form>
+          <Field name="age" type="number" v-model="age" />
+          <span class="warning">{{ errors.age }}</span>
+          <p class="label">현재 자산</p>
+          <Field name="money" type="number" v-model="money" />
+          <span class="warning">{{ errors.money }}</span>
+          <p class="label">연봉</p>
+
+          <Field name="salary" type="number" v-model="salary" />
+          <span class="warning">{{ errors.salary }}</span>
+          <button
+            :disabled="!isFormValid"
+            type="submit"
+            value="가입하기"
+            class="submit"
+          >
+            가입하기
+          </button>
+        </div>
+      </form>
+    </Form>
+  </div>
 </template>
 
 <script setup>
@@ -193,7 +205,117 @@ const signUp = function () {
 </script>
 
 <style scoped>
+.container2 {
+  background-color: rgb(232, 240, 254);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin: 0px 0px;
+}
+
 .warning {
   color: red;
+  margin-bottom: 20px;
+}
+
+.formarea {
+  background-color: white;
+  width: 50%;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.formarea1 {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 30px;
+}
+
+.title {
+  color: hsl(216, 100%, 26%);
+  font-weight: 700;
+  font-size: 3.5rem;
+}
+
+.username {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.username input {
+  border: 1px solid #4db7e5;
+  border-radius: 5px;
+  margin-bottom: 0px;
+}
+
+.username button {
+  margin-left: 20px;
+  border: 1px solid #4db7e5;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #1c5f82;
+  color: white;
+  width: 150px;
+}
+
+input {
+  margin-bottom: 0px;
+  padding: 8px;
+  border: 1px solid #4db7e5;
+  border-radius: 5px;
+  width: 100%;
+}
+
+input[type="submit"] {
+  background-color: #1c5f82;
+  color: white;
+  padding: 8px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
+}
+
+.submit {
+  background-color: #1c5f82;
+  width: 60%;
+  color: white;
+  padding: 8px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
+}
+
+.submit:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.submit:not(:disabled):hover {
+  background-color: #4db7e5;
+}
+
+.label {
+  color: #4db7e5;
+  margin-top: 5px;
+  margin-bottom: 0px;
+  text-align: center;
+}
+
+.inputarea {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 60%;
+}
+
+.idconfirm {
+  margin-top: 0;
+  padding-top: 0;
 }
 </style>

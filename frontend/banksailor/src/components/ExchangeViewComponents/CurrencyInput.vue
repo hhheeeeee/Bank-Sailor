@@ -205,6 +205,7 @@ input[type="number"]::-webkit-inner-spin-button {
   margin-top: 10px;
   border: none;
   width: 100px;
+  height: 50px;
   border-radius: 5px;
   background-color: rgb(7, 152, 242);
   color: white;

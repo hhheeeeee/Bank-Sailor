@@ -23,7 +23,7 @@ import Mapinput from "@/components/MapViewComponents/Mapinput.vue";
 
   background-size: cover;
   background-repeat: no-repeat; */
-  background-color: rgb(214, 232, 255);
+  background-color: whitesmoke;
   display: flex;
   flex-direction: column;
   justify-content: center;
