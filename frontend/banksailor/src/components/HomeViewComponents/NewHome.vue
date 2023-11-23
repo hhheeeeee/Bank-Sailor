@@ -9,14 +9,14 @@
         <div class="box1">
           <img src="/src/assets/currency-icon.png" alt="" class="icon ms-4" />
           <div class="exchange me-4">
-            <img src="/src/assets/arrow.png" alt="" width="60">
+            <img src="/src/assets/arrow.png" alt="" width="60" />
             <h3>환율 정보</h3>
           </div>
         </div>
         <div class="box2">
           <img src="/src/assets/map-icon.png" alt="" class="icon ms-4" />
           <div class="map me-4">
-            <img src="/src/assets/arrow.png" alt="" width="60">
+            <img src="/src/assets/arrow.png" alt="" width="60" />
             <h2>지도</h2>
           </div>
         </div>
@@ -103,10 +103,6 @@ import NewHomeCarousel from "./NewHomeCarousel.vue";
   transition: 0.3s all;
 }
 
-
-
-
-
 .container-main {
   width: 100%;
   height: 600px;
@@ -130,5 +126,4 @@ import NewHomeCarousel from "./NewHomeCarousel.vue";
   align-items: end;
   row-gap: 10px;
 }
-
 </style>

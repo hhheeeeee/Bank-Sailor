@@ -19,5 +19,10 @@
 <style scoped>
 svg {
   fill: blue;
+  transition: 0.3s all;
+}
+
+svg:hover {
+  transform: scale(1.3);
 }
 </style>

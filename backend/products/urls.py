@@ -14,4 +14,6 @@ urlpatterns = [
     path('email/', views.send_email_on_change),
     # 금리 변동시 이메일 발송
     path('recommend/', views.recommend),
+    # 유형별 맞춤상품
+    path('iwillrecommendyou/', views.iwillrecommendyou),
 ]

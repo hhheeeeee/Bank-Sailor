@@ -210,17 +210,12 @@ const sortedReverseProducts = computed(() => {
   justify-content: center;
 }
 
-  .sortbutton {
-    width: 30%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    row-gap: 5px;
-  }
-
-  a {
-    display: flex;
-  }
+.sortbutton {
+  width: 40%;
+  background-color: aquamarine;
+  display: flex;
+  flex-direction: column;
+}
 
 .rate {
   display: flex;

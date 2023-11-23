@@ -20,5 +20,10 @@
 <style scoped>
 svg {
   fill: red;
+  transition: 0.3s all;
+}
+
+svg:hover {
+  transform: scale(1.3);
 }
 </style>

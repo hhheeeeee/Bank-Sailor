@@ -11,6 +11,7 @@ export const useCounterStore = defineStore(
     const articles = ref([]);
     const comments = ref([]);
     const userInfo = ref([]);
+    const portfolio = ref([]);
     const API_URL = "http://127.0.0.1:8000";
     const token = ref(null);
     const isLogin = computed(() => {
@@ -224,6 +225,20 @@ export const useCounterStore = defineStore(
       }
     };
 
+    const getPortfolio = function () {
+      axios({
+        method: "get",
+        url: `${API_URL}/accounts/find/input_portfolioData/`,
+      })
+        .then((res) => {
+          portfolio.value = res.data;
+          console.log(portfolio);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
     return {
       articles,
       API_URL,
@@ -243,6 +258,8 @@ export const useCounterStore = defineStore(
       getUserInfo,
       userInfo,
       Toast,
+      getPortfolio,
+      portfolio,
     };
   },
   { persist: true }

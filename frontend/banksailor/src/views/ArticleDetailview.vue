@@ -1,69 +1,67 @@
 <template>
   <div class="container2">
     <div>
-    <h1 class="title">게시판</h1>
+      <h1 class="title">게시판</h1>
 
-    <hr />
+      <hr />
 
-    <div>
-      <div v-if="article">
-        <div class="header" v-if="currentState">
-          <p>{{ article.category }}</p>
-          /
-          <p>{{ article.title }}</p>
-          <p>작성자 : {{ article.username }}</p>
-          <p>작성일 : {{ article.created_at.substring(0, 10) }}</p>
-          <div class="main">
-            <p>{{ article.content }}</p>
+      <div>
+        <div v-if="article">
+          <div class="header" v-if="currentState">
+            <p>{{ article.category }}</p>
+            /
+            <p>{{ article.title }}</p>
+            <p>작성자 : {{ article.username }}</p>
+            <p>작성일 : {{ article.created_at.substring(0, 10) }}</p>
+            <div class="main">
+              <p>{{ article.content }}</p>
+            </div>
+          </div>
+
+          <div class="header" v-else>
+            <form @submit.prevent="editArticle">
+              <div>
+                카테고리:
+                <select v-model="article.category">
+                  <option
+                    v-for="category in categoryList"
+                    :key="category.id"
+                    :value="article.category"
+                  >
+                    {{ category.value }}
+                  </option>
+                </select>
+              </div>
+
+              <div>
+                <label for="title">제목:</label>
+                <input type="text" v-model="article.title" />
+              </div>
+
+              <div>
+                <label for="content">내용:</label>
+                <textarea type="text" v-model="article.content"></textarea>
+              </div>
+              <button v-show="!currentState">완료</button>
+              <button @click="$router.go(0)">취소</button>
+            </form>
           </div>
         </div>
-
-        <div class="header" v-else>
-          <form @submit.prevent="editArticle">
-            <div>
-              카테고리:
-              <select v-model="article.category">
-                <option
-                  v-for="category in categoryList"
-                  :key="category.id"
-                  :value="article.category"
-                >
-                  {{ category.value }}
-                </option>
-              </select>
-            </div>
-
-            <div>
-              <label for="title">제목:</label>
-              <input type="text" v-model="article.title" />
-            </div>
-
-            <div>
-              <label for="content">내용:</label>
-              <textarea type="text" v-model="article.content"></textarea>
-            </div>
-            <button v-show="!currentState">완료</button>
-            <button @click="$router.go(0)">취소</button>
-          </form>
-        </div>
       </div>
-    </div>
 
-    
-    <!-- <div> -->
+      <!-- <div> -->
       <div v-if="article && article.username === userInfo.username">
         <button v-show="currentState" @click="onClickEvent()">수정</button>
         <button @click="deleteArticle()">삭제</button>
       </div>
       <button @click="moveToList()">목록</button>
     </div>
-    
+
     <div>
       <CommentList :article="article" />
     </div>
-
   </div>
-  </template>
+</template>
 
 <script setup>
 import axios from "axios";
@@ -93,8 +91,8 @@ const categoryList = [
   },
 ];
 
-console.log('토큰', store.token);
-console.log('유저정보', userInfo);
+console.log("토큰", store.token);
+console.log("유저정보", userInfo);
 
 onMounted(() => {
   store.getComments(),
@@ -154,7 +152,6 @@ const deleteArticle = function (request, article_pk) {
       console.log(err);
     });
 };
-
 </script>
 
 <style>
@@ -170,7 +167,7 @@ const deleteArticle = function (request, article_pk) {
   text-align: center;
   font-size: 5rem;
   color: #1c5f82;
-  -webkit-text-stroke-width: 2px;
+  /* -webkit-text-stroke-width: 2px; */
   /* -webkit-text-stroke-color: white; */
   font-weight: 900;
   margin: 35px;

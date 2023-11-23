@@ -90,8 +90,6 @@ const onAddress1Change = (event) => {
   selectedBank.value = null;
   selectedAddress1.value = event.target.selectedOptions[0].textContent;
   selectedAddress1Code.value = event.target.value.slice(0, 2);
-  console.log(selectedAddress1.value);
-  console.log(selectedAddress1Code.value);
 
   axios({
     method: "get",
