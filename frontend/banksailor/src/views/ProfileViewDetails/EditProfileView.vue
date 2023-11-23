@@ -3,7 +3,6 @@
     <h1 class = title>포트폴리오 수정</h1>
 
     <div v-if="shouldShowEditForm" class="form">
-      내 유형 수정하기
       <form @submit.prevent="handleSubmit">
         <div>
           <label for="ID">ID : </label>
@@ -45,7 +44,7 @@
     </div>
 
     <div v-else class="form">
-      나만의 유형 저장하기
+      당신의 유형을 선택하고 맞춤 상품을 확인하세요!
       <form @submit.prevent="handleSubmit">
         <div v-for="style in savingStyles" :key="style">
           <input
@@ -67,8 +66,6 @@
         </div>
         <input type="submit" value="저장하기" />
       </form>
-
-      당신의 유형을 선택하고 맞춤 상품을 확인하세요!
     </div>
   </div>
 </template>
@@ -129,7 +126,7 @@ const myPortfolio = computed(() => {
 onMounted(() => {
   getPortfolio();
 });
-
+console.log(userInfo)
 const getPortfolio = function () {
   axios({
     method: "get",
