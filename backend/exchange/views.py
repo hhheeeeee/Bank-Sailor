@@ -3,39 +3,26 @@ from rest_framework.response import Response
 import requests
 
 @api_view(['GET'])
-def exchange(request, fromCountry, toCountry, price):
+def exchange(request, fromCountry, toCountry, price, st_date):
     # 환율 정보 가져오기
-    URL = 'https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=nJrSIWLxo06igbLUpsy8jF93POiYAzyt&searchdate=20180102&data=AP01'
+    URL = f'https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=nJrSIWLxo06igbLUpsy8jF93POiYAzyt&searchdate={st_date}&data=AP01'
     requestData = requests.get(URL)
     result = requestData.json()
-
-    # Find exchange rate for fromCountry to KRW
-    from_rate = 1.0
-    if fromCountry != 'KRW':
-        for data in result:
-            if data.get('cur_unit') == fromCountry:
-                from_rate = float(data.get('deal_bas_r').replace(',', ''))
-                if fromCountry == 'JPY(100)' or fromCountry == 'IDR(100)':
-                    from_rate /= 100  # 
-                break
-
-    # Find exchange rate for toCountry to KRW
-    to_rate = 1.0
+    
+    exchange_rate=1
+    exchangeresult = 1
+    # 환율 계산
     for data in result:
-        if data.get('cur_unit') == toCountry:
-            to_rate = float(data.get('deal_bas_r').replace(',', ''))
-            if toCountry == 'JPY(100)' or toCountry == 'IDR(100)':
-                to_rate /= 100 
+        if data.get('cur_unit') == fromCountry:
+            exchange_rate = float(data.get('deal_bas_r').replace(',',''))
+            print(data.get('deal_bas_r'))
+            exchangeresult = price * exchange_rate
             break
-
-    # Calculate exchange result
-    if fromCountry == 'KRW':
-        exchangeresult = price / to_rate
-    else:
-        exchangeresult = price * (to_rate / from_rate)
-
-    exchangeresult = round(exchangeresult, 2)
-    print(fromCountry, toCountry, price)
-    print('=====================================')
-
+    # else:
+    #     for data in result:
+    #         if data.get('cur_unit') == fromCountry:
+    #             exchange_rate = float(data.get('deal_bas_r').replace(',',''))
+    #             exchangeresult = price * exchange_rate
+    #             break
+    exchangeresult = round(exchangeresult , 3)
     return Response({"exchangeresult": exchangeresult})
