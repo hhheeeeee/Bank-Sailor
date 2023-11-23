@@ -1,15 +1,35 @@
 <template>
-  <div>
-    <a href="#" @click.prevent="goBack">뒤로가기</a>
-    <h1>금리 수정</h1>
-    <hr>
-    <p>현재 금리: {{ this.$route.query.rateValue ? this.$route.query.rateValue : '없음' }}</p>
-    <form @submit.prevent="updateRate">
-      <label for="newRate">수정 금리: </label>
-      <input type="number" step="0.0001" id="newRate" v-model="newRate">
-      <input type="submit" value="수정">
-    </form>
-  </div>
+  <main>
+    <div class="linkbar">
+      <a href="#" @click.prevent="goBack">뒤로가기</a>
+    </div>
+    <div class="titlepart">
+      <h1 class="title">금리정보 수정</h1>
+    </div>
+    <div class="detail-content">
+      <div class="info-list">
+        <div class="info">
+          <div class="info-title">
+            현재 금리
+          </div>
+          <div class="info-content">
+            {{ this.$route.query.rateValue ? this.$route.query.rateValue : '없음' }}
+          </div> 
+        </div>
+        <div class="info">
+          <div class="info-title">
+            수정 금리 입력
+          </div>
+          <div class="info-content">
+            <form @submit.prevent="updateRate">
+              <input type="number" step="0.0001" id="newRate" v-model="newRate">
+              <input type="submit" value="수정" class="submit-button">
+            </form >
+          </div> 
+        </div>
+      </div>
+    </div>
+  </main>
 </template>
 
 <script setup>
@@ -76,5 +96,90 @@ const goBack = () => {
 </script>
 
 <style scoped>
+
+main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  /* margin-bottom: 10px; */
+}
+
+.titlepart {
+  width: 100%;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+  border-bottom: 2px solid lightgray;
+}
+
+.title {
+  margin-top: 40px;
+  font-size: 3rem;
+  font-weight: 500;
+  font-family: 'Noto Sans KR', sans-serif;
+  color: rgb(0, 53, 133);
+}
+
+.linkbar {
+  margin-left: 20px;
+}
+
+
+.linkbar a {
+  font-family: 'Noto Sans KR', sans-serif;
+  color: black;
+  text-decoration: none;
+}
+
+.detail-content {
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: white;;
+  box-shadow: 5px 5px 10px 5px lightgray;
+  border-radius: 20px;
+  margin-bottom: 20px;
+}
+
+.info-list {
+  display: flex;
+  flex-direction: column;
+  margin: 50px;
+  margin-bottom: 25px;
+}
+
+.info {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid lightgray;
+}
+
+.info-title {
+  width: 20%;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 500;
+}
+.info-content {
+  width: 80%;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+.submit-button {
+  font-family: 'Noto Sans KR', sans-serif;
+  background-color: rgb(0, 53, 133);
+  color: white;
+  transition: background-color 0.1s ease;
+  margin-left: 1rem;
+}
+
+.submit-button:hover {
+  background-color: rgb(0, 70, 175);
+}
 
 </style>

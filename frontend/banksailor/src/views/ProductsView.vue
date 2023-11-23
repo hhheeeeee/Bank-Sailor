@@ -35,13 +35,12 @@ import { RouterLink, RouterView } from "vue-router";
   align-items: center;
   margin-bottom: 30px;
   border-bottom: 2px solid lightgray;
-  /* border-bottom: 2px solid hsl(216, 100%, 26%); */
 }
 
 .title {
   margin-top: 40px;
   font-size: 3rem;
-  font-weight: 400;
+  font-weight: 500;
   font-family: 'Noto Sans KR', sans-serif;
   color: rgb(0, 53, 133);
 }
