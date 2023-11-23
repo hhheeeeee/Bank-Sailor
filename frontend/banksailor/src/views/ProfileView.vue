@@ -22,7 +22,7 @@ import { RouterLink, RouterView } from "vue-router";
   width: 100vw;
   height: 87vh;
   margin-top: 30px;
-  background-color: rgb(214, 232, 255);
+  background-color: whitesmoke;
   background-size: cover;
   background-repeat: no-repeat;
   display: flex;
