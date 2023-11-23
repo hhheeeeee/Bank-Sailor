@@ -8,14 +8,15 @@ import CurrencyInput from "@/components/ExchangeViewComponents/CurrencyInput.vue
 </script>
 <style lang="scss" scoped>
 .calculatorbody {
-  background-color: white;
   width: 80%;
-  height: 35%;
+  height: 40%;
   margin-top: 30px;
-  border: 3px solid #0d2a3b;
-  border-radius: 50px;
+  margin-bottom: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: white;
+  box-shadow: 5px 5px 10px 5px lightgray;
+  border-radius: 20px;
 }
 </style>

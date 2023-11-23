@@ -13,8 +13,11 @@
       </div>
       <Arrow />
       <div class="inputbox">
-        <div class="exchangeresult">{{ exchangeresult }}</div>
-        <select class="select" @change="selectedCountry2">
+        <div class="exchangeresult">
+          <div>{{ exchangeresult }}</div>
+          <div>₩</div>
+        </div>
+        <!-- <select class="select" @change="selectedCountry2">
           <option value="null" disabled selected hidden>통화</option>
           <option disabled value="">Please select one</option>
           <template v-for="item in CountriesList" :key="item.id">
@@ -22,7 +25,7 @@
               {{ item.cur_unit }}
             </option>
           </template>
-        </select>
+        </select> -->
       </div>
     </div>
     <p>* 엔화/인도네시아 루피아는 100단위, 나머지는 모두 1단위</p>
@@ -39,9 +42,14 @@ import Arrow from "@/components/ExchangeViewComponents/Arrow.vue";
 const store = useCounterStore();
 const exchangeresult = ref("");
 const fromCountry = ref(null);
-const toCountry = ref(null);
+const toCountry = "KRW";
 const price = ref(null);
-
+var st_date = new Date()
+  .toISOString()
+  .substr(0, 10)
+  .replace("T", " ")
+  .replace("-", "")
+  .replace("-", "");
 const Toast = Swal.mixin({
   toast: true,
   position: "top-end",
@@ -65,21 +73,21 @@ const getExchangeResult = function () {
   if (fromCountry.value == null) {
     Toast.fire({
       icon: "warning",
-      title: "현재 통화를 선택해주세요",
-    });
-    return;
-  }
-
-  if (toCountry.value == null) {
-    Toast.fire({
-      icon: "warning",
       title: "변환할 통화를 선택해주세요",
     });
     return;
   }
+
+  // if (toCountry.value == null) {
+  //   Toast.fire({
+  //     icon: "warning",
+  //     title: "변환할 통화를 선택해주세요",
+  //   });
+  //   return;
+  // }
   axios({
     method: "get",
-    url: `${store.API_URL}/exchange/${fromCountry.value}/${toCountry.value}/${price.value}/`,
+    url: `${store.API_URL}/exchange/${fromCountry.value}/${toCountry}/${price.value}/${st_date}`,
   })
     .then((res) => {
       console.log(res.data);
@@ -163,6 +171,8 @@ const CountriesList = [
 
 .exchangeresult {
   width: 70%;
+  display: flex;
+  justify-content: space-between;
 }
 
 .selectcountry {
@@ -205,6 +215,7 @@ input[type="number"]::-webkit-inner-spin-button {
   margin-top: 10px;
   border: none;
   width: 100px;
+  height: 50px;
   border-radius: 5px;
   background-color: rgb(7, 152, 242);
   color: white;
@@ -224,5 +235,6 @@ input[type="number"]::-webkit-inner-spin-button {
   width: 70px;
   font-size: 20px;
   border: none;
+  background-color: transparent;
 }
 </style>

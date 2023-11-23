@@ -1,9 +1,9 @@
 <template>
   <div class="containerbody">
     <div class="loginarea">
-      <h1>Login</h1>
+      <h1 class="title">로그인</h1>
       <form @submit.prevent="logIn" class="customform">
-        <label for="username">사용자 아이디 </label>
+        <label for="username">아이디 </label>
         <input type="text" v-model.trim="username" id="username" />
         <label for="password">비밀번호 </label>
         <input type="password" v-model.trim="password" id="password" />
@@ -41,13 +41,14 @@ const logIn = function () {
 .containerbody {
   width: 100%;
   height: 100vh;
-  background-image: linear-gradient(
+  background-color: rgb(232, 240, 254);
+  /* background-image: linear-gradient(
       rgba(255, 255, 255, 0.4),
       rgba(255, 255, 255, 0.4)
     ),
     url("@/assets/backgroundimg.png");
   background-size: cover;
-  background-repeat: no-repeat;
+  background-repeat: no-repeat; */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -68,10 +69,10 @@ const logIn = function () {
   flex-direction: column;
 }
 
-h1 {
-  color: #1c5f82;
-  margin-bottom: 20px;
-  font-weight: 800;
+.title {
+  color: hsl(216, 100%, 26%);
+  font-weight: 600;
+  font-size: 3rem;
 }
 
 label {

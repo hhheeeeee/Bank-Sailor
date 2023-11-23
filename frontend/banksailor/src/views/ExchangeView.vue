@@ -1,6 +1,6 @@
 <template>
   <div class="containerbody">
-    <h1 class="calculatortitle">환율 계산기</h1>
+    <div class="calculatortitle">환율 계산기</div>
     <Currency />
   </div>
 </template>
@@ -13,7 +13,7 @@ import Currency from "@/components/ExchangeViewComponents/Currency.vue";
 .containerbody {
   width: 100%;
   height: 91vh;
-  background-color: rgb(214, 232, 255);
+  background-color: whitesmoke;
   /* background-image: linear-gradient(
       rgba(255, 255, 255, 0.4),
       rgba(255, 255, 255, 0.4)
@@ -24,15 +24,19 @@ import Currency from "@/components/ExchangeViewComponents/Currency.vue";
   background-repeat: no-repeat;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
 }
 
 .calculatortitle {
-  background-color: rgb(214, 232, 255);
-  color: rgb(28, 54, 89);
-  font-weight: 700;
-  font-size: 40px;
-  margin-bottom: 50px;
+  width: 100%;
+  text-align: center;
+  margin: 30px 0px;
+  font-size: 3rem;
+  font-weight: 400;
+  font-family: "Noto Sans KR", sans-serif;
+  color: rgb(0, 53, 133);
+  border-bottom: 1px solid grey;
+  padding-bottom: 30px;
 }
 </style>
