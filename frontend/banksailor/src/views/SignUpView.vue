@@ -213,6 +213,7 @@ const signUp = function () {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: 100%;
   margin: 0px 0px;
 }
@@ -225,6 +226,7 @@ const signUp = function () {
 .formarea {
   background-color: white;
   width: 50%;
+  margin-top: 30px;
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
@@ -241,6 +243,8 @@ const signUp = function () {
   color: hsl(216, 100%, 26%);
   font-weight: 600;
   font-size: 3rem;
+  text-align: center;
+  margin-top: 20px;
 }
 
 .username {

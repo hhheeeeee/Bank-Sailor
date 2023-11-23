@@ -506,30 +506,32 @@ def recommend(request):
 
         # 결과 출력
         print("가장 가까운 이웃의 pk(id) 값:", closest_neighbors_ids)
-
         recommend_deposit = []
         recommend_saving = []
-        myassets = []
         nowuser = User.objects.get(pk=request.user.pk)
         now_user_liked_deposits = nowuser.like_deposit.all()
         now_user_liked_savings = nowuser.like_saving.all()
+
         for id in closest_neighbors_ids:
             if id != USERPK:
                 other_user = User.objects.get(pk=id)
                 other_user_liked_deposits = other_user.like_deposit.all()
                 other_user_liked_savings = other_user.like_saving.all()
+
                 for d in other_user_liked_deposits:
-                    if d not in now_user_liked_deposits:
+                    if d not in now_user_liked_deposits and len(recommend_deposit) < 3:
                         recommend_deposit.append(d)
+
                 for s in other_user_liked_savings:
-                    if s not in now_user_liked_savings:
+                    if s not in now_user_liked_savings and len(recommend_saving) < 3:
                         recommend_saving.append(s)
+
         deposit_serializer = DepositProductListSerializer(recommend_deposit, many=True)
         saving_serializer = SavingProductListSerializer(recommend_saving, many=True)
 
         serialized_data = {
             'deposits': deposit_serializer.data,
-            'savings' : saving_serializer.data
+            'savings': saving_serializer.data
         }
         print(serialized_data)
         return Response(serialized_data)

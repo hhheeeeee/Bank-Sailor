@@ -30,31 +30,42 @@ defineProps({
 
 <style>
 .tbody3 {
+  vertical-align: middle;
   border-bottom: 1px solid darkgray;
 }
 .td1 {
   width: 10%;
+  vertical-align: middle;
   border-collapse: collapse;
   text-align: center;
+  font-family: 'Noto Sans KR', sans-serif; 
 }
 .td2 {
   width: 15%;
+  vertical-align: middle;
   border-collapse: collapse;
   text-align: center;
+  font-family: 'Noto Sans KR', sans-serif; 
 }
 .td3 {
   width: 45%;
+  vertical-align: middle;
   border-collapse: collapse;
   text-align: center;
+  font-family: 'Noto Sans KR', sans-serif; 
 }
 .td4 {
   width: 15%;
+  vertical-align: middle;
   border-collapse: collapse;
   text-align: center;
+  font-family: 'Noto Sans KR', sans-serif; 
 }
 .td5 {
   width: 15%;
+  vertical-align: middle;
   border-collapse: collapse;
   text-align: center;
+  font-family: 'Noto Sans KR', sans-serif; 
 }
 </style>

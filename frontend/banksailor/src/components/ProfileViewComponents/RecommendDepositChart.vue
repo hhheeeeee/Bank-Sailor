@@ -10,12 +10,14 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import { useCounterStore } from "@/stores/counter";
 import VueApexCharts from "vue3-apexcharts";
-const store = useCounterStore();
 
-const deposit = ref(store.userInfo.like_deposit);
+const props = defineProps({ data: Array });
+
+const deposit = ref(props.data);
+
 const categories = deposit.value.map((item) => item.fin_prdt_nm);
 
 const series = ref([
@@ -92,11 +94,6 @@ const chartOptions = ref({
     title: {
       text: "금리",
     },
-    labels: {
-      formatter: function (val) {
-        return val.toFixed(2); // Limit to 2 decimal places
-      },
-    },
   },
   fill: {
     opacity: 1,
@@ -104,9 +101,10 @@ const chartOptions = ref({
   tooltip: {
     y: {
       formatter: function (val) {
-        return val.toFixed(2);
+        return val;
       },
     },
   },
+  colors: ["#3E517A", "#49A9EA", "#F77F00", "#A239CA", "#7C7C7C"],
 });
 </script>
