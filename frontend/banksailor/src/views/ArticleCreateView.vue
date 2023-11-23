@@ -113,12 +113,8 @@ const moveToList = () => {
 </script>
 
 <style scoped>
-.title {
-  margin-top: 40px;
-  font-size: 3.5rem;
-  color: hsl(216, 100%, 26%);
-}
 .container2 {
+  margin: 0 auto;
   width: 80%;
   background-color: white;;
   box-shadow: 5px 5px 10px 5px lightgray;
@@ -126,15 +122,28 @@ const moveToList = () => {
   margin-bottom: 50px;
   padding-bottom: 50px;
 }
-
-
-
+.titlepart {
+  width: 100%;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+  border-bottom: 2px solid lightgray;
+  /* border-bottom: 2px solid hsl(216, 100%, 26%); */
+}
+.title {
+  margin-top: 40px;
+  font-size: 3rem;
+  font-weight: 400;
+  font-family: 'Noto Sans KR', sans-serif;
+  color: rgb(0, 53, 133);
+}
 .customform {
   max-width: 900px;
   height: 60vh;
   margin: 20px auto;
   padding: 20px;
-  background-color: #f2f2f2;
   border-radius: 10px;
 }
 
@@ -143,6 +152,7 @@ const moveToList = () => {
 }
 
 .form-label {
+  text-align: left;
   display: block;
   margin-bottom: 5px;
   color: #1c5f82;
