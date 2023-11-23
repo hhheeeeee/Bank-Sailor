@@ -1,8 +1,11 @@
 <template>
+  <div class="titlepart">
+    <h1 class="title">새글쓰기</h1>
+  </div>
+
   <div class="container1">
-    <h1 class="title">게시판</h1>
-    <hr />
     <form @submit.prevent="createArticle" class="customform">
+
       <div class="form-group">
         <label class="form-label" for="category">카테고리</label>
         <select v-model="selectedCategory" id="category">
@@ -15,6 +18,7 @@
           </option>
         </select>
       </div>
+
       <div class="form-group">
         <label class="form-label" for="title">제목:</label>
         <input
@@ -22,32 +26,49 @@
           v-model.trim="title"
           id="title"
           class="form-control"
+          placeholder="제목 입력, 최대 100자까지 가능합니다"
         />
       </div>
+
       <div class="form-group">
         <label class="form-label" for="content">내용:</label>
         <textarea
           v-model.trim="content"
           id="content"
           class="form-control form-control-textarea"
+          placeholder="내용을 입력해주세요"
         ></textarea>
       </div>
+
       <input type="submit" value="저장" class="form-submit" />
+
     </form>
+
     <button class="btn" @click="moveToList()">목록</button>
+
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import Swal from "sweetalert2";
 import axios from "axios";
+import { ref } from "vue";
 import { useCounterStore } from "@/stores/counter";
 import { useRouter } from "vue-router";
 
 const store = useCounterStore();
 const router = useRouter();
-
-const title = ref(null);
+const Toast = Swal.mixin({
+  toast: true,
+  position: "top-end",
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener("mouseenter", Swal.stopTimer);
+    toast.addEventListener("mouseleave", Swal.resumeTimer);
+  },
+});
 const content = ref(null);
 const selectedCategory = ref(null);
 const categoryList = [
@@ -79,7 +100,10 @@ const createArticle = function () {
       router.push({ name: "article" });
     })
     .catch((err) => {
-      console.log(err);
+      Toast.fire({
+        icon: "warning",
+        title: "빈칸을 모두 채워주세요!",
+      });
     });
 };
 
@@ -89,6 +113,11 @@ const moveToList = () => {
 </script>
 
 <style scoped>
+.title {
+  margin-top: 40px;
+  font-size: 3.5rem;
+  color: hsl(216, 100%, 26%);
+}
 .container1 {
   width: 100%;
   margin: 0;
@@ -96,14 +125,7 @@ const moveToList = () => {
   background-color: #ffffff;
 }
 
-.title {
-  margin: 0;
-  width: 100%;
-  padding: 20px;
-  text-align: center;
-  color: #1c5f82;
-  background-color: #4db7e5;
-}
+
 
 .customform {
   max-width: 900px;
