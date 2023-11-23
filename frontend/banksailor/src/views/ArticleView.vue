@@ -38,7 +38,10 @@
                 <td>{{ article.id }}</td>
                 <td>{{ article.category }}</td>
                 <RouterLink
-                  :to="{ name: 'ArticleDetailView', params: { id: article.id } }"
+                  :to="{
+                    name: 'ArticleDetailView',
+                    params: { id: article.id },
+                  }"
                 >
                   <p>{{ article.title }}</p>
                 </RouterLink>
@@ -138,11 +141,11 @@ const searchArticle = function () {
   text-align: center;
   font-size: 5rem;
   color: #1c5f82;
-  -webkit-text-stroke-width: 2px;
+  /* -webkit-text-stroke-width: 2px; */
   /* -webkit-text-stroke-color: white; */
   font-weight: 900;
   margin: 35px;
-  text-shadow: -2px 0px white, 0px 2px white, 2px 0px white, 0px -2px white;
+  /* text-shadow: -2px 0px white, 0px 2px white, 2px 0px white, 0px -2px white; */
 }
 
 button {
