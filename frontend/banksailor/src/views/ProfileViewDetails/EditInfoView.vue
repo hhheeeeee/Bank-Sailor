@@ -1,7 +1,11 @@
 <template>
   <div class="container2">
-    <template v-if="isLoading"><p>로딩중</p></template>
-    <template v-else>
+    <div v-if="isLoading">
+      <div class="loading">
+        <FadeLoader :loading="isLoading" />
+      </div>
+    </div>
+    <div v-else class="real">
       <h1 class="title">기본 정보 수정</h1>
       <Form
         @changed="changed"
@@ -49,7 +53,7 @@
           <SavingChart />
         </div>
       </div>
-    </template>
+    </div>
   </div>
 </template>
 
@@ -58,19 +62,19 @@ import DepositChart from "../../components/ProfileViewComponents/DepositChart.vu
 import SavingChart from "../../components/ProfileViewComponents/SavingChart.vue";
 import { useCounterStore } from "@/stores/counter";
 import { onMounted, watchEffect, ref, computed } from "vue";
+import FadeLoader from "vue-spinner/src/FadeLoader.vue";
 import { Form, Field, defineRule } from "vee-validate";
 import axios from "axios";
 const store = useCounterStore();
+const isLoading = ref(true);
 // const username = ref("");
 
 const email = ref("");
 const nickname = ref("");
-const age = ref("");
 const money = ref("");
 const salary = ref("");
 const like_deposit = ref(null);
 const like_saving = ref(null);
-const isLoading = ref(true);
 const isChanged = ref(false);
 
 const changed = function () {
@@ -106,7 +110,6 @@ const UpdateInfo = async function () {
       // username: username.value,
       email: email.value,
       nickname: nickname.value,
-      age: age.value,
       salary: salary.value,
       money: money.value,
     },
@@ -183,6 +186,7 @@ const schema = {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-top: 30px;
 }
 
 .container2::-webkit-scrollbar {
@@ -238,12 +242,12 @@ const schema = {
   font-size: 20px;
   font-weight: 800;
   color: rgb(7, 152, 242);
-  background-color: rgb(234, 218, 190);
+  background-color: rgb(205, 234, 190);
   padding-bottom: 5px;
 }
 
 .chart1 {
-  border: 3px solid rgb(234, 218, 190);
+  border: 3px solid rgb(205, 234, 190);
   margin-bottom: 40px;
 }
 
@@ -302,5 +306,9 @@ input {
   color: rgb(0, 53, 133);
   border-bottom: 1px solid grey;
   padding-bottom: 30px;
+}
+
+.real {
+  width: 100%;
 }
 </style>

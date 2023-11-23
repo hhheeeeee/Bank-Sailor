@@ -1,18 +1,25 @@
 <template>
   <div class="container1">
     <div class="container1">
-    <p>당신과 같은 20대 {{ myPortfolio[0].saving_style }} 유저는 이런 상품을 선택했어요~!</p>
+      <p>
+        당신과 같은 20대 {{ myPortfolio[0].saving_style }} 유저는 이런 상품을
+        선택했어요~!
+      </p>
 
-    <div v-for="recommend in recommend_list">
-      <div class="line-box">
-        <RouterLink
-        :to="{ name: 'savingdetail', params: { id: recommend.fin_prdt_cd } }">
-          {{ recommend.kor_co_nm }} - {{ recommend.fin_prdt_nm }}
-        </RouterLink>
+      <div v-for="recommend in recommend_list">
+        <div class="line-box">
+          <RouterLink
+            :to="{
+              name: 'savingdetail',
+              params: { id: recommend.fin_prdt_cd },
+            }"
+          >
+            {{ recommend.kor_co_nm }} - {{ recommend.fin_prdt_nm }}
+          </RouterLink>
+        </div>
       </div>
-
     </div>
-  </div>  </div>
+  </div>
 </template>
 
 <script setup>
@@ -23,15 +30,15 @@ import axios from "axios";
 
 const store = useCounterStore();
 const userInfo = store.userInfo;
-const portfolio = store.portfolio
+const portfolio = store.portfolio;
 const myPortfolio = computed(() => {
   return portfolio.filter((item) => item.user === userInfo.id);
 });
-const recommend_list = ref([])
+const recommend_list = ref([]);
 
-let like_saving = ''; // 변수를 바깥에서 선언
+let like_saving = ""; // 변수를 바깥에서 선언
 if (store.userInfo.like_saving.length === 0) {
-  like_saving = '00266451'; //
+  like_saving = "00266451"; //
 } else {
   like_saving = store.userInfo.like_saving[0].fin_prdt_cd;
 }
@@ -58,13 +65,13 @@ const recommend = function () {
         Authorization: `Token ${store.token}`,
       },
     })
-    .then((res) => {
-      console.log(res.data);
-      recommend_list.value = res.data;
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+      .then((res) => {
+        console.log(res.data);
+        recommend_list.value = res.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 };
 </script>

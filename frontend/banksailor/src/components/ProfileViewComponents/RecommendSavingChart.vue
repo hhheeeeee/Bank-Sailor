@@ -10,13 +10,15 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import { useCounterStore } from "@/stores/counter";
 import VueApexCharts from "vue3-apexcharts";
-const store = useCounterStore();
 
-const deposit = ref(store.userInfo.like_deposit);
-const categories = deposit.value.map((item) => item.fin_prdt_nm);
+const props = defineProps({ data: Array });
+
+const saving = ref(props.data);
+
+const categories = saving.value.map((item) => item.fin_prdt_nm);
 
 const series = ref([
   { name: "평균금리", data: [] },
@@ -26,7 +28,7 @@ const series = ref([
 const avgSeries = series.value.find((item) => item.name === "평균금리");
 const maxSeries = series.value.find((item) => item.name === "최대금리");
 
-for (const item of deposit.value) {
+for (const item of saving.value) {
   let count = 0;
   let sum = 0;
   if (item.rate_6 !== null) {
@@ -108,5 +110,6 @@ const chartOptions = ref({
       },
     },
   },
+  colors: ["#3E517A", "#49A9EA", "#F77F00", "#A239CA", "#7C7C7C"],
 });
 </script>
