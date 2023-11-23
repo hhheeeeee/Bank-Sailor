@@ -1,6 +1,6 @@
 <template>
   <div class="container1">
-    <h1>포트폴리오 수정</h1>
+    <h1 class = title>포트폴리오 수정</h1>
 
     <div v-if="shouldShowEditForm" class="form">
       내 유형 수정하기
@@ -10,10 +10,6 @@
           <input type="text" v-model="userInfo.username" />
         </div>
 
-        <div>
-          <label for="ID">비밀번호 : </label>
-          <input type="text" />
-        </div>
         <div>저축성향 :</div>
         <div class="radio-group">
           <div v-for="style in savingStyles" :key="style" class="radio-item">
@@ -44,6 +40,8 @@
         {{ myPortfolio[0].saving_style }} !! 제일 선호하는 은행은
         {{ myPortfolio[0].favorite_bank }} 입니다!
       </div>
+
+      <p>다른 {{ myPortfolio[0].saving_style }} 유저가 선택한 적금상품 확인하기♪</p>
     </div>
 
     <div v-else class="form">
@@ -199,6 +197,7 @@ const editPortfolio = function (portfolioId) {
   })
     .then((res) => {
       console.log(res.data);
+      getPortfolio()
       Toast.fire({
         icon: "success",
         title: "수정 완료!",
@@ -211,10 +210,13 @@ const editPortfolio = function (portfolioId) {
 </script>
 
 <style scoped>
+.title {
+  margin-top: 40px;
+  font-size: 3.5rem;
+  color: hsl(216, 100%, 26%);
+}
 .container1 {
-  width: 70%;
-  background-color: white;
-  border-radius: 30px;
+  background-color: whitesmoke;
 }
 .form {
   width: 60%;
