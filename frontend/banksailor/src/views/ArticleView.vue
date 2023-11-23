@@ -21,32 +21,31 @@
 
     <div class="board">
       <div v-if="searchfinish === true">
-        <h3>총 {{ filtered_article.length }}건의 검색결과가 있습니다</h3>
-
+        <h3 style="text-align: center; margin-top: 40px; font-weight: 400; font-family: 'Noto Sans KR', sans-serif; color: rgb(0, 53, 133);">총 {{ filtered_article.length }}건의 검색결과가 있습니다</h3>
         <hr />
         <div>
           <table class="table">
             <thead class="thead">
-              <th>번호</th>
-              <th>분류</th>
-              <th>제목</th>
-              <th>작성자</th>
-              <th>작성일</th>
+              <th class="th1">번호</th>
+              <th class="th2">분류</th>
+              <th class="th3">제목</th>
+              <th class="th4">작성자</th>
+              <th class="th5">작성일</th>
             </thead>
 
             <tbody class="tbody1">
               <tr v-for="article in filtered_article" :key="article.id">
-                <td>{{ article.id }}</td>
-                <td>{{ article.category }}</td>
-              <RouterLink
+                <td class="td1">{{ article.id }}</td>
+                <td class="td2">{{ article.category }}</td>
+              <RouterLink class="td3"
               :to="{
                 name: 'ArticleDetailView',
                 params: { id: article.id },
               }">
                 <p>{{ article.title }}</p>
               </RouterLink>
-              <td>{{ article.username }}</td>
-              <td>{{ article.created_at.slice(0, 10) }}</td>
+              <td class="td4">{{ article.username }}</td>
+              <td class="td5">{{ article.created_at.slice(0, 10) }}</td>
             </tr>
           </tbody>
         </table>
@@ -161,15 +160,26 @@ const searchArticle = function () {
   margin-bottom: 50px;
   padding-bottom: 50px;
 }
+.thead {
+  height: 50px;
+  background-color: rgb(233, 201, 142);
+  vertical-align: middle;
+  text-align: center;
+  font-weight: 400; 
+  font-family: 'Noto Sans KR', sans-serif; 
+  font-size: larger;
+}
 
 button {
-  border: 1px solid rgb(0, 53, 133);
   border-radius: 30px;
   padding-bottom: 4px;
   width: 80px;
   height: 35px;
   color: white;
   background-color: rgb(0, 53, 133);
+}
+button:hover {
+  background-color: #4db7e5;
 }
 .search-bar {
   display: flex;
@@ -197,7 +207,47 @@ button {
   border: none;
   cursor: pointer;
 }
-.search-bar button:hover {
-  background-color: rgb(0, 53, 133);
+.search-bar input:hover {
+  background-color: #4db7e5;
+}
+
+.tbody1 {
+  vertical-align: middle;
+  border-bottom: 1px solid darkgray;
+}
+.td1 {
+  width: 10%;
+  vertical-align: middle;
+  border-collapse: collapse;
+  text-align: center;
+  font-family: 'Noto Sans KR', sans-serif; 
+}
+.td2 {
+  width: 15%;
+  vertical-align: middle;
+  border-collapse: collapse;
+  text-align: center;
+  font-family: 'Noto Sans KR', sans-serif; 
+}
+.td3 {
+  width: 45%;
+  vertical-align: middle;
+  border-collapse: collapse;
+  text-align: center;
+  font-family: 'Noto Sans KR', sans-serif; 
+}
+.td4 {
+  width: 15%;
+  vertical-align: middle;
+  border-collapse: collapse;
+  text-align: center;
+  font-family: 'Noto Sans KR', sans-serif; 
+}
+.td5 {
+  width: 15%;
+  vertical-align: middle;
+  border-collapse: collapse;
+  text-align: center;
+  font-family: 'Noto Sans KR', sans-serif; 
 }
 </style>
