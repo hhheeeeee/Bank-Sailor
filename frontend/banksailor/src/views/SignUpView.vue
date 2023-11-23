@@ -9,7 +9,7 @@
       <h1 class="title">회원가입</h1>
       <form @submit.prevent="signUp" class="formarea1">
         <div class="inputarea">
-          <p class="label">유저네임</p>
+          <p class="label">아이디</p>
           <div class="username">
             <div class="usernameinput">
               <Field name="username" v-model="username" />
@@ -28,25 +28,28 @@
           <p class="label">이메일</p>
           <Field name="email" v-model="email" />
           <span class="warning">{{ errors.email }}</span>
+
           <p class="label">비번</p>
           <Field name="password1" type="password" v-model="password1" />
           <span class="warning">{{ errors.password1 }}</span>
+
           <p class="label">비번확인</p>
           <Field name="password2" type="password" v-model="password2" />
           <span class="warning">{{ errors.password2 }}</span>
-          <p class="label">닉넴</p>
 
+          <p class="label">닉넴</p>
           <Field name="nickname" v-model="nickname" />
           <span class="warning">{{ errors.nickname }}</span>
-          <p class="label">나이</p>
 
+          <p class="label">나이</p>
           <Field name="age" type="number" v-model="age" />
           <span class="warning">{{ errors.age }}</span>
+
           <p class="label">현재 자산</p>
           <Field name="money" type="number" v-model="money" />
           <span class="warning">{{ errors.money }}</span>
-          <p class="label">연봉</p>
 
+          <p class="label">연봉</p>
           <Field name="salary" type="number" v-model="salary" />
           <span class="warning">{{ errors.salary }}</span>
           <button

@@ -4,7 +4,6 @@
     <template v-else>
       <h1 class="title">기본 정보 수정</h1>
       <Form
-        @submit.prevent="UpdateInfo"
         @changed="changed"
         :validation-schema="schema"
         v-slot="{ errors }"
@@ -12,38 +11,35 @@
       >
         <form @submit.prevent="UpdateInfo" class="customform">
           <br />
-          <p>닉넴</p>
-          <Field name="nickname" v-model="nickname" />
-          <span class="warning">{{ errors.nickname }}</span>
+          <div class="inputarea">
+            <p class="label">닉네임</p>
+            <Field name="nickname" v-model="nickname" />
 
-          <p>이메일</p>
-          <Field name="email" v-model="email" />
-          <span class="warning">{{ errors.email }}</span>
+            <p class="label">이메일</p>
+            <Field name="email" v-model="email" />
+            <span class="warning">{{ errors.email }}</span>
 
-          <p>나이</p>
-          <Field name="age" type="number" v-model="age" />
-          <span class="warning">{{ errors.age }}</span>
+            <p class="label">현재 자산</p>
+            <Field name="money" type="number" v-model="money" />
+            <span class="warning">{{ errors.money }}</span>
 
-          <p>money</p>
-          <Field name="money" type="number" v-model="money" />
-          <span class="warning">{{ errors.money }}</span>
-
-          <p>salary</p>
-          <Field name="salary" type="number" v-model="salary" />
-          <span class="warning">{{ errors.salary }}</span>
-          <br />
-          <button
-            type="submit"
-            value="가입하기"
-            class="submit"
-            :disabled="isChanged == true"
-          >
-            수정하기
-          </button>
+            <p class="label">연봉</p>
+            <Field name="salary" type="number" v-model="salary" />
+            <span class="warning">{{ errors.salary }}</span>
+            <br />
+            <button
+              type="submit"
+              value="가입하기"
+              class="submit"
+              :disabled="isChanged == true"
+            >
+              수정하기
+            </button>
+          </div>
         </form>
       </Form>
       <div class="chartarea">
-        <p>내가 가입한것들</p>
+        <h3 class="subtitle">내가 가입한 상품</h3>
         <div class="chart1">
           <p class="saving">[예금]</p>
           <DepositChart />
@@ -88,7 +84,7 @@ onMounted(async () => {
     // username.value = store.userInfo.username;
     email.value = store.userInfo.email;
     nickname.value = store.userInfo.nickname;
-    age.value = store.userInfo.age;
+    // age.value = store.userInfo.age;
     money.value = store.userInfo.money;
     salary.value = store.userInfo.salary;
     like_deposit.value = store.userInfo.like_deposit;
@@ -182,7 +178,8 @@ const schema = {
   height: auto;
   overflow-x: hidden;
   background-color: white;
-  border-radius: 30px;
+  box-shadow: 5px 5px 10px 5px lightgray;
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -194,7 +191,7 @@ const schema = {
 
 .container2::-webkit-scrollbar-thumb {
   height: 20%; /* 스크롤바의 길이 */
-  background: #217af4; /* 스크롤바의 색상 */
+  background: rgb(0, 53, 133); /* 스크롤바의 색상 */
   border-radius: 10px;
 }
 
@@ -210,6 +207,7 @@ const schema = {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 
 .FF {
@@ -219,14 +217,19 @@ const schema = {
 }
 
 .title {
-  font-size: 50px;
-  font-weight: 700;
+  width: 100%;
   text-align: center;
-  margin-bottom: 30px;
-  color: rgb(28, 54, 89);
+  margin: 30px 0px;
+  font-size: 3rem;
+  font-weight: 400;
+  font-family: "Noto Sans KR", sans-serif;
+  color: rgb(0, 53, 133);
+  border-bottom: 1px solid grey;
+  padding-bottom: 30px;
 }
 
 .chartarea {
+  margin-top: 70px;
   width: 90%;
   text-align: center;
 }
@@ -242,5 +245,62 @@ const schema = {
 .chart1 {
   border: 3px solid rgb(234, 218, 190);
   margin-bottom: 40px;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.label {
+  color: RGB(0, 53, 133);
+  margin-top: 5px;
+  margin-bottom: 0px;
+  text-align: center;
+}
+
+input {
+  margin-bottom: 13px;
+  padding: 8px;
+  border-radius: 5px;
+  width: 100%;
+  border: 0.5px solid RGB(0, 53, 133);
+}
+
+.inputarea {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 70%;
+}
+
+.submit {
+  background-color: #1c5f82;
+  width: 60%;
+  color: white;
+  padding: 8px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
+  align-self: center;
+}
+
+.submit:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.subtitle {
+  width: 100%;
+  text-align: center;
+  margin: 30px 0px;
+  font-size: 2rem;
+  font-weight: 400;
+  font-family: "Noto Sans KR", sans-serif;
+  color: rgb(0, 53, 133);
+  border-bottom: 1px solid grey;
+  padding-bottom: 30px;
 }
 </style>
