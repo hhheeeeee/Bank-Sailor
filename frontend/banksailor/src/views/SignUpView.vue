@@ -12,8 +12,12 @@
           <p class="label">아이디</p>
           <div class="username">
             <div class="usernameinput">
-              <Field name="username" v-model="username" />
-              <span class="warning">{{ errors.username }}</span>
+              <Field
+                name="username"
+                v-model="username"
+                placeholder="사용하고 싶은 아이디을 입력해주세요."
+              />
+              <div class="warning">{{ errors.username }}</div>
             </div>
             <button @click="checkId">중복확인버튼</button>
           </div>
@@ -26,31 +30,59 @@
           </p>
 
           <p class="label">이메일</p>
-          <Field name="email" v-model="email" />
+          <Field
+            name="email"
+            v-model="email"
+            placeholder="이메일을 입력해주세요."
+          />
           <span class="warning">{{ errors.email }}</span>
 
-          <p class="label">비번</p>
-          <Field name="password1" type="password" v-model="password1" />
+          <p class="label">비밀번호</p>
+          <Field
+            name="password1"
+            type="password"
+            v-model="password1"
+            placeholder="비밀번호를 입력해주세요."
+          />
           <span class="warning">{{ errors.password1 }}</span>
 
-          <p class="label">비번확인</p>
+          <p class="label">비밀번호 확인</p>
           <Field name="password2" type="password" v-model="password2" />
           <span class="warning">{{ errors.password2 }}</span>
 
-          <p class="label">닉넴</p>
-          <Field name="nickname" v-model="nickname" />
+          <p class="label">닉네임</p>
+          <Field
+            name="nickname"
+            v-model="nickname"
+            placeholder="닉네임을 입력해주세요."
+          />
           <span class="warning">{{ errors.nickname }}</span>
 
           <p class="label">나이</p>
-          <Field name="age" type="number" v-model="age" />
+          <Field
+            name="age"
+            type="number"
+            v-model="age"
+            placeholder="나이를 입력해주세요."
+          />
           <span class="warning">{{ errors.age }}</span>
 
           <p class="label">현재 자산</p>
-          <Field name="money" type="number" v-model="money" />
+          <Field
+            name="money"
+            type="number"
+            v-model="money"
+            placeholder="현재 자산을 입력해주세요."
+          />
           <span class="warning">{{ errors.money }}</span>
 
           <p class="label">연봉</p>
-          <Field name="salary" type="number" v-model="salary" />
+          <Field
+            name="salary"
+            type="number"
+            v-model="salary"
+            placeholder="연봉을 입력해주세요."
+          />
           <span class="warning">{{ errors.salary }}</span>
           <button
             :disabled="!isFormValid"
@@ -77,6 +109,13 @@ defineRule("confirmed", (value, [target]) => {
     return true;
   }
   return "비밀번호가 일치하지 않습니다.";
+});
+
+defineRule("required", (value) => {
+  if (!value) {
+    return "필수 입력 항목입니다.";
+  }
+  return true;
 });
 
 defineRule("different", (value, [target]) => {
@@ -110,10 +149,17 @@ defineRule("validPositiveNumber", (value) => {
   return "0 이상의 숫자여야 합니다.";
 });
 
+defineRule("minlen", (value) => {
+  if (value.length > 5) {
+    return true;
+  }
+  return "비밀번호가 너무 짧습니다";
+});
+
 const schema = {
   username: "required",
   email: "required|validEmail",
-  password1: "required|min:6|different:@username",
+  password1: "required|minlen|different:@username",
   password2: "required|confirmed:@password1",
   nickname: "required",
   age: "required|validAge",
@@ -244,29 +290,32 @@ const signUp = function () {
   font-weight: 600;
   font-size: 3rem;
   text-align: center;
-  margin-top: 20px;
+  margin-top: 40px;
 }
 
 .username {
   display: flex;
+  width: 100%;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
 }
 
 .username input {
+  width: 90%;
   border: 1px solid #4db7e5;
   border-radius: 5px;
   margin-bottom: 0px;
 }
 
 .username button {
-  margin-left: 20px;
   border: 1px solid #4db7e5;
   border-radius: 5px;
   cursor: pointer;
   background-color: #1c5f82;
   color: white;
   width: 150px;
+  height: 32px;
+  margin-bottom: 30px;
 }
 
 input {
@@ -319,6 +368,7 @@ input[type="submit"] {
   flex-direction: column;
   align-items: start;
   width: 60%;
+  margin-top: 30px;
 }
 
 .idconfirm {
@@ -330,5 +380,9 @@ input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+
+.usernameinput {
+  width: 70%;
 }
 </style>
