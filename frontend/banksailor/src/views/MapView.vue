@@ -1,6 +1,6 @@
 <template>
   <div class="containerbody1">
-    <h1 class="maptitle">내 근처 은행 찾기</h1>
+    <div class="maptitle">내 근처 은행 찾기</div>
     <div class="mapcontents">
       <Mapinput />
     </div>
@@ -25,26 +25,28 @@ import Mapinput from "@/components/MapViewComponents/Mapinput.vue";
   background-repeat: no-repeat; */
   background-color: whitesmoke;
   display: flex;
+
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  margin: 0px 0px;
 }
 
 .maptitle {
-  font-weight: 900;
-  font-size: 3.5rem;
-  /* text-shadow: 2px 2px 2px grey; */
+  width: 100%;
   text-align: center;
-  margin-bottom: 30px;
-  color: rgb(28, 54, 89);
+  margin: 30px 0px;
+  font-size: 3rem;
+  font-weight: 400;
+  font-family: "Noto Sans KR", sans-serif;
+  color: rgb(0, 53, 133);
+  border-bottom: 1px solid grey;
+  padding-bottom: 30px;
 }
 
 .mapcontents {
   display: flex;
-  width: 45%;
+  width: 100%;
   height: 60vh;
-  /* border: 3px solid #1c5f82; */
-  /* background-color: #f6ddb4; */
   justify-content: center;
   align-items: center;
   padding: 20px 20px;

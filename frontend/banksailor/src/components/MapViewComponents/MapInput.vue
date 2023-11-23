@@ -82,11 +82,14 @@ const createmap = () => {
 
 <style scoped>
 .inputarea {
-  width: 950%;
-  height: 80%;
+  width: 75%;
+  height: 90%;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: white;
+  box-shadow: 5px 5px 10px 5px lightgray;
+  border-radius: 20px;
 }
 
 .label {
@@ -100,8 +103,7 @@ input {
 }
 
 #map {
-  width: 400px;
+  width: 500px;
   height: 400px;
-  border: 3px solid rgb(28, 54, 89);
 }
 </style>
