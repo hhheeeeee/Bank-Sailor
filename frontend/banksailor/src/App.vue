@@ -19,8 +19,8 @@ const customlogout = async function () {
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
-    confirmButtonText: "네",
-    cancelButtonText: "아니요",
+    confirmButtonText: "YES",
+    cancelButtonText: "NO",
     customClass: {
       container: "swal-container",
     },
