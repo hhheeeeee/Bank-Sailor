@@ -6,37 +6,29 @@
     <div class="box4">
       <div class="rate">6개월</div>
       <div class="sortbutton">
-        <div class="sortup" @click="selectSortValue(6, false, $event)">up</div>
-        <div class="sortdown" @click="selectSortValue(6, true, $event)">
-          down
-        </div>
+        <div @click="selectSortValue(6, false, $event)"><upicon /></div>
+        <div @click="selectSortValue(6, true, $event)"><downicon /></div>
       </div>
     </div>
     <div class="box5">
       <div class="rate">12개월</div>
       <div class="sortbutton">
-        <div class="sortup" @click="selectSortValue(12, false, $event)">up</div>
-        <div class="sortdown" @click="selectSortValue(12, true, $event)">
-          down
-        </div>
+        <div @click="selectSortValue(12, false, $event)"><upicon /></div>
+        <div @click="selectSortValue(12, true, $event)"><downicon /></div>
       </div>
     </div>
     <div class="box6">
       <div class="rate">24개월</div>
       <div class="sortbutton">
-        <div class="sortup" @click="selectSortValue(24, false, $event)">up</div>
-        <div class="sortdown" @click="selectSortValue(24, true, $event)">
-          down
-        </div>
+        <div @click="selectSortValue(24, false, $event)"><upicon /></div>
+        <div @click="selectSortValue(24, true, $event)"><downicon /></div>
       </div>
     </div>
     <div class="box7">
       <div class="rate">36개월</div>
       <div class="sortbutton">
-        <div class="sortup" @click="selectSortValue(36, false, $event)">up</div>
-        <div class="sortdown" @click="selectSortValue(36, true, $event)">
-          down
-        </div>
+        <div @click="selectSortValue(36, false, $event)"><upicon /></div>
+        <div @click="selectSortValue(36, true, $event)"><downicon /></div>
       </div>
     </div>
   </div>
