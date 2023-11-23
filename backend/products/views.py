@@ -15,7 +15,7 @@ from .serializers import DepositProductSerializer, DepositOptionSerializer, Savi
 from accounts.models import User
 from django.core.mail import send_mail
 
-import pandas as pd
+import json
 from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import NearestNeighbors
 
@@ -533,3 +533,124 @@ def recommend(request):
         }
         print(serialized_data)
         return Response(serialized_data)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@api_view(['POST'])
+def iwillrecommendyou(request):
+    # 현재 로그인된 유저 정보 가져오기
+    mydata = request.data
+    
+    with open('./accounts/fixtures/user_saving.json', encoding='utf-8') as file:
+        datas = json.load(file)
+
+    # fields 안에 내가 원하는 정보가 있기 때문에 뽑아오기
+    users_info = []
+    for user_data in datas:
+        user_fields = user_data.get('fields', {})
+        user_info = {
+            'pk': user_data.get('pk', 0),
+            'fin_prdt_cd': user_fields.get('financial_products', 0),
+            'age': user_fields.get('age', 0),
+            'money': user_fields.get('money', 0),
+            'salary': user_fields.get('salary', 0),
+            'saving_style':user_fields.get('saving_style', 0)
+        }
+        users_info.append(user_info)
+    
+    user_df = pd.DataFrame(users_info)
+    # 상품 미가입된 유저 정보 제외
+    new_df = user_df.drop(index=user_df[user_df['fin_prdt_cd']==''].index)
+    
+    # 새로운 행을 저장할 리스트와 삭제할 행의 인덱스 리스트 초기화
+    new_rows = []
+    rows_to_delete = []
+
+    # 새로운 행 생성하고 삭제할 행 인덱스 기록
+    for index, row in new_df.iterrows():
+        codes = row['fin_prdt_cd'].split(',')
+        if len(codes) > 1:
+            rows_to_delete.append(index)
+            for code in codes[1:]:
+                new_row = row.copy()
+                new_row['fin_prdt_cd'] = code.strip()
+                new_rows.append(new_row)
+
+    # 새로운 행들을 데이터프레임에 추가
+    if new_rows:
+        new_df = new_df.drop(rows_to_delete)  # 삭제할 행 제거
+        new_df = pd.concat([new_df, pd.DataFrame(new_rows)], ignore_index=True) 
+
+    # 조건에 따라 점수 매기기
+    def calculate_rate(row):
+        score = 0
+
+        # 조건 1: 나이 일치 여부
+        if str(mydata['age'])[0] == str(row['age'])[0]:
+            score += 1
+        else:
+            score -= 1
+
+        # 조건 2: saving_style 일치 여부
+        if mydata['saving_style'] == row['saving_style']:
+            score += 2
+
+        # 조건 3: salary 자릿수 일치 여부
+        if len(str(mydata['salary'])) == len(str(row['salary'])):
+            score += 1
+
+        # 조건 4: money 자릿수 일치 여부
+        if len(str(mydata['money'])) == len(str(row['money'])):
+            score += 1
+
+        return score
+
+    # 점수 계산하여 새로운 열 추가
+    new_df['score'] = new_df.apply(calculate_rate, axis=1)
+    score_table = new_df.pivot_table('score', index='pk', columns= 'fin_prdt_cd').fillna(0)
+    transpose_table = score_table.values.T
+    
+    # SVD.fit_transform을 통해 변환하게 되면 8380개의 영화 데이터가 12개의 어떤 요소의 값을 가지게 됩니다.
+    SVD = TruncatedSVD(n_components=12)
+    # 결측치를 제거하고 데이터끼리 피어슨 상관계수를 통해 구해줍니다
+    matrix = SVD.fit_transform(transpose_table)
+
+    corr = np.corrcoef(matrix)
+    
+    # 상관계수를 이용하여 '내가 가입한 상품'과 관련해 상관계수가 높은 상품을 뽑아주면 됩니다.
+    prd_name = score_table.columns
+    prd_name_list = list(prd_name)
+    coffey_hands = prd_name_list.index('00266451')
+    corr_coffey_hands = corr[coffey_hands]
+    result_list = list(prd_name[(corr_coffey_hands >= 0.1)])[:11]
+    print(result_list)
+    
+    # for result in result_list:
+    #     recommend_list = SavingProductList.objects.filter(fin_prdt_cd=result)
+    recommend_list = SavingProductList.objects.filter(fin_prdt_cd__in=result_list)
+    print(recommend_list)
+        
+    serializer = SavingProductListSerializer(recommend_list, many=True)        
+    print(serializer.data)
+    return Response(serializer.data)
+
+    
