@@ -13,15 +13,16 @@
       </form>
     </div>
 
-    <div v-for="comment in comments" :key="comment.id"> <!-- 댓글목록창 -->
-      <li v-if="article && comment.article.title === article.title">
-        {{ comment.content }}
-        {{ comment.updated_at.slice(0, 10) }}
-        
+    <div v-for="comment in comments" :key="comment.id" class="comments"> <!-- 댓글목록창 -->
+      <div v-if="article && comment.article.title === article.title" class="comment">
+        <div>{{ comment.content }}</div>
+        &nbsp;
+        <div style="font-size: small;">{{ comment.updated_at.slice(0, 10) }}</div>
+
         <div v-show="comment && userInfo.id === comment.user">
-          <button @click="deleteComment(comment.id)">댓삭</button>
+          <button @click="deleteComment(comment.id)" class="del-btn">댓삭</button>
         </div>
-      </li>
+      </div>        
     </div>
 
   </div>
@@ -51,9 +52,7 @@ onMounted(() => {
     url: `${store.API_URL}/articles/comments/`
   })
     .then((res) => {
-      console.log('댓글', res.data)
       comments.value = res.data
-      console.log('댓글', comments)
     })
     .catch((err) => {
       console.log(err)
@@ -92,7 +91,6 @@ const deleteComment = function (commentId) {
   })
     .then((res) => {
       // console.log('삭제완')
-      alert('댓글이 삭제됩니다.')
       router.go(0)
     })
     .catch((err) => {
@@ -104,6 +102,7 @@ const deleteComment = function (commentId) {
 <style scoped>
 .input-comment {
   width: 100%;
+  display: flex;
 }
 .input-bar {
   width: 100%;
@@ -120,8 +119,12 @@ const deleteComment = function (commentId) {
   border: 1px solid #ccc;
   font-size: 14px;
 }
+.input-bar textarea {
+  width: 80%;
+}
 .input-bar input[type="submit"] {
-  height: auto;
+  width: 20%;
+  height: 100%;
   padding: 8px;
   /* margin: 0 5px; */
   border-radius: 4px;
@@ -132,8 +135,30 @@ const deleteComment = function (commentId) {
   border: none;
   cursor: pointer;
 }
-.input-bar button:hover {
-  background-color: rgb(131, 133, 0);
+.input-bar input:hover {
+  background-color: #4db7e5;
 }
-
+.comments {
+  display: flex;
+  font-family: 'Noto Sans KR', sans-serif; 
+}
+.comment {
+  display: flex;
+  margin: 2%;
+}
+.del-btn {
+  border: solid 3px rgb(233, 201, 142);
+  border-radius: 30px;
+  padding-bottom: 4px;
+  width: 80px;
+  height: 35px;
+  color: black;
+  background-color: rgb(233, 201, 142);
+  font-family: 'Noto Sans KR', sans-serif;
+  margin-left: 50%;
+}
+.del-btn:hover {
+  background-color: #4db7e5;
+  border: solid 3px #4db7e5;
+}
 </style>
