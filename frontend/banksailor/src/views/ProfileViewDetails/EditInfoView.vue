@@ -58,6 +58,7 @@
 </template>
 
 <script setup>
+import Swal from "sweetalert2";
 import DepositChart from "../../components/ProfileViewComponents/DepositChart.vue";
 import SavingChart from "../../components/ProfileViewComponents/SavingChart.vue";
 import { useCounterStore } from "@/stores/counter";
@@ -113,21 +114,28 @@ const UpdateInfo = async function () {
       salary: salary.value,
       money: money.value,
     },
-  })
-    .then((res) => {
-      store.getUserInfo();
-      // email.value = store.userInfo.email;
-      // nickname.value = store.userInfo.nickname;
-      // age.value = store.userInfo.age;
-      // money.value = store.userInfo.money;
-      // salary.value = store.userInfo.salary;
-      // like_deposit.value = store.userInfo.like_deposit;
-      // like_saving.value = store.userInfo.like_saving;
-      alert("수 정 완 료");
-    })
-    .catch((err) => {
+  }).then((res) => {
+    store.getUserInfo();
+    // email.value = store.userInfo.email;
+    // nickname.value = store.userInfo.nickname;
+    // age.value = store.userInfo.age;
+    // money.value = store.userInfo.money;
+    // salary.value = store.userInfo.salary;
+    // like_deposit.value = store.userInfo.like_deposit;
+    // like_saving.value = store.userInfo.like_saving;
+    Swal.fire({
+      title: "수정이 완료되었습니다",
+      text: "",
+      icon: "success",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      customClass: {
+        container: "swal-container",
+      },
+    }).catch((err) => {
       console.log(err);
     });
+  });
 };
 
 defineRule("validEmail", (value) => {

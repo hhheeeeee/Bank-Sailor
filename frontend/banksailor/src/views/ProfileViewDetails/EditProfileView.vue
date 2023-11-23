@@ -1,8 +1,9 @@
 <template>
-  <div class="container1">
+  <div class="container-pofol">
+
     <h1 class = title>포트폴리오 수정</h1>
 
-    <div v-if="shouldShowEditForm" class="form">
+    <div v-if="shouldShowEditForm" class="form"> <!-- 이미 유형을 저장해놨을 때-->
       <form @submit.prevent="handleSubmit">
         <div>
           <label for="ID">ID : </label>
@@ -43,21 +44,37 @@
       <p>다른 {{ myPortfolio[0].saving_style }} 유저가 선택한 적금상품 확인하기♪</p>
     </div>
 
-    <div v-else class="form">
-      당신의 유형을 선택하고 맞춤 상품을 확인하세요!
+    <div v-else class="form"> <!-- 처음 유형을 저장할 때!-->
+      <h3 style="text-align: center; margin-top: 40px; margin-bottom: 40px; font-weight: 400; font-family: 'Noto Sans KR', sans-serif; color: rgb(0, 53, 133);">당신의 유형을 선택하고 맞춤 상품을 확인하세요!</h3>
+      <div  class="first-select-form">
+        <h3 style="margin: 2%; text-align: left; font-weight: 400; font-family: 'Noto Sans KR', sans-serif; color: rgb(219, 180, 107);">저축 스타일</h3>
+        <div class="container">
+          <div class="heros">
+            <div class="hero">
+              <div class="image"></div>
+            </div>
+            <div class="hero">
+              <div class="image"></div>
+            </div>
+            <div class="hero">
+              <div class="image"></div>
+            </div>
+          </div>
+      </div>
+      
       <form @submit.prevent="handleSubmit">
         <div v-for="style in savingStyles" :key="style">
           <input
-            type="radio"
-            :id="style"
-            name="saving_style"
-            :value="style"
-            v-model="saving_style"
+          type="radio"
+          :id="style"
+          name="saving_style"
+          :value="style"
+          v-model="saving_style"
           />
           <label :for="style">{{ style }}</label>
         </div>
         <div>
-          <label for="favorite_bank">최애은행 : </label>
+          <label for="favorite_bank" style="font-size: 25px; margin: 2%; text-align: left; font-weight: 400; font-family: 'Noto Sans KR', sans-serif; color: rgb(219, 180, 107);">최애은행 : </label>
           <select v-model="favorite_bank">
             <option v-for="bank in banks" :key="bank" :value="bank">
               {{ bank }}
@@ -66,6 +83,7 @@
         </div>
         <input type="submit" value="저장하기" />
       </form>
+    </div>
     </div>
   </div>
 </template>
@@ -207,23 +225,38 @@ const editPortfolio = function (portfolioId) {
 </script>
 
 <style scoped>
+.container-pofol {
+  width: 75%;
+  height: auto;
+  overflow-x: hidden;
+  background-color: white;
+  box-shadow: 5px 5px 10px 5px lightgray;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 30px;
+}
 .title {
-  margin-top: 40px;
-  font-size: 3.5rem;
-  color: hsl(216, 100%, 26%);
+  width: 100%;
+  text-align: center;
+  margin: 30px 0px;
+  font-size: 3rem;
+  font-weight: 400;
+  font-family: "Noto Sans KR", sans-serif;
+  color: rgb(0, 53, 133);
+  border-bottom: 1px solid grey;
+  padding-bottom: 30px;
 }
-.container1 {
-  background-color: whitesmoke;
-}
-.form {
-  width: 60%;
+
+.first-select-form {
+  width: 90%;
   margin: 0 auto;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 10px;
   background-color: #f8f8f8;
 }
-
 .form label {
   display: block;
   margin-bottom: 5px;
@@ -276,4 +309,50 @@ const editPortfolio = function (portfolioId) {
   background-color: #1c5f82;
   color: white;
 }
+.container {
+  padding: 50px 0;
+}
+
+.container .heros {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.container .heros .hero {
+  width: 80px;
+  height: 84px;
+  margin: 4px;
+  border: 3px solid #FFF;
+  border-radius: 10px;
+  box-sizing: border-box;
+  background-color: #555;
+  overflow: hidden;
+  transform: skewX(-14deg);
+  transition: 
+    transform .1s,
+    background-color .6s;
+}
+
+.container .heros .hero:hover {
+  background-color: #ff9c00;
+  transform: skewX(-14deg) scale(1.3);
+  z-index: 1;
+}
+
+.container .heros .hero .image {
+  width: 140%;
+  height: 100%;
+  transform: skew(14deg) translateX(-16px);
+  background-position: center;
+  background-size: 90px;
+  background-repeat: no-repeat;
+}
+
+.container .heros .hero:nth-child(1) .image { background-image: url("https://raw.githubusercontent.com/printilikepenguin/forUserContent/master/piggy-bank-1270926_1280-removebg-preview.png") }
+.container .heros .hero:nth-child(2) .image { background-image: url("https://raw.githubusercontent.com/printilikepenguin/forUserContent/master/combat-diver-60545_1280-removebg-preview.png") }
+.container .heros .hero:nth-child(3) .image { background-image: url("https://raw.githubusercontent.com/printilikepenguin/forUserContent/master/sea-7695699_1280-removebg-preview.png") }
 </style>

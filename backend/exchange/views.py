@@ -1,11 +1,15 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 import requests
+from django.conf import settings
+
+
 
 @api_view(['GET'])
 def exchange(request, fromCountry, toCountry, price, st_date):
     # 환율 정보 가져오기
-    URL = f'https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=nJrSIWLxo06igbLUpsy8jF93POiYAzyt&searchdate={st_date}&data=AP01'
+    API_KEY = settings.CURRENCY_API_KEY
+    URL = f'https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=${API_KEY}&searchdate={st_date}&data=AP01'
     requestData = requests.get(URL)
     result = requestData.json()
     
