@@ -7,11 +7,11 @@
     <div v-if="article"> 
 
       <div v-if="currentState"> <!-- 게시글 일반 화면 -->
-        <div class="article-title">
-          <p>{{ article.title }}</p>
-          <div style="display: flex; ">
-            <p style="flex-direction: left;">{{ article.category }}</p>
-            <p style="flex-direction: margin-right;">{{ article.username }}, {{ article.created_at.substring(0, 10) }}</p>
+        <div class="article-head">
+          <p class="article-title">{{ article.title }}</p>
+          <div style="display: flex; justify-content: space-between;">
+            <p style="border-left: solid 5px orange; padding-left: 30px; font-family: 'Noto Sans KR', sans-serif; color: gray;">{{ article.category }}</p>
+            <p style="font-family: 'Noto Sans KR', sans-serif; color: gray;">{{ article.username }}, {{ article.created_at.substring(0, 10) }}</p>
           </div>
         </div>
         <div class="article-content">
@@ -20,9 +20,9 @@
       </div>
 
       <div v-else> <!-- 수정화면 -->
-        <form @submit.prevent="editArticle">
+        <form @submit.prevent="editArticle" class="customform">
           
-          <div>
+          <div class="form-group">
             카테고리:
             <select v-model="article.category">
               <option
@@ -35,18 +35,18 @@
             </select>
           </div>
 
-          <div>
-            <label for="title">제목:</label>
-            <input type="text" v-model="article.title" />
+          <div class="form-group">
+            <label for="title" class="form-label">제목:</label>
+            <input type="text" v-model="article.title" class="form-control"/>
           </div>
 
-          <div>
-            <label for="content">내용:</label>
-            <textarea type="text" v-model="article.content"></textarea>
+          <div class="form-group">
+            <label for="content" class="form-label">내용:</label>
+            <textarea type="text" v-model="article.content" class="form-control form-control-textarea"></textarea>
           </div>
 
           <button v-show="!currentState">완료</button>
-          <button @click="$router.go(0)">취소</button>
+          <button @click="$router.go(0)" style="margin-left: 2%;">취소</button>
         </form>
       </div>
     </div> <!-- v-if article-->
@@ -104,7 +104,7 @@ onMounted(() => {
       .then((res) => {
         // console.log(res.data)
         article.value = res.data;
-        console.log(article);
+        // console.log(article);
       })
       .catch((err) => {
         console.log(err);
@@ -183,12 +183,19 @@ const deleteArticle = function (request, article_pk) {
   color: rgb(0, 53, 133);
 }
 .article-title {
-  background-color: rebeccapurple;
-  
+  width: 90%;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-top: 50px;
+  color: rgb(0, 53, 133);
+  padding-left: 30px;
 }
 .article-content {
   padding-top: 10%;
   padding-bottom: 10%;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: larger;
 }
 .buttons {
   display: flex;
@@ -204,6 +211,37 @@ const deleteArticle = function (request, article_pk) {
   margin: 20px;
   font-size: 1rem;
   line-height: 1.6;
+}
+.customform {
+  max-width: 900px;
+  height: 60vh;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 10px;
+  font-family: 'Noto Sans KR', sans-serif; 
+}
+.form-group {
+  margin-bottom: 3%;
+  font-family: 'Noto Sans KR', sans-serif; 
+}
+
+.form-label {
+  text-align: left;
+  display: block;
+  margin-bottom: 5px;
+  color: #1c5f82;
+  font-family: 'Noto Sans KR', sans-serif; 
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+}
+
+.form-control-textarea {
+  height: 300px;
 }
 
 .comment-box {
@@ -232,10 +270,17 @@ input[type="submit"]:hover {
 }
 
 button {
-  border: 1px solid #1c5f82;
+  border: solid 3px rgb(233, 201, 142);
   border-radius: 30px;
   padding-bottom: 4px;
   width: 80px;
   height: 35px;
+  color: black;
+  background-color: rgb(233, 201, 142);
+  font-family: 'Noto Sans KR', sans-serif;
+}
+button:hover {
+  background-color: #4db7e5;
+  border: solid 3px #4db7e5;
 }
 </style>
