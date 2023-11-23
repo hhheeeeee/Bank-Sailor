@@ -19,6 +19,8 @@ import json
 from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import NearestNeighbors
 
+from django.conf import settings
+
 
 # 정기예금 실행 시 작동
 # 금융감독원의 "정기예금" API 로 부터 자료를 수신받아
@@ -27,7 +29,7 @@ from sklearn.neighbors import NearestNeighbors
 @api_view(['GET'])
 def deposit_list(request):
     # API 키
-    API_KEY = '58476eeb85a1feef2bd1156e726ce9ae'
+    API_KEY = settings.FINANCE_API_KEY
 
     # 금융감독원 정기예금 JSON 요청 API
     URL = f'http://finlife.fss.or.kr/finlifeapi/depositProductsSearch.json?auth={API_KEY}&topFinGrpNo=020000&pageNo=1'
@@ -188,7 +190,7 @@ def deposit_list(request):
 @api_view(['GET'])
 def saving_list(request):
     # API 키
-    API_KEY = '58476eeb85a1feef2bd1156e726ce9ae'
+    API_KEY = settings.FINANCE_API_KEY
 
     # 금융감독원 적금 JSON 요청 API
     URL = f'http://finlife.fss.or.kr/finlifeapi/savingProductsSearch.json?auth={API_KEY}&topFinGrpNo=020000&pageNo=1'
@@ -465,7 +467,7 @@ def send_email_on_change(request):
     send_mail(
         title,
         content,
-        'xorms5712@naver.com',
+        settings.EMAIL_ADDRESS,
         to,
     )
 
