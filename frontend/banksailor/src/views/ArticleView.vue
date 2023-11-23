@@ -180,6 +180,8 @@ button {
 }
 button:hover {
   background-color: #4db7e5;
+  border: solid 1px #4db7e5;
+
 }
 .search-bar {
   display: flex;
@@ -209,6 +211,7 @@ button:hover {
 }
 .search-bar input:hover {
   background-color: #4db7e5;
+  border: 1px solid #4db7e5;
 }
 
 .tbody1 {
@@ -232,9 +235,9 @@ button:hover {
 .td3 {
   width: 45%;
   vertical-align: middle;
-  border-collapse: collapse;
   text-align: center;
   font-family: 'Noto Sans KR', sans-serif; 
+  color: black;
 }
 .td4 {
   width: 15%;

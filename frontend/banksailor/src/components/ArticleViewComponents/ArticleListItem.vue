@@ -4,7 +4,7 @@
     <td class="td2">{{ article.category }}</td>
     <td class="td3">
       <RouterLink
-        :to="{ name: 'ArticleDetailView', params: { id: article.id } }"
+        :to="{ name: 'ArticleDetailView', params: { id: article.id } }" class="custom-link"
       >
         <p>{{ article.title }}</p>
       </RouterLink>
@@ -67,5 +67,10 @@ defineProps({
   border-collapse: collapse;
   text-align: center;
   font-family: 'Noto Sans KR', sans-serif; 
+}
+.custom-link {
+  font-weight: 500;
+  color: black;
+  text-decoration: underline;
 }
 </style>
