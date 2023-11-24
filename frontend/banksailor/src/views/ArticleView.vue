@@ -158,7 +158,7 @@ const searchArticle = function () {
 .title {
   margin-top: 40px;
   font-size: 3rem;
-  font-weight: 400;
+  font-weight: 500;
   font-family: "Noto Sans KR", sans-serif;
   color: rgb(0, 53, 133);
 }
