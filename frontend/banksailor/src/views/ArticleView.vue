@@ -37,13 +37,13 @@
               <tr v-for="article in filtered_article" :key="article.id">
                 <td class="td1">{{ article.id }}</td>
                 <td class="td2">{{ article.category }}</td>
-              <RouterLink class="td3"
+              <td><RouterLink class="td3"
               :to="{
                 name: 'ArticleDetailView',
                 params: { id: article.id },
               }">
                 <p>{{ article.title }}</p>
-              </RouterLink>
+              </RouterLink></td>
               <td class="td4">{{ article.username }}</td>
               <td class="td5">{{ article.created_at.slice(0, 10) }}</td>
             </tr>
@@ -141,7 +141,6 @@ const searchArticle = function () {
   align-items: center;
   margin-bottom: 30px;
   border-bottom: 2px solid lightgray;
-  /* border-bottom: 2px solid hsl(216, 100%, 26%); */
 }
 .title {
   margin-top: 40px;
@@ -165,7 +164,7 @@ const searchArticle = function () {
   background-color: rgb(233, 201, 142);
   vertical-align: middle;
   text-align: center;
-  font-weight: 400; 
+  font-weight: 300; 
   font-family: 'Noto Sans KR', sans-serif; 
   font-size: larger;
 }
@@ -235,6 +234,7 @@ button:hover {
 .td3 {
   width: 45%;
   vertical-align: middle;
+  border-collapse: collapse;
   text-align: center;
   font-family: 'Noto Sans KR', sans-serif; 
   color: black;

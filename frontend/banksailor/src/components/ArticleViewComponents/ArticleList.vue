@@ -40,7 +40,7 @@ const store = useCounterStore();
   background-color: rgb(233, 201, 142);
   vertical-align: middle;
   text-align: center;
-  font-weight: 400; 
+  font-weight: 300; 
   font-family: 'Noto Sans KR', sans-serif; 
   font-size: larger;
 }
