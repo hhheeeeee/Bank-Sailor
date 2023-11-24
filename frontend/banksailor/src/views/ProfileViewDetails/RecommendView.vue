@@ -85,6 +85,7 @@ const getRecommend = async function () {
 <style scoped>
 .container2 {
   width: 70%;
+  margin-bottom: 2.5%;
   background-color: white;
   border-radius: 30px;
   box-shadow: 5px 5px 10px 5px lightgray;
