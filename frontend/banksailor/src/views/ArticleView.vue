@@ -151,6 +151,7 @@ const searchArticle = function () {
 }
 .container2 {
   margin: 0 auto;
+  height: 91vh;
   padding: 5%;
   width: 80%;
   background-color: white;;

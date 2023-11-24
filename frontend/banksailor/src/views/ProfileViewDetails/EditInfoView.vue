@@ -205,6 +205,7 @@ const isFormValid = computed(() => {
 .container2 {
   width: 75%;
   height: auto;
+  margin-bottom: 2.5%;
   overflow-x: hidden;
   background-color: white;
   box-shadow: 5px 5px 10px 5px lightgray;

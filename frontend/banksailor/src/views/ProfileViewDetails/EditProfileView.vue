@@ -255,6 +255,7 @@ const editPortfolio = function (portfolioId) {
 <style scoped>
 .container-pofol {
   width: 75%;
+  margin-bottom: 2.5%;
   height: auto;
   overflow-x: hidden;
   background-color: white;
