@@ -22,7 +22,7 @@
         </div>
       </div>
     </div>
-    <HomeLinkBar />
+    <HomeLinkBar class="HomeLinkBar"/>
   </div>
 </template>
 
@@ -150,6 +150,10 @@ const goMap = () => {
   flex-direction: column;
   align-items: end;
   row-gap: 10px;
+}
+
+.HomeLinkBar {
+  margin-top: 70px;
 }
 
 </style>
