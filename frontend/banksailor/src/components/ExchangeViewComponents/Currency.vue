@@ -12,12 +12,17 @@
           <div class="exchangearea">
             <div class="inputbox">
               <input type="number" class="priceinput" v-model="price" />
-              <select class="select" @change="selectedCountry1">
+              <select class="select" v-model="fromCountry">
                 <option value="null" disabled selected hidden>통화</option>
                 <option disabled value="">Please select one</option>
-                <template v-for="item in CountriesList" :key="item.id">
-                  <option>{{ item.cur_unit }}</option>
-                </template>
+                <option
+                  v-for="item in CountriesList"
+                  :key="item.id"
+                  :value="item.cur_unit"
+                >
+                  {{ item.cur_unit }}
+                  <!-- <option>{{ item.cur_unit }}</option> -->
+                </option>
               </select>
             </div>
             <Arrow />
@@ -36,6 +41,15 @@
       </div>
 
       <div v-if="isshow" class="compare">
+        <div class="compare-header">
+          <span style="display: inline"
+            >오늘과 비교해보고 싶은 날짜를 입력해주세요(기본값 : 어제)</span
+          >
+          <form @submit.prevent="comparesearch">
+            <input type="date" v-model="howlong" />
+            <input type="submit" value="Submit" class="diffsearch" />
+          </form>
+        </div>
         <div class="compare-cards1">
           <div v-for="item in diff" class="card1">
             <div class="card-content">
@@ -73,6 +87,8 @@ const exchangeresult = ref("");
 const fromCountry = ref(null);
 const price = ref(null);
 const diff = ref(null);
+const howlong = ref(null);
+
 var st_date = new Date()
   .toISOString()
   .substr(0, 10)
@@ -110,14 +126,15 @@ const getExchangeResult = async function (order) {
   try {
     isLoading.value = true;
     const response = await axios.get(
-      `${store.API_URL}/exchange/currency/${fromCountry.value}/${price.value}/${st_date}`
+      `${store.API_URL}/exchange/currency/${fromCountry.value}/${price.value}/${st_date}/-1`
     );
 
-    if (order == "KRW") {
-      diff.value = response.data.diff;
+    if (diff.value == null) {
+      exchangeresult.value = response.data.exchangeresult;
+      // diff.value = response.data.diff;
     } else {
       exchangeresult.value = response.data.exchangeresult;
-      diff.value = response.data.diff;
+      // diff.value = response.data.diff;
       isshow.value = true;
     }
   } catch (error) {
@@ -135,22 +152,56 @@ const selectedCountry1 = (event) => {
   fromCountry.value = event.target.value;
 };
 
-// onMounted(async () => {
-//   try {
-//     const response = await axios.get(
-//       `${store.API_URL}/exchange/diff/${st_date}`
-//     );
-//     diff.value = response.data.diff;
-//   } catch (error) {
-//     console.error("Error fetching exchange rate data:", error);
-//     Toast.fire({
-//       icon: "error",
-//       title: "환율 데이터를 가져오는 중 오류가 발생했습니다",
-//     });
-//   } finally {
-//     isLoading.value = false; // 로딩 완료
-//   }
-// });
+onMounted(async () => {
+  try {
+    isLoading.value = true;
+    const response = await axios.get(
+      `${store.API_URL}/exchange/currency/KRW/1000/${st_date}/-1`
+    );
+
+    diff.value = response.data.diff;
+    isshow.value = true;
+  } catch (error) {
+    console.error("Error fetching recommendations:", error);
+    Toast.fire({
+      icon: "error",
+      title: "환율 데이터를 가져오는 중 오류가 발생했습니다",
+    });
+  } finally {
+    isLoading.value = false; // 로딩 완료
+  }
+});
+
+const comparesearch = async function () {
+  console.log(howlong.value);
+  const today = new Date().toISOString().split("T")[0];
+  if (howlong.value > today) {
+    Toast.fire({
+      icon: "error",
+      title: "오늘 이후 날짜는 선택할 수 없습니다.",
+    });
+    howlong.value = "";
+    return;
+  }
+
+  try {
+    isLoading.value = true;
+    const response = await axios.get(
+      `${store.API_URL}/exchange/currency/KRW/1000/${st_date}/${howlong.value}`
+    );
+
+    diff.value = response.data.diff;
+    isshow.value = true;
+  } catch (error) {
+    console.error("Error fetching recommendations:", error);
+    Toast.fire({
+      icon: "error",
+      title: "환율 데이터를 가져오는 중 오류가 발생했습니다",
+    });
+  } finally {
+    isLoading.value = false; // 로딩 완료
+  }
+};
 
 const CountriesList = [
   { id: 0, cur_unit: "AED" },
@@ -329,7 +380,7 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .compare {
   width: 80%;
-  max-height: 1600px;
+  max-height: 400px;
   overflow-y: scroll;
   background-color: white;
   border-radius: 15px;
@@ -351,6 +402,8 @@ input[type="number"]::-webkit-inner-spin-button {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  padding: 30px 0px;
+  overflow: auto;
 }
 
 .card1 {
@@ -382,5 +435,26 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .blue-text {
   color: blue;
+}
+
+.compare-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.diffsearch {
+  font-family: "Noto Sans KR", sans-serif;
+  background-color: rgb(0, 53, 133);
+  color: white;
+  transition: background-color 0.1s ease;
+  border: none;
+  margin-left: 10px;
+  border-radius: 5px;
+}
+
+.diffsearch:hover {
+  background-color: rgb(0, 70, 175);
 }
 </style>

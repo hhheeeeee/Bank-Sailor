@@ -1,9 +1,9 @@
 <template>
   <div class="container-pofol">
+    <h1 class="title">포트폴리오 수정</h1>
 
-    <h1 class = title>포트폴리오 수정</h1>
-
-    <div v-if="shouldShowEditForm" class="form"> <!-- 이미 유형을 저장해놨을 때-->
+    <div v-if="shouldShowEditForm" class="form">
+      <!-- 이미 유형을 저장해놨을 때-->
       <form @submit.prevent="handleSubmit">
         <div>
           <label for="ID">ID : </label>
@@ -41,13 +41,37 @@
         {{ myPortfolio[0].favorite_bank }} 입니다!
       </div>
 
-      <p>다른 {{ myPortfolio[0].saving_style }} 유저가 선택한 적금상품 확인하기♪</p>
+      <p>
+        다른 {{ myPortfolio[0].saving_style }} 유저가 선택한 적금상품 확인하기♪
+      </p>
     </div>
 
-    <div v-else class="form"> <!-- 처음 유형을 저장할 때!-->
-      <h3 style="text-align: center; margin-top: 40px; margin-bottom: 40px; font-weight: 400; font-family: 'Noto Sans KR', sans-serif; color: rgb(0, 53, 133);">당신의 유형을 선택하고 맞춤 상품을 확인하세요!</h3>
-      <div  class="first-select-form">
-        <h3 style="margin: 2%; text-align: left; font-weight: 400; font-family: 'Noto Sans KR', sans-serif; color: rgb(219, 180, 107);">저축 스타일</h3>
+    <div v-else class="form">
+      <!-- 처음 유형을 저장할 때!-->
+      <h3
+        style="
+          text-align: center;
+          margin-top: 40px;
+          margin-bottom: 40px;
+          font-weight: 400;
+          font-family: 'Noto Sans KR', sans-serif;
+          color: rgb(0, 53, 133);
+        "
+      >
+        당신의 유형을 선택하고 맞춤 상품을 확인하세요!
+      </h3>
+      <div class="first-select-form">
+        <h3
+          style="
+            margin: 2%;
+            text-align: left;
+            font-weight: 400;
+            font-family: 'Noto Sans KR', sans-serif;
+            color: rgb(219, 180, 107);
+          "
+        >
+          저축 스타일
+        </h3>
         <div class="container">
           <div class="heros">
             <div class="hero">
@@ -60,30 +84,41 @@
               <div class="image"></div>
             </div>
           </div>
+        </div>
+
+        <form @submit.prevent="handleSubmit">
+          <div v-for="style in savingStyles" :key="style" class="radio-div">
+            <input
+              type="radio"
+              :id="style"
+              name="saving_style"
+              :value="style"
+              v-model="saving_style"
+            />
+            <label :for="style">{{ style }}</label>
+          </div>
+          <div>
+            <label
+              for="favorite_bank"
+              style="
+                font-size: 25px;
+                margin: 2%;
+                text-align: left;
+                font-weight: 400;
+                font-family: 'Noto Sans KR', sans-serif;
+                color: rgb(219, 180, 107);
+              "
+              >최애은행 :
+            </label>
+            <select v-model="favorite_bank">
+              <option v-for="bank in banks" :key="bank" :value="bank">
+                {{ bank }}
+              </option>
+            </select>
+          </div>
+          <input type="submit" value="저장하기" />
+        </form>
       </div>
-      
-      <form @submit.prevent="handleSubmit">
-        <div v-for="style in savingStyles" :key="style" class="radio-div">
-          <input
-          type="radio"
-          :id="style"
-          name="saving_style"
-          :value="style"
-          v-model="saving_style"
-          />
-          <label :for="style">{{ style }}</label>
-        </div>
-        <div>
-          <label for="favorite_bank" style="font-size: 25px; margin: 2%; text-align: left; font-weight: 400; font-family: 'Noto Sans KR', sans-serif; color: rgb(219, 180, 107);">최애은행 : </label>
-          <select v-model="favorite_bank">
-            <option v-for="bank in banks" :key="bank" :value="bank">
-              {{ bank }}
-            </option>
-          </select>
-        </div>
-        <input type="submit" value="저장하기" />
-      </form>
-    </div>
     </div>
   </div>
 </template>
@@ -144,7 +179,7 @@ const myPortfolio = computed(() => {
 onMounted(() => {
   getPortfolio();
 });
-console.log(userInfo)
+console.log(userInfo);
 const getPortfolio = function () {
   axios({
     method: "get",
@@ -212,7 +247,7 @@ const editPortfolio = function (portfolioId) {
   })
     .then((res) => {
       console.log(res.data);
-      getPortfolio()
+      getPortfolio();
       Toast.fire({
         icon: "success",
         title: "수정 완료!",
@@ -330,15 +365,13 @@ const editPortfolio = function (portfolioId) {
   width: 30%;
   height: 84px;
   margin: 4px;
-  border: 3px solid #FFF;
+  border: 3px solid #fff;
   border-radius: 10px;
   box-sizing: border-box;
   background-color: #555;
   overflow: hidden;
   transform: skewX(-14deg);
-  transition: 
-    transform .1s,
-    background-color .6s;
+  transition: transform 0.1s, background-color 0.6s;
 }
 
 .container .heros .hero:hover {
@@ -356,7 +389,13 @@ const editPortfolio = function (portfolioId) {
   background-repeat: no-repeat;
 }
 
-.container .heros .hero:nth-child(1) .image { background-image: url("https://raw.githubusercontent.com/printilikepenguin/forUserContent/master/piggy-bank-1270926_1280-removebg-preview.png") }
-.container .heros .hero:nth-child(2) .image { background-image: url("https://raw.githubusercontent.com/printilikepenguin/forUserContent/master/combat-diver-60545_1280-removebg-preview.png") }
-.container .heros .hero:nth-child(3) .image { background-image: url("https://raw.githubusercontent.com/printilikepenguin/forUserContent/master/sea-7695699_1280-removebg-preview.png") }
+.container .heros .hero:nth-child(1) .image {
+  background-image: url("https://raw.githubusercontent.com/printilikepenguin/forUserContent/master/piggy-bank-1270926_1280-removebg-preview.png");
+}
+.container .heros .hero:nth-child(2) .image {
+  background-image: url("https://raw.githubusercontent.com/printilikepenguin/forUserContent/master/combat-diver-60545_1280-removebg-preview.png");
+}
+.container .heros .hero:nth-child(3) .image {
+  background-image: url("https://raw.githubusercontent.com/printilikepenguin/forUserContent/master/sea-7695699_1280-removebg-preview.png");
+}
 </style>
