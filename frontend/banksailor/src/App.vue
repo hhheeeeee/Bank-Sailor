@@ -84,6 +84,17 @@ const goHome = () => {
     <div :class="{ 'gradation-home': $route.fullPath.includes('home') }"></div>
   </header>
   <RouterView />
+  <footer>
+    <div class="copyright">
+      Copyright 2023. BankSailor. All rights reserved.
+    </div>
+    <div class="link-bar">
+      <a href="#">이용약관</a>  |
+      <a href="#">개인정보처리방침</a>  |
+      <a href="#">사이트맵</a>  |
+      <a href="#">서비스 문의</a>
+    </div>
+  </footer>
 </template>
 
 <style scoped>
@@ -172,6 +183,33 @@ a {
   width: 100%;
   height: 10px;
   background: linear-gradient(to bottom, lightgrey, white);
+}
+
+footer {
+  width: 100%;
+  height: 80px;
+  background-color: rgb(0, 52, 119);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  color: white;
+}
+
+.copyright {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 300;
+}
+
+.link-bar a {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 300;
+  text-decoration: none;
+  color: white;
+}
+
+.link-bar a:hover {
+  text-decoration: underline;
 }
 
 </style>
