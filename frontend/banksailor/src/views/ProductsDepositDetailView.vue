@@ -51,7 +51,7 @@
               6개월: {{ rateInfo.rate_6 ? `${rateInfo.rate_6}%` : "없음" }} (최고:
               {{ rateInfo.rate_6_max ? `${rateInfo.rate_6_max}%` : "없음" }})
               <button
-                v-if="store.userInfo.is_superuser"
+                v-if="store.isLogin && store.userInfo.is_superuser"
                 class="btn btn-warning p-0"
                 @click="goUpdate6"
               >
@@ -63,7 +63,7 @@
               {{ rateInfo.rate_12 ? `${rateInfo.rate_12}%` : "없음" }} (최고:
               {{ rateInfo.rate_12_max ? `${rateInfo.rate_12_max}%` : "없음" }})
               <button
-                v-if="store.userInfo.is_superuser"
+                v-if="store.isLogin && store.userInfo.is_superuser"
                 class="btn btn-warning p-0"
                 @click="goUpdate12"
               >
@@ -75,7 +75,7 @@
               {{ rateInfo.rate_24 ? `${rateInfo.rate_24}%` : "없음" }} (최고:
               {{ rateInfo.rate_24_max ? `${rateInfo.rate_24_max}%` : "없음" }})
               <button
-                v-if="store.userInfo.is_superuser"
+                v-if="store.isLogin && store.userInfo.is_superuser"
                 class="btn btn-warning p-0"
                 @click="goUpdate24"
               >
@@ -87,7 +87,7 @@
               {{ rateInfo.rate_36 ? `${rateInfo.rate_36}%` : "없음" }} (최고:
               {{ rateInfo.rate_36_max ? `${rateInfo.rate_36_max}%` : "없음" }})
               <button
-                v-if="store.userInfo.is_superuser"
+                v-if="store.isLogin && store.userInfo.is_superuser"
                 class="btn btn-warning p-0"
                 @click="goUpdate36"
               >
@@ -97,7 +97,7 @@
           </div>
         </div>
         <br>
-        <button class="btn signup" @click="signup">상품 가입</button>
+        <button v-if="store.isLogin" class="btn signup" @click="signup">상품 가입</button>
       </div>
     </div>
 
