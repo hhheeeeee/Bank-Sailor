@@ -261,6 +261,7 @@ const signUp = function () {
   align-items: center;
   justify-content: center;
   width: 100%;
+  height: 91vh;
   margin: 0px 0px;
 }
 
