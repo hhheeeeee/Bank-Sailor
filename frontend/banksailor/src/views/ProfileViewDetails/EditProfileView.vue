@@ -2,8 +2,6 @@
   <div class="container-pofol">
     <h1 class="title">포트폴리오 수정</h1>
 
-    <h1 class="title">포트폴리오 수정</h1>
-
     <div v-if="shouldShowEditForm" class="form">
       <!-- 이미 유형을 저장해놨을 때-->
       <div class="ment" style="color: orange">
@@ -125,24 +123,12 @@
 
     <div v-else class="form">
       <!-- 처음 유형을 저장할 때!-->
-      <h3
-        style="
-          text-align: center;
-          margin-top: 40px;
-          margin-bottom: 40px;
-          font-weight: 400;
-          font-family: 'Noto Sans KR', sans-serif;
-          color: rgb(0, 53, 133);
-        "
-      >
-        당신의 유형을 선택하고 맞춤 상품을 확인하세요!
-      </h3>
+      <h3 class="ment">당신의 유형을 선택하고 맞춤 상품을 확인하세요!</h3>
       <div class="first-select-form">
         <h3
           style="
             margin: 2%;
             text-align: left;
-            font-weight: 400;
             font-family: 'Noto Sans KR', sans-serif;
             color: rgb(219, 180, 107);
           "
@@ -164,29 +150,55 @@
         </div>
 
         <form @submit.prevent="handleSubmit">
-          <div v-for="style in savingStyles" :key="style" class="radio-div">
-            <input
-              type="radio"
-              :id="style"
-              name="saving_style"
-              :value="style"
-              v-model="saving_style"
-            />
-            <label :for="style">{{ style }}</label>
+          <div class="container">
+            <div class="heros">
+              <div class="hero-label">
+                <input
+                  type="radio"
+                  id="알뜰형"
+                  name="saving_style"
+                  value="알뜰형"
+                  v-model="saving_style"
+                  class="radio-input"
+                />
+                <label for="알뜰형">알뜰형</label>
+              </div>
+              <div class="hero-label">
+                <input
+                  type="radio"
+                  id="도전형"
+                  name="saving_style"
+                  value="도전형"
+                  v-model="saving_style"
+                  class="radio-input"
+                />
+                <label for="도전형">도전형</label>
+              </div>
+              <div class="hero-label">
+                <input
+                  type="radio"
+                  id="성실형"
+                  name="saving_style"
+                  value="성실형"
+                  v-model="saving_style"
+                  class="radio-input"
+                />
+                <label for="성실형">성실형</label>
+              </div>
+            </div>
           </div>
-          <div>
+
+          <div class="bank-select">
             <label
               for="favorite_bank"
               style="
-                font-size: 25px;
                 margin: 2%;
                 text-align: left;
-                font-weight: 400;
                 font-family: 'Noto Sans KR', sans-serif;
                 color: rgb(219, 180, 107);
               "
-              >최애은행 :
-            </label>
+              ><h3>최애은행</h3></label
+            >
             <select v-model="favorite_bank">
               <option v-for="bank in banks" :key="bank" :value="bank">
                 {{ bank }}
@@ -196,65 +208,6 @@
           <input type="submit" value="저장하기" />
         </form>
       </div>
-
-      <form @submit.prevent="handleSubmit">
-        <div class="container">
-          <div class="heros">
-            <div class="hero-label">
-              <input
-                type="radio"
-                id="알뜰형"
-                name="saving_style"
-                value="알뜰형"
-                v-model="saving_style"
-                class="radio-input"
-              />
-              <label for="알뜰형">알뜰형</label>
-            </div>
-            <div class="hero-label">
-              <input
-                type="radio"
-                id="도전형"
-                name="saving_style"
-                value="도전형"
-                v-model="saving_style"
-                class="radio-input"
-              />
-              <label for="도전형">도전형</label>
-            </div>
-            <div class="hero-label">
-              <input
-                type="radio"
-                id="성실형"
-                name="saving_style"
-                value="성실형"
-                v-model="saving_style"
-                class="radio-input"
-              />
-              <label for="성실형">성실형</label>
-            </div>
-          </div>
-        </div>
-
-        <div class="bank-select">
-          <label
-            for="favorite_bank"
-            style="
-              margin: 2%;
-              text-align: left;
-              font-family: 'Noto Sans KR', sans-serif;
-              color: rgb(219, 180, 107);
-            "
-            ><h3>최애은행</h3></label
-          >
-          <select v-model="favorite_bank">
-            <option v-for="bank in banks" :key="bank" :value="bank">
-              {{ bank }}
-            </option>
-          </select>
-        </div>
-        <input type="submit" value="저장하기" />
-      </form>
     </div>
   </div>
 </template>
