@@ -484,35 +484,35 @@ def recommend(request):
         # 1. age, salary, money 비슷한 유저들 뽑고 그 유저들은 뭐 쓰는지 보여주기
         data = User.objects.all()
         data_list = list(data.values('id', 'money', 'age', 'salary'))
+        print(data_list)
         df = pd.DataFrame.from_records(data_list)
-        # index를 id로 지정
+        # # index를 id로 지정
         df.set_index('id', inplace=True)
-        # 사용할 특성 선택
+        # # 사용할 특성 선택
         features = ['age', 'money', 'salary']
-        # 특성 스케일링
+        # # 특성 스케일링
         scaler = StandardScaler()
         df[features] = scaler.fit_transform(df[features]) 
+        df[features] = df[features].fillna(df[features].mean())
 
-        # Find the features of the current user
+        # # Find the features of the current user
         user_data = df.loc[USERPK].values.reshape(1, -1)
 
-        # KNN 모델 생성
+        # # KNN 모델 생성
         knn_model = NearestNeighbors(n_neighbors=2, algorithm='ball_tree')
         knn_model.fit(df[features])
 
-        # Find the nearest neighbors based on the features of the current user
         distances, indices = knn_model.kneighbors(user_data)
 
-        # 가장 가까운 이웃의 인덱스를 이용하여 pk(id) 값을 가져오기
+        # # 가장 가까운 이웃의 인덱스를 이용하여 pk(id) 값을 가져오기
         closest_neighbors_ids = df.index[indices[0]]
-
-        # 결과 출력
-        print("가장 가까운 이웃의 pk(id) 값:", closest_neighbors_ids)
+        # print(indices)
+        # # 결과 로깅
         recommend_deposit = []
         recommend_saving = []
-        nowuser = User.objects.get(pk=request.user.pk)
-        now_user_liked_deposits = nowuser.like_deposit.all()
-        now_user_liked_savings = nowuser.like_saving.all()
+        now_user = request.user
+        now_user_liked_deposits = now_user.like_deposit.all()
+        now_user_liked_savings = now_user.like_saving.all()
 
         for id in closest_neighbors_ids:
             if id != USERPK:
@@ -535,10 +535,7 @@ def recommend(request):
             'deposits': deposit_serializer.data,
             'savings': saving_serializer.data
         }
-        print(serialized_data)
         return Response(serialized_data)
-
-
 
 
 

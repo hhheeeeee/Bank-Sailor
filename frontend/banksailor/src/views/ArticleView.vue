@@ -21,7 +21,17 @@
 
     <div class="board">
       <div v-if="searchfinish === true">
-        <h3 style="text-align: center; margin-top: 40px; font-weight: 400; font-family: 'Noto Sans KR', sans-serif; color: rgb(0, 53, 133);">총 {{ filtered_article.length }}건의 검색결과가 있습니다</h3>
+        <h3
+          style="
+            text-align: center;
+            margin-top: 40px;
+            font-weight: 400;
+            font-family: 'Noto Sans KR', sans-serif;
+            color: rgb(0, 53, 133);
+          "
+        >
+          총 {{ filtered_article.length }}건의 검색결과가 있습니다
+        </h3>
         <hr />
         <div>
           <table class="table">
@@ -37,37 +47,41 @@
               <tr v-for="article in filtered_article" :key="article.id">
                 <td class="td1">{{ article.id }}</td>
                 <td class="td2">{{ article.category }}</td>
-              <td><RouterLink class="td3"
-              :to="{
-                name: 'ArticleDetailView',
-                params: { id: article.id },
-              }">
-                <p>{{ article.title }}</p>
-              </RouterLink></td>
-              <td class="td4">{{ article.username }}</td>
-              <td class="td5">{{ article.created_at.slice(0, 10) }}</td>
-            </tr>
-          </tbody>
-        </table>
-        
-        <button @click="searchfinish = !searchfinish">목록가기</button>
+                <td>
+                  <RouterLink
+                    class="td3"
+                    :to="{
+                      name: 'ArticleDetailView',
+                      params: { id: article.id },
+                    }"
+                  >
+                    <p>{{ article.title }}</p>
+                  </RouterLink>
+                </td>
+                <td class="td4">{{ article.username }}</td>
+                <td class="td5">{{ article.created_at.slice(0, 10) }}</td>
+              </tr>
+            </tbody>
+          </table>
 
+          <button @click="searchfinish = !searchfinish">목록가기</button>
+        </div>
+      </div>
+
+      <div v-else class="board">
+        <ArticleList />
+
+        <div
+          v-show="store.isLogin === true"
+          style="display: flex; justify-content: flex-end; margin-top: 5%"
+        >
+          <RouterLink :to="{ name: 'ArticleCreateView' }">
+            <button>새글쓰기</button>
+          </RouterLink>
+        </div>
       </div>
     </div>
-    
-    <div v-else class="board">
-      <ArticleList />
-
-      <div v-show="store.isLogin === true" style="display: flex; justify-content: flex-end; margin-top: 5%;">
-        <RouterLink :to="{ name: 'ArticleCreateView' }">
-          <button>새글쓰기</button>
-        </RouterLink>
-
-      </div>
-    </div>
-
   </div>
-</div>
 </template>
 
 <script setup>
@@ -123,13 +137,12 @@ const searchArticle = function () {
   if (!value_for_search.value) {
     Toast.fire({
       icon: "warning",
-      title: "검색어를 입력해주세용!",
+      title: "검색어를 입력해주세요!",
     });
   } else {
     searchfinish.value = true;
   }
 };
-
 </script>
 
 <style scoped>
@@ -146,7 +159,7 @@ const searchArticle = function () {
   margin-top: 40px;
   font-size: 3rem;
   font-weight: 400;
-  font-family: 'Noto Sans KR', sans-serif;
+  font-family: "Noto Sans KR", sans-serif;
   color: rgb(0, 53, 133);
 }
 .container2 {
@@ -154,7 +167,7 @@ const searchArticle = function () {
   height: 91vh;
   padding: 5%;
   width: 80%;
-  background-color: white;;
+  background-color: white;
   box-shadow: 5px 5px 10px 5px lightgray;
   border-radius: 20px;
   margin-bottom: 50px;
@@ -165,8 +178,8 @@ const searchArticle = function () {
   background-color: rgb(233, 201, 142);
   vertical-align: middle;
   text-align: center;
-  font-weight: 300; 
-  font-family: 'Noto Sans KR', sans-serif; 
+  font-weight: 300;
+  font-family: "Noto Sans KR", sans-serif;
   font-size: larger;
 }
 
@@ -181,7 +194,6 @@ button {
 button:hover {
   background-color: #4db7e5;
   border: solid 1px #4db7e5;
-
 }
 .search-bar {
   display: flex;
@@ -223,21 +235,21 @@ button:hover {
   vertical-align: middle;
   border-collapse: collapse;
   text-align: center;
-  font-family: 'Noto Sans KR', sans-serif; 
+  font-family: "Noto Sans KR", sans-serif;
 }
 .td2 {
   width: 15%;
   vertical-align: middle;
   border-collapse: collapse;
   text-align: center;
-  font-family: 'Noto Sans KR', sans-serif; 
+  font-family: "Noto Sans KR", sans-serif;
 }
 .td3 {
   width: 45%;
   vertical-align: middle;
   border-collapse: collapse;
   text-align: center;
-  font-family: 'Noto Sans KR', sans-serif; 
+  font-family: "Noto Sans KR", sans-serif;
   color: black;
 }
 .td4 {
@@ -245,13 +257,13 @@ button:hover {
   vertical-align: middle;
   border-collapse: collapse;
   text-align: center;
-  font-family: 'Noto Sans KR', sans-serif; 
+  font-family: "Noto Sans KR", sans-serif;
 }
 .td5 {
   width: 15%;
   vertical-align: middle;
   border-collapse: collapse;
   text-align: center;
-  font-family: 'Noto Sans KR', sans-serif; 
+  font-family: "Noto Sans KR", sans-serif;
 }
 </style>
