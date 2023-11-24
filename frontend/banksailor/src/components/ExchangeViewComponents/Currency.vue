@@ -251,7 +251,7 @@ h4 {
   width: 80%;
   background-color: white;
   border-radius: 15px;
-  padding: 30px 30px;
+  padding: 20px 20px;
 }
 
 .exchangearea {
