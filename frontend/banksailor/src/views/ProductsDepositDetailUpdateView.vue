@@ -142,7 +142,8 @@ main {
   background-color: white;;
   box-shadow: 5px 5px 10px 5px lightgray;
   border-radius: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 600px;
+
 }
 
 .info-list {
