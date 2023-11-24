@@ -7,16 +7,18 @@ from datetime import datetime, timedelta
 
 
 @api_view(['GET'])
-def exchange(request, fromCountry, price, st_date):
+def exchange(request, fromCountry, price, st_date, howlong):
     # 환율 정보 가져오기
     # API_KEY = settings.CURRENCY_API_KEY
+    st_data = str(int(st_date) - 1)
     API_KEY = 'nJrSIWLxo06igbLUpsy8jF93POiYAzyt'
-    URL = f'https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey={API_KEY}&searchdate={st_date}&data=AP01'
+    URL = f'https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey={API_KEY}&searchdate={st_data}&data=AP01'
     requestData = requests.get(URL)
     todayresult = requestData.json()
+    # print(todayresult)
     exchange_rate=1
     exchangeresult = 1
-    print(todayresult)
+    # print(URL)
     # 환율 계산
     for data in todayresult:
         if data.get('cur_unit') == fromCountry:
@@ -29,10 +31,20 @@ def exchange(request, fromCountry, price, st_date):
     #             exchange_rate = float(data.get('deal_bas_r').replace(',',''))
     #             exchangeresult = price * exchange_rate
     #             break
+    
+    if howlong == '-1':
+        date_diff = 3
+    else:
+        stringdate = howlong.replace('-', '')
+        date1 = datetime.strptime(st_date, '%Y%m%d')
+        date2 = datetime.strptime(stringdate, '%Y%m%d')
+        date_diff = date1 - date2
+        date_diff = date_diff.days
+    
+    
     exchangeresult = round(exchangeresult , 3)
-
-    date = datetime.strptime(st_date, "%Y%m%d")
-    yesterday = date - timedelta(days=1)
+    date1 = datetime.strptime(st_date, "%Y%m%d")
+    yesterday = date1 - timedelta(days=date_diff)
     yesterday = yesterday.strftime("%Y%m%d")  
 
     NEWURL = f'https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey={API_KEY}&searchdate={yesterday}&data=AP01'
@@ -56,7 +68,6 @@ def exchange(request, fromCountry, price, st_date):
         else:
             result[str(id)] = [today_country, today_deal_bas_r, None]
             id += 1
-
 
     return Response({"exchangeresult": exchangeresult, 'diff' : result})
 
