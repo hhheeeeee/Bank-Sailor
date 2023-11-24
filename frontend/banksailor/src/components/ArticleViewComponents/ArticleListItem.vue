@@ -28,11 +28,20 @@ defineProps({
 </script>
 
 
-<style>
+<style scoped>
 .tbody3 {
   vertical-align: middle;
   border-bottom: 1px solid darkgray;
 }
+
+/* .tbody3:last-child {
+  border-bottom: 2px solid black;
+} */
+
+
+/* .table>:not(:first-child) {
+  border-bottom: 1px solid black;
+} */
 .td1 {
   width: 10%;
   vertical-align: middle;

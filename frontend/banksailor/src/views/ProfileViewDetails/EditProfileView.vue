@@ -4,77 +4,105 @@
     <h1 class = title>포트폴리오 수정</h1>
 
     <div v-if="shouldShowEditForm" class="form"> <!-- 이미 유형을 저장해놨을 때-->
-      <form @submit.prevent="handleSubmit">
+      <div class="ment" style="color: orange;">
+        현재 당신의 유형은
+        <h3 style="color: rgb(0, 53, 133); font-weight: 800;">{{ myPortfolio[0].saving_style }}!!</h3> 제일 선호하는 은행은
+        <h3 style="color: rgb(0, 53, 133); font-weight: 800;">{{ myPortfolio[0].favorite_bank }}</h3> 입니다!
+      </div>
+      <RouterLink :to="{ name: 'recommend'}" class="ment">
+      <p>다른 {{ myPortfolio[0].saving_style }} 유저가 선택한 적금상품 확인하기♪</p></RouterLink> 
+
+      <form @submit.prevent="handleSubmit" class="edit-form">
+        <h3 style="margin: 2%; text-align: left; font-family: 'Noto Sans KR', sans-serif; color: rgb(219, 180, 107);">취향이 바뀌셨나요?</h3>
         <div>
           <label for="ID">ID : </label>
           <input type="text" v-model="userInfo.username" />
         </div>
 
-        <div>저축성향 :</div>
-        <div class="radio-group">
-          <div v-for="style in savingStyles" :key="style" class="radio-item">
-            <input
-              type="radio"
-              :id="style"
-              name="saving_style"
-              :value="style"
-              v-model="saving_style"
-            />
-            <label :for="style">{{ style }}</label>
+        <h3 style="margin: 2%; text-align: left;font-family: 'Noto Sans KR', sans-serif; color: rgb(219, 180, 107);">저축 스타일</h3>
+        <div class="container">
+          <div class="heros">
+            <div class="hero">
+              <label for="알뜰형" class="image"></label>
+            </div>
+            <div class="hero">
+              <label for="도전형" class="image"></label>
+            </div>
+            <div class="hero">
+              <label for="성실형" class="image"></label>
+            </div>
+          </div>
+      </div>
+
+        <div class="container">
+          <div class="heros">
+            <div class="hero-label">
+              <input type="radio" id="알뜰형" name="saving_style" value="알뜰형" v-model="saving_style" class="radio-input"/>
+              <label for="알뜰형">알뜰형</label>
+            </div>
+            <div class="hero-label">
+              <input type="radio" id="도전형" name="saving_style" value="도전형" v-model="saving_style" class="radio-input"/>
+              <label for="도전형">도전형</label>
+            </div>
+            <div class="hero-label">
+              <input type="radio" id="성실형" name="saving_style" value="성실형" v-model="saving_style" class="radio-input"/>
+              <label for="성실형">성실형</label>
+            </div>
           </div>
         </div>
 
-        <div>
-          <label for="favorite_bank">최애은행 : </label>
+        <div class="bank-select">
+          <label for="favorite_bank" style="margin: 2%; text-align: left; font-family: 'Noto Sans KR', sans-serif; color: rgb(219, 180, 107);"><h3>최애은행</h3></label>
           <select v-model="favorite_bank">
             <option v-for="bank in banks" :key="bank" :value="bank">
               {{ bank }}
             </option>
           </select>
         </div>
-        <input type="submit" value="저장하기" />
+        <input type="submit" value="저장하기" class="form-submit"/>
       </form>
 
-      <div>
-        현재 당신의 유형은
-        {{ myPortfolio[0].saving_style }} !! 제일 선호하는 은행은
-        {{ myPortfolio[0].favorite_bank }} 입니다!
-      </div>
 
-      <p>다른 {{ myPortfolio[0].saving_style }} 유저가 선택한 적금상품 확인하기♪</p>
     </div>
 
     <div v-else class="form"> <!-- 처음 유형을 저장할 때!-->
-      <h3 style="text-align: center; margin-top: 40px; margin-bottom: 40px; font-weight: 400; font-family: 'Noto Sans KR', sans-serif; color: rgb(0, 53, 133);">당신의 유형을 선택하고 맞춤 상품을 확인하세요!</h3>
+      <h3 class="ment">당신의 유형을 선택하고 맞춤 상품을 확인하세요!</h3>
       <div  class="first-select-form">
-        <h3 style="margin: 2%; text-align: left; font-weight: 400; font-family: 'Noto Sans KR', sans-serif; color: rgb(219, 180, 107);">저축 스타일</h3>
+        <h3 style="margin: 2%; text-align: left;font-family: 'Noto Sans KR', sans-serif; color: rgb(219, 180, 107);">저축 스타일</h3>
         <div class="container">
           <div class="heros">
             <div class="hero">
-              <div class="image"></div>
+              <label for="알뜰형" class="image"></label>
             </div>
             <div class="hero">
-              <div class="image"></div>
+              <label for="도전형" class="image"></label>
             </div>
             <div class="hero">
-              <div class="image"></div>
+              <label for="성실형" class="image"></label>
             </div>
           </div>
       </div>
       
       <form @submit.prevent="handleSubmit">
-        <div v-for="style in savingStyles" :key="style" class="radio-div">
-          <input
-          type="radio"
-          :id="style"
-          name="saving_style"
-          :value="style"
-          v-model="saving_style"
-          />
-          <label :for="style">{{ style }}</label>
+        <div class="container">
+          <div class="heros">
+            <div class="hero-label">
+              <input type="radio" id="알뜰형" name="saving_style" value="알뜰형" v-model="saving_style" class="radio-input"/>
+              <label for="알뜰형">알뜰형</label>
+            </div>
+            <div class="hero-label">
+              <input type="radio" id="도전형" name="saving_style" value="도전형" v-model="saving_style" class="radio-input"/>
+              <label for="도전형">도전형</label>
+            </div>
+            <div class="hero-label">
+              <input type="radio" id="성실형" name="saving_style" value="성실형" v-model="saving_style" class="radio-input"/>
+              <label for="성실형">성실형</label>
+            </div>
+          </div>
         </div>
-        <div>
-          <label for="favorite_bank" style="font-size: 25px; margin: 2%; text-align: left; font-weight: 400; font-family: 'Noto Sans KR', sans-serif; color: rgb(219, 180, 107);">최애은행 : </label>
+
+        <div class="bank-select">
+          <label for="favorite_bank" style="margin: 2%; text-align: left; font-family: 'Noto Sans KR', sans-serif; color: rgb(219, 180, 107);"><h3>최애은행</h3></label>
           <select v-model="favorite_bank">
             <option v-for="bank in banks" :key="bank" :value="bank">
               {{ bank }}
@@ -236,6 +264,24 @@ const editPortfolio = function (portfolioId) {
   flex-direction: column;
   align-items: center;
   padding-top: 30px;
+  padding-bottom: 80px;
+}
+.container-pofol::-webkit-scrollbar {
+  width: 10px; /* 스크롤바의 너비 */
+}
+
+.container-pofol::-webkit-scrollbar-thumb {
+  height: 20%; /* 스크롤바의 길이 */
+  background: rgb(0, 53, 133); /* 스크롤바의 색상 */
+  border-radius: 10px;
+}
+
+.container-pofol::-webkit-scrollbar-track {
+  background: rgba(33, 122, 244, 0.1); /*스크롤바 뒷 배경 색상*/
+}
+
+.container-pofol::-webkit-scrollbar-thumb {
+  height: 50%;
 }
 .title {
   width: 100%;
@@ -259,8 +305,27 @@ const editPortfolio = function (portfolioId) {
   border-radius: 10px;
   background-color: #f8f8f8;
 }
+.ment {
+  text-align: center; 
+  margin-top: 40px; 
+  margin-bottom: 40px; 
+  font-weight: 400; 
+  font-family: 'Noto Sans KR', sans-serif; 
+  color: rgb(0, 53, 133);
+}
 .radio-div {
-  display: flex;
+  width: 30%;
+  height: 84px;
+  margin: 4px;
+  border: 3px solid #FFF;
+  border-radius: 10px;
+  box-sizing: border-box;
+  background-color: #555;
+  overflow: hidden;
+  transform: skewX(-14deg);
+  transition: 
+    transform .1s,
+    background-color .6s;
 }
 .form label {
   display: block;
@@ -269,7 +334,7 @@ const editPortfolio = function (portfolioId) {
 
 .form input[type="text"],
 .form select {
-  width: calc(100% - 10px);
+  width: 100%;
   padding: 8px;
   margin-bottom: 10px;
   border-radius: 5px;
@@ -282,13 +347,22 @@ const editPortfolio = function (portfolioId) {
   padding: 10px;
   border: none;
   border-radius: 5px;
-  background-color: #1c5f82;
+  background-color: rgb(0, 53, 133);
   color: white;
   cursor: pointer;
 }
 
 .form input[type="submit"]:hover {
-  background-color: #144362;
+  background-color: #4db7e5;
+}
+.edit-form {
+  width: 90%;
+  margin-bottom: 30%;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f8f8f8;
 }
 .radio-group {
   display: flex;
@@ -315,7 +389,7 @@ const editPortfolio = function (portfolioId) {
   color: white;
 }
 .container {
-  padding: 50px 0;
+  /* padding: 50px 0; */
 }
 
 .container .heros {
@@ -339,6 +413,13 @@ const editPortfolio = function (portfolioId) {
   transition: 
     transform .1s,
     background-color .6s;
+}
+
+.container .heros .hero-label {
+  width: 30%;
+  height: 84px;
+  font-weight: 400;
+  font-family: "Noto Sans KR", sans-serif;
 }
 
 .container .heros .hero:hover {
