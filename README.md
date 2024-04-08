@@ -2,7 +2,9 @@
 
 👩‍💻 <b>개발 기간</b> : 2023.11.16 ~ 2023.11.23
 
-🛠️ <b>프로젝트명</b> : SSAFY 10기 1학기 관통 프로젝트 '금융 상품 비교 애플리케이션' 제작
+🛠️ <b>프로젝트명</b> : BankSailor
+
+- SSAFY 10기 1학기 관통 프로젝트 '금융 상품 비교 애플리케이션'
 
 <details>
 <summary>🖱️ 개발일정</summary>
@@ -59,34 +61,59 @@
 
 금전을 관리하는 여정은 넓은 바다를 항해하는 것과도 같습니다. BankSailor는 당신만의 안내자로서 여러분의 미래를 설계합니다. 함께 여행하며 안전한 항해를 경험해보세요.
 
-## 화면 구성
-
 ## 주요 기능
 
-예/적금별 금리 비교 제공
+- 예/적금별 금리 비교 제공
 
-환율계산
+- 환율계산
 
-주변 은행 검색
+- 주변 은행 검색
 
-자유게시판
+- 자유게시판
 
-이용자 맞춤형 상품 추천 제공
+- 이용자 맞춤형 상품 추천 제공
 
 # Technologies Used : 사용한 기술과 라이브러리
 
 ## 💻 기술 스택
 
-Frontend
-Vue3
+[Frontend]
 
-Backend
-Django 3.1.2
-TensorFlow와의 결합을 용이하게 하기 위하여 프레임워크로 Django를 채택하였습니다.
+  <img src="https://img.shields.io/badge/vue.js-4FC08D?style=for-the-badge&logo=vue.js&logoColor=white">
 
-## 피그마 초안
+- 프레임워크 및 라이브러리
 
-![pigma](./image/pigma.png)
+  - Vue Router (v4.2.5)
+  - Pinia (v2.1.7) : 상태 관리 라이브러리입니다
+  - Vue3 ApexCharts : 차트 라이브러리
+
+- UI 프레임워크 및 컴포넌트
+
+  - Bootstrap Vue (v2.23.1)
+  - Font Awesome (v6.4.2)
+  - SweetAlert2 (v11.6.13)
+  - Vue Spinner (v1.0.4)
+  - Vue3 Carousel (v0.3.1)
+
+- 폼 검증 및 데이터 처리
+
+  - Vee-Validate (v4.11.8)
+
+- 빌드 및 개발 도구
+  - Vite (v4.4.11):
+
+[Backend]
+
+<img src="https://img.shields.io/badge/django-092E20?style=for-the-badge&logo=django&logoColor=white"> <img src="https://img.shields.io/badge/sqlite-003B57?style=for-the-badge&logo=SQlite&logoColor=white">
+
+- TensorFlow와의 결합을 용이하게 하기 위하여 프레임워크로 Django를 채택
+
+- API 인증 및 권한 관리
+  - Django Rest Framework
+  - dj-rest-auth
+  - allauth
+- 이메일 서비스
+  - Django Email Backend
 
 ## ERD
 
@@ -96,9 +123,6 @@ TensorFlow와의 결합을 용이하게 하기 위하여 프레임워크로 Djan
 
 ![components](./image/components.png)
 
-# Deployment : 배포 링크
+# 관련 문서
 
-# Installation : 프로젝트 설치 및 실행 방법
-
-https://www.openads.co.kr/content/contentDetail?contsId=8359
-https://www.tensorflow.org/recommenders/examples/basic_retrieval?hl=ko
+- [발표 자료](./BankSailor.pdf)
